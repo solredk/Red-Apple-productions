@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerLook playerLook;
 
+
     public void DoJump(InputAction.CallbackContext context)
     {
         if (context.performed && PlayerMovement != null)
@@ -19,6 +20,7 @@ public class InputManager : MonoBehaviour
 
     public void DoMoving(InputAction.CallbackContext context)
     {
+
         moveInput = context.ReadValue<Vector2>();
         if (PlayerMovement != null)
         {
@@ -28,10 +30,13 @@ public class InputManager : MonoBehaviour
 
     public void DoLooking(InputAction.CallbackContext context)
     {
+
+
         lookInput = context.ReadValue<Vector2>();
         if (playerLook != null)
         {
-            playerLook.Look(lookInput);
+            playerLook.Look(lookInput,context.control.device == Gamepad.current);
         }
+
     }
 }
