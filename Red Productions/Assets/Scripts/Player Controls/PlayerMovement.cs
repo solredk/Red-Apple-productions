@@ -19,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveInput;
 
-    private Vector2 velocity;
+
+    private float velocity;
 
     private void Update()
     {
@@ -55,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ApplyGravity()
     {
-        velocity
+        
     }
 
     public void DoJump()

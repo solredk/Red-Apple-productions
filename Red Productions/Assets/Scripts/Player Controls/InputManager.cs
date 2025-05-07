@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     private Vector2 lookInput;
 
     [SerializeField] private PlayerMovement PlayerMovement;
+    [SerializeField] private PlayerLook playerLook;
 
     public void DoJump(InputAction.CallbackContext context)
     {
@@ -28,5 +29,9 @@ public class InputManager : MonoBehaviour
     public void DoLooking(InputAction.CallbackContext context)
     {
         lookInput = context.ReadValue<Vector2>();
+        if (playerLook != null)
+        {
+            playerLook.Look(lookInput);
+        }
     }
 }
