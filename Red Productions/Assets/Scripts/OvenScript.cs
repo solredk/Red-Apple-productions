@@ -49,10 +49,11 @@ public class OvenScript : MonoBehaviour
 
     void SpawnBurger()
     {
+       
         GameObject burger = Instantiate(burgerPrefab, spawnPoint.position, Quaternion.identity);
         Debug.Log("Burger Created!");
 
-        // Destroy the ingredients after the burger is spawned
+  
         Collider[] colliders = Physics.OverlapSphere(transform.position, overlapRadius, IngredientLayer);
         foreach (var collider in colliders)
         {

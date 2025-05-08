@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class PickupAndDrop : MonoBehaviour
 {
-    [SerializeField] private GameObject gun;
-
-
     public GameObject Camera;
     public float maxPickupDistance = 5;
     public float holdDistance = 2.5f;
     public float verticalOffsetY = 0f;
     public float maxDownY = -0.5f;
+    public float scrollSpeed = 1f; // Adjust this to control scroll speed
 
     private GameObject itemHolding;
     private bool isHolding = false;
@@ -22,21 +20,22 @@ public class PickupAndDrop : MonoBehaviour
         }
     }
 
-    public void Pickup() 
+    public void Pickup()
     {
         if (isHolding || itemHolding != null) return;
+
         RaycastHit hit;
         Debug.DrawRay(Camera.transform.position, Camera.transform.forward * maxPickupDistance, Color.red, 1f);
+
         if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, maxPickupDistance))
         {
-            Debug.Log("randombs");
-            if (hit.transform.tag == "Item")
+            Debug.Log("Raycast Hit");
+
+            if (hit.transform.CompareTag("Item"))
             {
-                gun.SetActive(false);
                 itemHolding = hit.transform.gameObject;
 
-                foreach (Collider c in hit.transform.GetComponentsInChildren<Collider>()) if (c != null) c.enabled = false;
-                foreach (Rigidbody r in hit.transform.GetComponentsInChildren<Rigidbody>()) if (r != null) r.isKinematic = true;
+ 
 
                 itemHolding.transform.SetParent(Camera.transform);
 
@@ -49,20 +48,38 @@ public class PickupAndDrop : MonoBehaviour
         }
     }
 
-    public void Drop() 
+    public void Drop()
     {
         if (!isHolding || itemHolding == null) return;
-        gun.SetActive(true);
+
         itemHolding.transform.SetParent(null);
 
-        foreach (var c in itemHolding.transform.GetComponentsInChildren<Collider>()) if (c != null) c.enabled = true;
-        foreach (var r in itemHolding.transform.GetComponentsInChildren<Rigidbody>()) if (r != null) r.isKinematic = false;
 
+
+        // Project the item onto the ground
         RaycastHit hitDown;
-        Physics.Raycast(transform.position, -Vector3.up, out hitDown);
-        itemHolding.transform.position = hitDown.point + new Vector3(transform.forward.x, 0, transform.forward.z);
+        if (Physics.Raycast(transform.position, -Vector3.up, out hitDown))
+        {
+            itemHolding.transform.position = hitDown.point + new Vector3(transform.forward.x, 0, transform.forward.z);
+        }
+        else
+        {
+
+            itemHolding.transform.position = transform.position + transform.forward * holdDistance;
+        }
 
         itemHolding = null;
         isHolding = false;
+    }
+
+
+    public void AdjustHoldDistance(float scrollDelta)
+    {
+        if (isHolding && itemHolding != null)
+        {
+            holdDistance += scrollDelta * scrollSpeed;
+            holdDistance = Mathf.Clamp(holdDistance, 0.5f, 10f); 
+            itemHolding.transform.localPosition = new Vector3(0, verticalOffsetY, holdDistance);
+        }
     }
 }
