@@ -16,8 +16,7 @@ public class PlayerHealth : HealthSystem
     private void Update()
     {
         UpdateHealthUI();
-
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             //take damage for testing purposes
             TakeDamage(Random.Range(1, 50));

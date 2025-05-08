@@ -10,21 +10,32 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private List<GameObject> ActivePlayers;
     [SerializeField] private GameObject[] playerPrefabs;
 
+    [SerializeField] private GameObject[] playerGameObjects;
+
     private void Awake()
     {
-        playerInputManager.playerPrefab = playerPrefabs[playerCount];
+        DontDestroyOnLoad(this);
+        if (playerInputManager.playerCount == 1)
+        {
+            playerGameObjects[0].SetActive(true); // Corrected method name to 'SetActive'  
+        }
+        else if (playerInputManager.playerCount == 2)
+        {
+            playerGameObjects[1].SetActive(true); 
+        }
+        //playerInputManager.playerPrefab = playerPrefabs[playerCount];  
     }
     public void OnJoined()
     {
-        playerInputManager.playerPrefab = playerPrefabs[playerCount];
-        playerCount += 1;
-        ActivePlayers.Add(playerInputManager.playerPrefab);
+        //playerInputManager.playerPrefab = playerPrefabs[playerCount];
+        //playerCount += 1;
+       // ActivePlayers.Add(playerInputManager.playerPrefab);
 
     }
 
     public void OnLeft()
     {
-        playerCount -= 1;
-        ActivePlayers.Remove(playerInputManager.playerPrefab);
+        //playerCount -= 1;
+       // ActivePlayers.Remove(playerInputManager.playerPrefab);
     }
 }
