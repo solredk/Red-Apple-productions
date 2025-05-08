@@ -13,6 +13,15 @@ public class TomatoProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+ 
+            HealthSystem playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(10f); 
+            }
+        }
         Destroy(gameObject);
     }
 }

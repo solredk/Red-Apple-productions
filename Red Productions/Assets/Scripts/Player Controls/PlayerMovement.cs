@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -30,41 +30,34 @@ public class PlayerMovement : MonoBehaviour
 
     public void Moving()
     {
-        if (isSprinting)
+        isGrounded = controller.isGrounded;
+
+        // Als hij op de grond staat en naar beneden beweegt → hou hem stabiel op de grond
+        if (isGrounded && playerVelocity.y < 0)
         {
-            currentSpeed = sprintSpeed;
-        }
-        else
-        {
-            currentSpeed = walkSpeed;
+            playerVelocity.y = -2f;  // kleine negatieve waarde om op de grond te blijven
         }
 
+        // Snelheid kiezen
+        currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
+
+        // Beweging horizontaal
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-
         controller.Move(transform.TransformDirection(moveDirection) * currentSpeed * Time.deltaTime);
 
+        // Gravity toepassen
         playerVelocity.y += gravity * Time.deltaTime;
 
-
-        isGrounded = controller.isGrounded;
+        // Verticale beweging toepassen
+        controller.Move(playerVelocity * Time.deltaTime);
     }
+
 
     public void ReadMoveVaulue(Vector2 input)
     {
         moveInput = input;
     }
 
-    public void ApplyGravity()
-    {
-        
-    }
 
-    public void DoJump()
-    {
-        if (isGrounded)
-        {
-            playerVelocity.y = Mathf.Sqrt(2f * -gravity);
-        }
-    }
 
 }
