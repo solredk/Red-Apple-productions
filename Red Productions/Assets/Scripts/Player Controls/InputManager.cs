@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerLook playerLook;
     [SerializeField] private TomatoLauncher tomatoLauncher;
-
+    [SerializeField] private PickupAndDrop pickupAndDrop;
     public void DoShooting(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -20,6 +20,21 @@ public class InputManager : MonoBehaviour
         if (context.canceled)
         {
             tomatoLauncher.isShooting = false;
+        }
+    }
+    public void OnPickup(InputAction.CallbackContext context)
+    {
+        if (context.performed && pickupAndDrop != null)
+        {
+            pickupAndDrop.Pickup();
+        }
+    }
+
+    public void OnDrop(InputAction.CallbackContext context)
+    {
+        if (context.performed && pickupAndDrop != null)
+        {
+            pickupAndDrop.Drop();
         }
     }
     public void DoMoving(InputAction.CallbackContext context)

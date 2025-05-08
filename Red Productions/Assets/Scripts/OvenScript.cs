@@ -18,12 +18,12 @@ public class OvenScript : MonoBehaviour
 
     void Update()
     {
-        // Only check for ingredients if a burger hasn't been spawned yet
+
         if (!burgerSpawned)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, overlapRadius, IngredientLayer);
 
-            // Clear the list at the beginning of each check
+        
             ingredientsInOven.Clear();
 
             foreach (var collider in colliders)
@@ -42,7 +42,7 @@ public class OvenScript : MonoBehaviour
             if (ingredientsInOven.Count == 3)
             {
                 SpawnBurger();
-                burgerSpawned = true; // Set the flag to prevent further spawning
+                burgerSpawned = true; 
             }
         }
     }
