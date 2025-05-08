@@ -3,14 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
   tags:
+  - Undefined
   - Item
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ingredient
   - Water
   - UI
   - SplitscreenUI
