@@ -3,33 +3,23 @@ using UnityEngine;
 public class PickupAndDrop : MonoBehaviour
 {
     public GameObject Camera;
-    float maxPickupDistance = 5;
-    GameObject itemHolding;
-    bool isHolding = false;
+    public float maxPickupDistance = 5;
     public float holdDistance = 2.5f;
+    public float verticalOffsetY = 0f;
+    public float maxDownY = -0.5f;
 
-    public float verticalOffsetY = 0f; // You can tweak this in Inspector
-    public float maxDownY = -0.5f;     // Lowest Y offset allowed
+    private GameObject itemHolding;
+    private bool isHolding = false;
 
     void Start()
     {
-
+        if (Camera == null)
+        {
+            Camera = GetComponentInChildren<Camera>(true)?.gameObject;
+        }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown("e"))
-        {
-            Pickup();
-        }
-        if (Input.GetKeyDown("q"))
-        {
-            Drop();
-        }
-
-    }
-
-    void Pickup()
+    public void Pickup() 
     {
         if (isHolding || itemHolding != null) return;
 
@@ -54,7 +44,7 @@ public class PickupAndDrop : MonoBehaviour
         }
     }
 
-    void Drop()
+    public void Drop() 
     {
         if (!isHolding || itemHolding == null) return;
 
@@ -69,6 +59,5 @@ public class PickupAndDrop : MonoBehaviour
 
         itemHolding = null;
         isHolding = false;
-
     }
 }
