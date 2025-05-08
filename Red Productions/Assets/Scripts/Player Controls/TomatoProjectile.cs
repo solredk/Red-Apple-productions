@@ -32,10 +32,16 @@ public class TomatoProjectile : MonoBehaviour
             HealthSystem enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
+                // Maak de damage popup
                 GameObject text = Instantiate(damagePopUp, transform.position, Quaternion.identity);
                 text.GetComponent<TextMeshPro>().text = DamageOutput.ToString();
+
+                // Breng schade aan de vijand
                 enemyHealth.TakeDamage(DamageOutput);
-                Instantiate(blood, transform.position, Quaternion.identity);
+
+                // Spawn de blood particles een beetje boven de vijand
+                Vector3 bloodSpawnPosition = transform.position + Vector3.up * 0.5f; // Verhoog met 0.5f boven de vijand
+                Instantiate(blood, bloodSpawnPosition, Quaternion.identity);
             }
         }
         Destroy(gameObject);
