@@ -9,9 +9,6 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float sensX = 100f;
     [SerializeField] private float sensY = 100f;
 
-    [SerializeField] private float controllerSensX = 100f;
-    [SerializeField] private float controllerSensY = 100f;
-
     [SerializeField] private Camera cam;
 
     private float mouseX;
@@ -56,7 +53,6 @@ public class PlayerLook : MonoBehaviour
 
     public void Look(Vector2 input,bool controller)
     {
-        Debug.Log("Look input: " + input);
         mouseX = input.x;
         mouseY = input.y;
         controllerActive = controller;

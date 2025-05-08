@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerLook playerLook;
-
+    [SerializeField] private TomatoLauncher tomatoLauncher;
 
     public void DoJump(InputAction.CallbackContext context)
     {
@@ -17,7 +17,18 @@ public class InputManager : MonoBehaviour
             PlayerMovement.DoJump();
         }
     }
+    public void DoShooting(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            tomatoLauncher.isShooting = true;
+        }
 
+        if (context.canceled)
+        {
+            tomatoLauncher.isShooting = false;
+        }
+    }
     public void DoMoving(InputAction.CallbackContext context)
     {
 
