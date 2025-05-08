@@ -228,11 +228,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &533669166 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 205212311747460999, guid: 6cdc262e34604f149898008d44d6b9cf, type: 3}
-  m_PrefabInstance: {fileID: 1044834643251346449}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1344864749
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,6 +349,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &2095389660 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6975169397412662671, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+  m_PrefabInstance: {fileID: 6586137818355585209}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee12e5a6c21ee9498ac55a63ce438a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1044834643251346449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -419,10 +425,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3140928371145539026, guid: 6cdc262e34604f149898008d44d6b9cf, type: 3}
-      propertyPath: spawnPoint
-      value: 
-      objectReference: {fileID: 533669166}
-    - target: {fileID: 3140928371145539026, guid: 6cdc262e34604f149898008d44d6b9cf, type: 3}
       propertyPath: overlapseRadius
       value: 1.2
       objectReference: {fileID: 0}
@@ -477,7 +479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3492219629436720908, guid: 2383542b4983bb5458e648b70cf8b3c4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.487
+      value: 2.991
       objectReference: {fileID: 0}
     - target: {fileID: 3492219629436720908, guid: 2383542b4983bb5458e648b70cf8b3c4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -554,7 +556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3910857439178049227, guid: bd3e345960fd3104bb63460ce12ff373, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.589
+      value: 2.915
       objectReference: {fileID: 0}
     - target: {fileID: 3910857439178049227, guid: bd3e345960fd3104bb63460ce12ff373, type: 3}
       propertyPath: m_LocalRotation.w
@@ -605,6 +607,86 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_ActionId
+      value: ac7f75c8-9426-4e78-9faf-09c464031074
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_ActionId
+      value: de3f61c9-d448-4492-864d-2e7d6e808e0d
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_ActionName
+      value: 'Player/Drop[/Keyboard/q]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_ActionName
+      value: 'Player/Pickup[/Keyboard/e]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2095389660}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2095389660}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PickupAndDrop, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PickupAndDrop, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452606874949682302, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655696319462400865, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+      propertyPath: pickupAndDrop
+      value: 
+      objectReference: {fileID: 2095389660}
     - target: {fileID: 5648186464211578564, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.77
@@ -684,7 +766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8772655895006039150, guid: 1f08b9c3124a21b4987c036fe5d1b80b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.221
+      value: 0.283
       objectReference: {fileID: 0}
     - target: {fileID: 8772655895006039150, guid: 1f08b9c3124a21b4987c036fe5d1b80b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -692,7 +774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8772655895006039150, guid: 1f08b9c3124a21b4987c036fe5d1b80b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.52
+      value: 3.106
       objectReference: {fileID: 0}
     - target: {fileID: 8772655895006039150, guid: 1f08b9c3124a21b4987c036fe5d1b80b, type: 3}
       propertyPath: m_LocalRotation.w
