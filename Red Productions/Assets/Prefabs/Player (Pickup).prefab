@@ -202,7 +202,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.05224876, z: 0, w: 0.9986341}
   m_LocalPosition: {x: -0.5, y: 0.86, z: -2.86}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.77, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1108453409364109718}
@@ -359,6 +359,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e2137801-d09c-4ed8-9e39-b85b6989733a
+    m_ActionName: Player/Pickup
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 04887459-624a-4947-9b9a-ddc501a3751a
+    m_ActionName: Player/Drop
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -417,6 +425,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMovement: {fileID: 4234229606313971510}
   playerLook: {fileID: 1570802790478631328}
+  tomatoLauncher: {fileID: 0}
+  pickupAndDrop: {fileID: 6975169397412662671}
 --- !u!114 &1570802790478631328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,6 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 1562247545371279897}
+  maxPickupDistance: 5
   holdDistance: 2
   verticalOffsetY: 0
   maxDownY: -0.35
