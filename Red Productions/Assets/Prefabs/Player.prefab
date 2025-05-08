@@ -434,6 +434,7 @@ GameObject:
   - component: {fileID: 1367473909583324553}
   - component: {fileID: 1879061655179475570}
   - component: {fileID: 4267210662245356115}
+  - component: {fileID: -7094198092212728707}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -621,6 +622,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e2137801-d09c-4ed8-9e39-b85b6989733a
+    m_ActionName: 'Player/Pickup[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 04887459-624a-4947-9b9a-ddc501a3751a
+    m_ActionName: 'Player/Drop[/Keyboard/q]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -680,6 +701,7 @@ MonoBehaviour:
   PlayerMovement: {fileID: 6077679425612484585}
   playerLook: {fileID: 1879061655179475570}
   tomatoLauncher: {fileID: 4229342538934610628}
+  pickupAndDrop: {fileID: 0}
 --- !u!114 &1879061655179475570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,6 +736,23 @@ MonoBehaviour:
   frontHealthBar: {fileID: 2331314405881217355}
   backHealthBar: {fileID: 4715255217558824692}
   deathScreen: {fileID: 2875472673332236905}
+--- !u!114 &-7094198092212728707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4245593904818937003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee12e5a6c21ee9498ac55a63ce438a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 1562247545371279897, guid: 7c52d24993cf3d04797a7e3dbbbf0968, type: 3}
+  maxPickupDistance: 5
+  holdDistance: 2
+  verticalOffsetY: 0
+  maxDownY: -0.35
 --- !u!1 &4375456595721146994
 GameObject:
   m_ObjectHideFlags: 0

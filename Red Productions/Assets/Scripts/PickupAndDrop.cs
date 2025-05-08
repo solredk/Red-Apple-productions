@@ -22,16 +22,17 @@ public class PickupAndDrop : MonoBehaviour
     public void Pickup() 
     {
         if (isHolding || itemHolding != null) return;
-
         RaycastHit hit;
+        Debug.DrawRay(Camera.transform.position, Camera.transform.forward * maxPickupDistance, Color.red, 1f);
         if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, maxPickupDistance))
         {
+            Debug.Log("randombs");
             if (hit.transform.tag == "Item")
             {
                 itemHolding = hit.transform.gameObject;
 
-                foreach (var c in hit.transform.GetComponentsInChildren<Collider>()) if (c != null) c.enabled = false;
-                foreach (var r in hit.transform.GetComponentsInChildren<Rigidbody>()) if (r != null) r.isKinematic = true;
+                foreach (Collider c in hit.transform.GetComponentsInChildren<Collider>()) if (c != null) c.enabled = false;
+                foreach (Rigidbody r in hit.transform.GetComponentsInChildren<Rigidbody>()) if (r != null) r.isKinematic = true;
 
                 itemHolding.transform.SetParent(Camera.transform);
 
