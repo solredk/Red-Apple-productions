@@ -1,31 +1,30 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerHealth : HealthSystem
+public class EnemyHealth : HealthSystem
 {
-    [Header("health bar display")]
     [SerializeField] private float lerpTimer;
     [SerializeField] private float chipSpeed = 2f;
+
+    [SerializeField] private GameObject damagePopUp;
 
     [SerializeField] private Image frontHealthBar;
     [SerializeField] private Image backHealthBar;
 
-    [SerializeField] private Image deathScreen;
-
     private void Update()
     {
         UpdateHealthUI();
+
         if (currentHealth <= 0)
         {
             Die();
         }
     }
-
     public override void TakeDamage(float damage)
     {
         //the base take damage function
         base.TakeDamage(damage);
+
 
         //reset the lerp timer
         lerpTimer = 0;
@@ -49,7 +48,7 @@ public class PlayerHealth : HealthSystem
     public override void Die()
     {
         base.Die();
-        deathScreen.gameObject.SetActive(true);
+        Destroy(gameObject);
     }
 
 

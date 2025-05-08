@@ -702,9 +702,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de8c0fb54dc8b041afdde6dd787b342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 100
-  sensY: 100
+  mouseSensitivity: 50
+  controllerSensitivity: 100
+  controllerExponent: 1.5
   cam: {fileID: 6191367490128261374}
+  smoothTime: 0.05
 --- !u!114 &4267210662245356115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,6 +1043,7 @@ GameObject:
   - component: {fileID: 5632520297847938243}
   - component: {fileID: 6191367490128261374}
   - component: {fileID: 1161864024796458769}
+  - component: {fileID: 6555864788379958435}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1159,6 +1162,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &6555864788379958435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443509804344648119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee083daeebcc8b64880cd785d488860d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.3
+  magnitude: 0.2
 --- !u!1 &8180170863089046923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,6 +1301,9 @@ MonoBehaviour:
   tomatoPrefab: {fileID: 4578710047296779920, guid: af3eba7b57bc75045b2dc77f9e9ea9e1, type: 3}
   launchPoint: {fileID: 6104133862564846258}
   tomatoData: {fileID: 11400000, guid: 39d81729402df4c48a1480ba65573cf8, type: 2}
+  screenRumble: {fileID: 6555864788379958435}
   fireRate: 0
   isShooting: 0
   damageOutput: 0
+  playerLook: {fileID: 0}
+  controllerActive: 0

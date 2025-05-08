@@ -1,0 +1,43 @@
+using UnityEngine;
+
+public class ScreenRumble : MonoBehaviour
+{
+    [SerializeField] private float duration = 0.3f;  // duur van de shake
+    [SerializeField] private float magnitude = 0.2f; // kracht van de shake
+
+    private Vector3 originalPos;
+    private float shakeTimer = 0f;
+
+    private void Start()
+    {
+        originalPos = transform.localPosition;
+    }
+
+    private void Update()
+    {
+        if (shakeTimer > 0)
+        {
+            transform.localPosition = originalPos + Random.insideUnitSphere * magnitude;
+
+            shakeTimer -= Time.deltaTime;
+
+            if (shakeTimer <= 0f)
+            {
+                transform.localPosition = originalPos;
+            }
+        }
+    }
+
+    public void TriggerShake(float shakeDuration, float shakeMagnitude)
+    {
+        duration = shakeDuration;
+        magnitude = shakeMagnitude;
+        shakeTimer = duration;
+    }
+
+    // Overload zonder parameters, gebruikt standaardwaarden
+    public void TriggerShake()
+    {
+        shakeTimer = duration;
+    }
+}

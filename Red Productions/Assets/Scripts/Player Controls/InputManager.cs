@@ -10,11 +10,30 @@ public class InputManager : MonoBehaviour
     [SerializeField] private PlayerLook playerLook;
     [SerializeField] private TomatoLauncher tomatoLauncher;
     [SerializeField] private PickupAndDrop pickupAndDrop;
+    private Gamepad gamepad;
+    private float rumbleDuration = 0.2f; // hoe lang de trilling duurt
+    private float rumbleTimer;
+
+    private void Update()
+    {
+        // Check of rumble aanstaat en update timer
+        if (rumbleTimer > 0)
+        {
+            rumbleTimer -= Time.deltaTime;
+            if (rumbleTimer <= 0)
+            {
+                StopRumble();
+            }
+        }
+    }
     public void DoShooting(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             tomatoLauncher.isShooting = true;
+            if (context.control.device == Gamepad.current)
+            tomatoLauncher.controllerActive = true;
+            
         }
 
         if (context.canceled)
@@ -58,4 +77,22 @@ public class InputManager : MonoBehaviour
         }
 
     }
+    private void StartRumble(float lowFrequency, float highFrequency, float duration)
+    {
+        gamepad = Gamepad.current;
+        if (gamepad != null)
+        {
+            gamepad.SetMotorSpeeds(lowFrequency, highFrequency);
+            rumbleTimer = duration;
+        }
+    }
+
+    private void StopRumble()
+    {
+        if (gamepad != null)
+        {
+            gamepad.SetMotorSpeeds(0f, 0f);
+        }
+    }
 }
+

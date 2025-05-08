@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TomatoLauncherStats
   m_EditorClassIdentifier: 
   fireRate: 1
-  damageOutput: 0
+  damageOutput: 10

@@ -101,6 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec652c55d6ad3e429e857a38023d3ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damagePopUp: {fileID: 2067116603789273713, guid: 3d7d27f13f7dd634895ecfa847a9be15, type: 3}
+  blood: {fileID: 4849230991136133866, guid: 688e761579de09a4d9e8afd6f0ca57ec, type: 3}
+  DamageOutput: 0
 --- !u!65 &7143052849321397451
 BoxCollider:
   m_ObjectHideFlags: 0

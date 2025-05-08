@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 public class TomatoLauncher : MonoBehaviour
@@ -8,18 +9,26 @@ public class TomatoLauncher : MonoBehaviour
 
     [SerializeField] private TomatoLauncherStats tomatoData;
 
-    
+    [SerializeField] private ScreenRumble screenRumble;
+
+
     [SerializeField] private float fireRate;
     private float CooldownTimer;
 
     public bool isShooting;
 
     [SerializeField] private int damageOutput;
+    [SerializeField] private PlayerLook playerLook;
+
+    public bool controllerActive;
+    private Gamepad gamepad;
+    private float rumbleDuration = 0.2f; // hoe lang de trilling duurt
+    private float rumbleTimer;
 
     private void Start()
     {
         fireRate = tomatoData.fireRate;
-       // damageOutput = tomatoData.damageOutput;
+        damageOutput = tomatoData.damageOutput;
     }
 
     private void Update()
@@ -33,6 +42,15 @@ public class TomatoLauncher : MonoBehaviour
         {
             CooldownTimer -= Time.deltaTime;
         }
+        // Check of rumble aanstaat en update timer
+        if (rumbleTimer > 0)
+        {
+            rumbleTimer -= Time.deltaTime;
+            if (rumbleTimer <= 0)
+            {
+                StopRumble();
+            }
+        }
     }
 
     private void Upgrade()
@@ -42,8 +60,35 @@ public class TomatoLauncher : MonoBehaviour
     }
     private void Shoot()
     {
-        Instantiate(tomatoPrefab, launchPoint.position, launchPoint.rotation);
+        GameObject projectile =Instantiate(tomatoPrefab, launchPoint.position, launchPoint.rotation);
+
+        
+        projectile.GetComponent<TomatoProjectile>().DamageOutput = damageOutput;
+        screenRumble.TriggerShake(.1f, 0.1f); // Start the screen rumble
         CooldownTimer = fireRate;
+
+        if (controllerActive)
+        {
+            StartRumble(0.5f, 0.5f, rumbleDuration);
+        }
         Debug.Log (CooldownTimer);
+    }
+
+    private void StartRumble(float lowFrequency, float highFrequency, float duration)
+    {
+        gamepad = Gamepad.current;
+        if (gamepad != null)
+        {
+            gamepad.SetMotorSpeeds(lowFrequency, highFrequency);
+            rumbleTimer = duration;
+        }
+    }
+
+    private void StopRumble()
+    {
+        if (gamepad != null)
+        {
+            gamepad.SetMotorSpeeds(0f, 0f);
+        }
     }
 }
