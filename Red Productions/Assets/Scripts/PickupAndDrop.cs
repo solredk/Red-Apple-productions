@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PickupAndDrop : MonoBehaviour
 {
+    [SerializeField] private GameObject gun;
+
+
     public GameObject Camera;
     public float maxPickupDistance = 5;
     public float holdDistance = 2.5f;
@@ -29,6 +32,7 @@ public class PickupAndDrop : MonoBehaviour
             Debug.Log("randombs");
             if (hit.transform.tag == "Item")
             {
+                gun.SetActive(false);
                 itemHolding = hit.transform.gameObject;
 
                 foreach (Collider c in hit.transform.GetComponentsInChildren<Collider>()) if (c != null) c.enabled = false;
@@ -48,7 +52,7 @@ public class PickupAndDrop : MonoBehaviour
     public void Drop() 
     {
         if (!isHolding || itemHolding == null) return;
-
+        gun.SetActive(true);
         itemHolding.transform.SetParent(null);
 
         foreach (var c in itemHolding.transform.GetComponentsInChildren<Collider>()) if (c != null) c.enabled = true;
