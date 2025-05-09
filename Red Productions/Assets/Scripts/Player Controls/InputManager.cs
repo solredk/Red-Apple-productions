@@ -89,7 +89,15 @@ public class InputManager : MonoBehaviour
             rumbleTimer = duration;
         }
     }
-
+    public void DoAdjustDistance(InputAction.CallbackContext context)
+    {
+        if (context.performed && pickupAndDrop != null)
+        {
+            float scrollDelta = context.ReadValue<float>();
+            pickupAndDrop.AdjustHoldDistance(scrollDelta);
+            Debug.Log(scrollDelta);
+        }
+    }
     private void StopRumble()
     {
         if (gamepad != null)

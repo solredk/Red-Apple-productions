@@ -4,10 +4,11 @@ public class PickupAndDrop : MonoBehaviour
 {
     public GameObject Camera;
     public float maxPickupDistance = 5;
-    public float holdDistance = 2.5f;
+    public float holdDistance = 2.5f; // Initial hold distance
     public float verticalOffsetY = 0f;
     public float maxDownY = -0.5f;
     public float scrollSpeed = 1f; // Adjust this to control scroll speed
+    public float minHoldDistance = 0.5f; // Minimum hold distance
 
     private GameObject itemHolding;
     private bool isHolding = false;
@@ -35,7 +36,8 @@ public class PickupAndDrop : MonoBehaviour
             {
                 itemHolding = hit.transform.gameObject;
 
- 
+            
+                // ...
 
                 itemHolding.transform.SetParent(Camera.transform);
 
@@ -54,31 +56,30 @@ public class PickupAndDrop : MonoBehaviour
 
         itemHolding.transform.SetParent(null);
 
-
-
-        // Project the item onto the ground
+     
         RaycastHit hitDown;
-        if (Physics.Raycast(transform.position, -Vector3.up, out hitDown))
+        Vector3 dropPosition = transform.position + transform.forward * holdDistance; 
+
+        if (Physics.Raycast(dropPosition, -Vector3.up, out hitDown))
         {
-            itemHolding.transform.position = hitDown.point + new Vector3(transform.forward.x, 0, transform.forward.z);
+            itemHolding.transform.position = hitDown.point; 
         }
         else
         {
-
-            itemHolding.transform.position = transform.position + transform.forward * holdDistance;
+           
+            itemHolding.transform.position = dropPosition;
         }
 
         itemHolding = null;
         isHolding = false;
     }
 
-
     public void AdjustHoldDistance(float scrollDelta)
     {
         if (isHolding && itemHolding != null)
         {
             holdDistance += scrollDelta * scrollSpeed;
-            holdDistance = Mathf.Clamp(holdDistance, 0.5f, 10f); 
+            holdDistance = Mathf.Clamp(holdDistance, minHoldDistance, 10f);
             itemHolding.transform.localPosition = new Vector3(0, verticalOffsetY, holdDistance);
         }
     }
