@@ -32,8 +32,11 @@ public class InputManager : MonoBehaviour
         {
             tomatoLauncher.isShooting = true;
             if (context.control.device == Gamepad.current)
-            tomatoLauncher.controllerActive = true;
-            
+            {
+                tomatoLauncher.controllerActive = true;
+                tomatoLauncher.gamepad = context.control.device as Gamepad;
+            }
+
         }
 
         if (context.canceled)

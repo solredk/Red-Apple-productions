@@ -630,7 +630,7 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 04887459-624a-4947-9b9a-ddc501a3751a
     m_ActionName: 'Player/Drop[/Keyboard/q]'
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
@@ -738,12 +738,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee12e5a6c21ee9498ac55a63ce438a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 8180170863089046923}
   Camera: {fileID: 7443509804344648119}
   maxPickupDistance: 5
   holdDistance: 2
   verticalOffsetY: 0
   maxDownY: -0.35
+  scrollSpeed: 1
 --- !u!1 &4375456595721146994
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class TomatoLauncher : MonoBehaviour
     [SerializeField] private PlayerLook playerLook;
 
     public bool controllerActive;
-    private Gamepad gamepad;
+    public Gamepad gamepad;
     private float rumbleDuration = 0.2f; // hoe lang de trilling duurt
     private float rumbleTimer;
 
@@ -66,17 +66,14 @@ public class TomatoLauncher : MonoBehaviour
         projectile.GetComponent<TomatoProjectile>().DamageOutput = damageOutput;
         screenRumble.TriggerShake(.1f, 0.1f); // Start the screen rumble
         CooldownTimer = fireRate;
-
-        if (controllerActive)
-        {
-            StartRumble(0.5f, 0.5f, rumbleDuration);
-        }
+        StartRumble(0.5f, 0.5f, rumbleDuration);
         Debug.Log (CooldownTimer);
     }
 
     private void StartRumble(float lowFrequency, float highFrequency, float duration)
     {
-        gamepad = Gamepad.current;
+        if (gamepad == null) gamepad = Gamepad.current;
+        Debug.Log(gamepad);
         if (gamepad != null)
         {
             gamepad.SetMotorSpeeds(lowFrequency, highFrequency);
@@ -86,6 +83,7 @@ public class TomatoLauncher : MonoBehaviour
 
     private void StopRumble()
     {
+        if (gamepad == null) gamepad = Gamepad.current;
         if (gamepad != null)
         {
             gamepad.SetMotorSpeeds(0f, 0f);
