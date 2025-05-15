@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     {
         pauseCanvas.SetActive(false);
     }
+
     public void Pause()
     {
         if (!isPaused)
@@ -38,7 +39,7 @@ public class UIManager : MonoBehaviour
         PlayerCountText.text = playerInputManager.playerCount.ToString() + " players";
         if (playerInputManager.playerCount == 2)
         {
-            lobbyCanvas.gameObject.SetActive(false);
+            lobbyCanvas.SetActive(false);
         }
     }
 }

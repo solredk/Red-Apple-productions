@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ScreenRumble : MonoBehaviour
 {
-    [SerializeField] private float duration = 0.3f;  // duur van de shake
-    [SerializeField] private float magnitude = 0.2f; // kracht van de shake
+    [SerializeField] private float duration = 0.3f;  
+    [SerializeField] private float magnitude = 0.2f; // the magnitude of the shake
 
     private Vector3 originalPos;
     private float shakeTimer = 0f;
@@ -35,7 +35,6 @@ public class ScreenRumble : MonoBehaviour
         shakeTimer = duration;
     }
 
-    // Overload zonder parameters, gebruikt standaardwaarden
     public void TriggerShake()
     {
         shakeTimer = duration;

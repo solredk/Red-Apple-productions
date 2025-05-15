@@ -43,7 +43,6 @@ public class PlayerHealth : HealthSystem
         }
     }
 
-
     public override void TakeDamage(float damage)
     {
         //the base take damage function

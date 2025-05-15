@@ -6,11 +6,10 @@ public class EnemyHealth : HealthSystem
 {
     [SerializeField] private GameObject damagePopUp;
 
-
-
     [SerializeField] private GameObject canvas;
 
     private bool isDead = false;
+
     private void Update()
     {
         UpdateHealthUI();
@@ -20,6 +19,7 @@ public class EnemyHealth : HealthSystem
             Die();
         }
     }
+    
     public override void TakeDamage(float damage)
     {
         //the base take damage function

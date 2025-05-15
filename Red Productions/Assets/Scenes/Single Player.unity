@@ -1341,6 +1341,7 @@ GameObject:
   - component: {fileID: 1284033194}
   - component: {fileID: 1284033193}
   - component: {fileID: 1284033195}
+  - component: {fileID: 1284033196}
   m_Layer: 0
   m_Name: managers
   m_TagString: Manager
@@ -1361,11 +1362,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombiePrefab: {fileID: 277947306648186914, guid: 4f4ef35a7ed302143b16959cfa7ce53d, type: 3}
-  maxZombies: 10
-  spawnIntervalMin: 1
-  spawnIntervalMax: 10
-  spawnAreaCenter: {x: 0, y: 0, z: 0}
-  spawnAreaSize: {x: 0, y: 0, z: 0}
   PlayerInputManager: {fileID: 0}
 --- !u!4 &1284033194
 Transform:
@@ -1396,6 +1392,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SecondPlayer: {fileID: 0}
   playerInputManager: {fileID: 0}
+  waveSpawner: {fileID: 1284033193}
+--- !u!114 &1284033196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284033192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad153cae5acd5104484e60f168e7c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseCanvas: {fileID: 1001594208}
+  lobbyCanvas: {fileID: 1001594208}
+  playerInputManager: {fileID: 0}
+  PlayerCountText: {fileID: 0}
 --- !u!1 &1479266624
 GameObject:
   m_ObjectHideFlags: 0

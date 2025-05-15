@@ -17,8 +17,6 @@ public abstract class HealthSystem : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-
-
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
@@ -38,6 +36,7 @@ public abstract class HealthSystem : MonoBehaviour
 
         currentHealth += healAmount;
     }
+    
     protected virtual void UpdateHealthUI()
     {
         //putting the front and back fill amount in a variable
@@ -70,6 +69,7 @@ public abstract class HealthSystem : MonoBehaviour
             backHealthBar.color = Color.green;
         }
     }
+    
     public virtual void Die()
     {
         //death logic

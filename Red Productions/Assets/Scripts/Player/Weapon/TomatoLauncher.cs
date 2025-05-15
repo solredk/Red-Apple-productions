@@ -22,7 +22,7 @@ public class TomatoLauncher : MonoBehaviour
 
     [SerializeField] private int damage;
 
-    private float rumbleDuration = 0.2f; 
+    private  float rumbleDuration = 0.2f; 
 
 
     private void Start()
@@ -42,12 +42,6 @@ public class TomatoLauncher : MonoBehaviour
         {
             CooldownTimer -= Time.deltaTime;
         }
-    }
-
-    private void Upgrade()
-    {
-        tomatoData.fireRate = fireRate += 1;
-        tomatoData.damageOutput = damage += 1;
     }
 
     private void Shoot()

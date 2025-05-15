@@ -5,17 +5,17 @@ using UnityEngine.InputSystem;
 public class WaveSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    public GameObject zombiePrefab;
-    public int maxZombies = 10;
-    public float spawnIntervalMin = 1f;
-    public float spawnIntervalMax = 10f;
+    [SerializeField] private GameObject zombiePrefab;
+    private int maxZombies = 10;
+    private float spawnIntervalMin = 1f;
+    private float spawnIntervalMax = 10f;
 
     [Header("Spawn Area (World Space)")]
-    public Vector3 spawnAreaCenter;
-    public Vector3 spawnAreaSize;
+    private Vector3 spawnAreaCenter;
+    private Vector3 spawnAreaSize;
 
     private int currentZombies = 0;
-    private List<GameObject> spawnedZombies = new List<GameObject>();
+    private List<GameObject> spawnedZombies = new ();
 
     [SerializeField] private PlayerInputManager PlayerInputManager;
 
@@ -48,7 +48,7 @@ public class WaveSpawner : MonoBehaviour
 
     private Vector3 GetRandomPositionInArea()
     {
-        Vector3 randomOffset = new Vector3(
+        Vector3 randomOffset = new (
             Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
             0,
             Random.Range(-spawnAreaSize.z / 2, spawnAreaSize.z / 2)

@@ -16,6 +16,7 @@ public class PlayerLook : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
+
     private void Update()
     {
         float mouseX = input.x * Sensitivity * Time.deltaTime;
@@ -38,6 +39,7 @@ public class PlayerLook : MonoBehaviour
         {
             Sensitivity = mouseSensitivity;
         }
+        
         input = lookInput;
     }
 }

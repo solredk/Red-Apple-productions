@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour
 {
-    private List<GameObject> players = new List<GameObject>();
+    private List<GameObject> players = new();
 
     private GameObject closestPlayer;
 

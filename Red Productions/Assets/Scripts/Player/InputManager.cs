@@ -18,15 +18,10 @@ public class InputManager : MonoBehaviour
     private Gamepad gamepad;
 
     [SerializeField] private PlayerMovement PlayerMovement;
-
     [SerializeField] private PlayerLook playerLook;
-
     [SerializeField] private TomatoLauncher tomatoLauncher;
-
     [SerializeField] private PickupAndDrop pickupAndDrop;
-
     [SerializeField] private UIManager UIManager;
-
     [SerializeField] private PlayerInputManager playerInputManager;
 
 
@@ -77,6 +72,7 @@ public class InputManager : MonoBehaviour
             pickupAndDrop.Drop();
         }
     }
+    
     public void DoMoving(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2)

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class ControllerRumble : MonoBehaviour
 {
     public Gamepad gamepad;
+
     private float rumbleTimer;
 
     private void Update()
@@ -20,7 +21,10 @@ public class ControllerRumble : MonoBehaviour
     }
     public void StartRumble(float lowFrequency, float highFrequency, float duration, Gamepad gamepad)
     {
-        if (gamepad == null) gamepad = Gamepad.current;
+        if (gamepad == null)
+        {
+            gamepad = Gamepad.current;
+        }
 
         if (gamepad != null)
         {
@@ -31,9 +35,10 @@ public class ControllerRumble : MonoBehaviour
 
     private void StopRumble()
     {
-        if (gamepad != null)
+        if (gamepad == null)
         {
-            gamepad.SetMotorSpeeds(0f, 0f);
+            return;
         }
+        gamepad.SetMotorSpeeds(0f, 0f);
     }
 }
