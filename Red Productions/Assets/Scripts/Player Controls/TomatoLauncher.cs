@@ -10,6 +10,7 @@ public class TomatoLauncher : MonoBehaviour
     [SerializeField] private TomatoLauncherStats tomatoData;
 
     [SerializeField] private ScreenRumble screenRumble;
+    [SerializeField] private ControllerRumble controllerRumble;
 
 
     [SerializeField] private float fireRate;
@@ -42,15 +43,6 @@ public class TomatoLauncher : MonoBehaviour
         {
             CooldownTimer -= Time.deltaTime;
         }
-        // Check of rumble aanstaat en update timer
-        if (rumbleTimer > 0)
-        {
-            rumbleTimer -= Time.deltaTime;
-            if (rumbleTimer <= 0)
-            {
-                StopRumble();
-            }
-        }
     }
 
     private void Upgrade()
@@ -58,35 +50,16 @@ public class TomatoLauncher : MonoBehaviour
         tomatoData.fireRate = fireRate += 1;
         tomatoData.damageOutput = damageOutput += 1;
     }
+
     private void Shoot()
     {
         GameObject projectile =Instantiate(tomatoPrefab, launchPoint.position, launchPoint.rotation);
-
-        
         projectile.GetComponent<TomatoProjectile>().DamageOutput = damageOutput;
-        screenRumble.TriggerShake(.1f, 0.1f); // Start the screen rumble
+
+        screenRumble.TriggerShake(.1f, 0.1f); 
+
+        controllerRumble.StartRumble(0.5f, 0.5f, rumbleDuration);
+
         CooldownTimer = fireRate;
-        StartRumble(0.5f, 0.5f, rumbleDuration);
-        Debug.Log (CooldownTimer);
-    }
-
-    private void StartRumble(float lowFrequency, float highFrequency, float duration)
-    {
-        if (gamepad == null) gamepad = Gamepad.current;
-        Debug.Log(gamepad);
-        if (gamepad != null)
-        {
-            gamepad.SetMotorSpeeds(lowFrequency, highFrequency);
-            rumbleTimer = duration;
-        }
-    }
-
-    private void StopRumble()
-    {
-        if (gamepad == null) gamepad = Gamepad.current;
-        if (gamepad != null)
-        {
-            gamepad.SetMotorSpeeds(0f, 0f);
-        }
     }
 }

@@ -2,63 +2,45 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.DualShock;
+
 public class PlayerLook : MonoBehaviour
 {
+    [Header("Mouse and Controller Sensitivity")]
     [SerializeField] private float mouseSensitivity = 100f;
-    [SerializeField] private float controllerSensitivity = 200f;
-    [SerializeField] private float controllerExponent = 1.5f; // curve-exponent
-    [SerializeField] private Camera cam;
+    [SerializeField] private float controllerSensitivity = 100f;
+    [SerializeField] private float Sensitivity; 
 
     private Vector2 input;
-    private bool controllerActive;
+    private float xRotation = 0f;
 
-    private float xRotation;
-    private float yRotation;
+    [SerializeField] private Transform playerBody;
 
-    private float smoothX;
-    private float smoothY;
-    private float smoothVelocityX;
-    private float smoothVelocityY;
-    [SerializeField] private float smoothTime = 0.05f;
-
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     private void Update()
     {
-        if (Cursor.lockState != CursorLockMode.Locked)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        float mouseX = input.x * Sensitivity * Time.deltaTime;
+        float mousey = input.y * Sensitivity * Time.deltaTime;
 
-        float sens = controllerActive ? controllerSensitivity : mouseSensitivity;
-
-        // Smooth damp op input
-        smoothX = Mathf.SmoothDamp(smoothX, input.x, ref smoothVelocityX, smoothTime);
-        smoothY = Mathf.SmoothDamp(smoothY, input.y, ref smoothVelocityY, smoothTime);
-
-        yRotation += smoothX * sens * Time.deltaTime;
-        xRotation -= smoothY * sens * Time.deltaTime;
+        xRotation -= mousey;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        transform.rotation = Quaternion.Euler(0, yRotation, 0);
+        transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 
-    public void Look(Vector2 lookInput, bool controller)
+    public void Look(Vector2 lookInput, bool controllerActive)
     {
-        controllerActive = controller;
-
-        if (controller)
+        if (controllerActive)
         {
-            if (lookInput.magnitude < 0.1f)
-                lookInput = Vector2.zero;
-            else
-            {
-                // Apply sensitivity curve
-                lookInput.x = Mathf.Pow(Mathf.Abs(lookInput.x), controllerExponent) * Mathf.Sign(lookInput.x);
-                lookInput.y = Mathf.Pow(Mathf.Abs(lookInput.y), controllerExponent) * Mathf.Sign(lookInput.y);
-            }
+            Sensitivity = controllerSensitivity;
         }
-
+        else  
+        {
+            Sensitivity = mouseSensitivity;
+        }
         input = lookInput;
     }
 }

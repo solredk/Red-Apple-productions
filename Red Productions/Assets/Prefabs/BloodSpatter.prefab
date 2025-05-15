@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5576653394028669509}
   - component: {fileID: 3942556489949473091}
   - component: {fileID: 6762144152576603066}
+  - component: {fileID: 4246461348428528254}
   m_Layer: 0
   m_Name: BloodSpatter
   m_TagString: Untagged
@@ -4833,3 +4834,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4246461348428528254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4849230991136133866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f08f7f97e9d6ba4c9148d31bb43d5e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

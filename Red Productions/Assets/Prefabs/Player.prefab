@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 1879061655179475570}
   - component: {fileID: 4267210662245356115}
   - component: {fileID: -7094198092212728707}
+  - component: {fileID: 4374990941330569199}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -630,6 +631,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 04887459-624a-4947-9b9a-ddc501a3751a
     m_ActionName: 'Player/Drop[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fbf87392-4437-44f0-aeeb-f9c14d005988
+    m_ActionName: Player/Adjust
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -690,6 +695,7 @@ MonoBehaviour:
   playerLook: {fileID: 1879061655179475570}
   tomatoLauncher: {fileID: 4229342538934610628}
   pickupAndDrop: {fileID: -7094198092212728707}
+  controllerRumble: {fileID: 4374990941330569199}
 --- !u!114 &1879061655179475570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,10 +727,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 100
-  lerpTimer: 0
-  chipSpeed: 2
   frontHealthBar: {fileID: 2331314405881217355}
   backHealthBar: {fileID: 4715255217558824692}
+  lerpTimer: 0
+  chipSpeed: 2
   deathScreen: {fileID: 2875472673332236905}
 --- !u!114 &-7094198092212728707
 MonoBehaviour:
@@ -744,6 +750,19 @@ MonoBehaviour:
   verticalOffsetY: 0
   maxDownY: -0.35
   scrollSpeed: 1
+  minHoldDistance: 0.5
+--- !u!114 &4374990941330569199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4245593904818937003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef47f94b3f419144923069260b06053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4375456595721146994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,6 +1208,7 @@ GameObject:
   - component: {fileID: 6016653943774048201}
   - component: {fileID: 6784716795133724900}
   - component: {fileID: 4229342538934610628}
+  - component: {fileID: 369901604677200723}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1302,8 +1322,21 @@ MonoBehaviour:
   launchPoint: {fileID: 6104133862564846258}
   tomatoData: {fileID: 11400000, guid: 39d81729402df4c48a1480ba65573cf8, type: 2}
   screenRumble: {fileID: 6555864788379958435}
+  controllerRumble: {fileID: 369901604677200723}
   fireRate: 0
   isShooting: 0
   damageOutput: 0
   playerLook: {fileID: 0}
   controllerActive: 0
+--- !u!114 &369901604677200723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8180170863089046923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef47f94b3f419144923069260b06053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
