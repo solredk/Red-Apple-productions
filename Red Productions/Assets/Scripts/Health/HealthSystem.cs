@@ -22,6 +22,8 @@ public abstract class HealthSystem : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        //reset the lerp timer
+        lerpTimer = 0;
     }
 
     public virtual void Heal(float healAmount)
@@ -31,6 +33,8 @@ public abstract class HealthSystem : MonoBehaviour
         {
             healAmount = maxHealth - currentHealth;
         }
+
+        lerpTimer = 0;
 
         currentHealth += healAmount;
     }

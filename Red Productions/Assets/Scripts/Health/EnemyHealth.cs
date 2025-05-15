@@ -25,10 +25,6 @@ public class EnemyHealth : HealthSystem
         //the base take damage function
         base.TakeDamage(damage);
 
-
-        //reset the lerp timer
-        lerpTimer = 0;
-
         //update the health UI
         UpdateHealthUI();
     }
@@ -37,10 +33,6 @@ public class EnemyHealth : HealthSystem
     {
         //the base heal function
         base.Heal(healAmount);
-
-        //reset the lerp timer
-        lerpTimer = 0;
-
         //update the health UI
         UpdateHealthUI();
     }
@@ -48,8 +40,9 @@ public class EnemyHealth : HealthSystem
     public override void Die()
     {
         base.Die();
-        isDead = true;
-        StartCoroutine(DieTimer());
+        Destroy(gameObject);
+        //isDead = true;
+        //StartCoroutine(DieTimer());
     }
     
     IEnumerator DieTimer()

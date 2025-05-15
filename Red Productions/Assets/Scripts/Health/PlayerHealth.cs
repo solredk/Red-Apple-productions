@@ -7,6 +7,10 @@ public class PlayerHealth : HealthSystem
     [Header("health bar display")]
     [SerializeField] private Image deathScreen;
 
+    [SerializeField] InputManager inputManager;
+
+    [SerializeField] private float healCooldown = 5f;
+
     private void Update()
     {
         UpdateHealthUI();
@@ -18,19 +22,32 @@ public class PlayerHealth : HealthSystem
         {
             Heal(10);
         }
+
+        if (inputManager.currentObjectType == CurrentObjectType.item && currentHealth < maxHealth)
+        {
+            
+            if (healCooldown <= 0)
+            {
+                Heal(1 * Time.deltaTime);
+            }
+            if (healCooldown > 0)
+            {
+                healCooldown -= Time.deltaTime;
+            }
+        }
+
+
         if (currentHealth <= 0)
         {
             Die();
         }
     }
 
+
     public override void TakeDamage(float damage)
     {
         //the base take damage function
         base.TakeDamage(damage);
-
-        //reset the lerp timer
-        lerpTimer = 0;
 
         //update the health UI
         UpdateHealthUI();
@@ -41,11 +58,10 @@ public class PlayerHealth : HealthSystem
         //the base heal function
         base.Heal(healAmount);
 
-        //reset the lerp timer
-        lerpTimer = 0;
-
-        //update the health UI
-        UpdateHealthUI();
+        if (currentHealth >= maxHealth)
+        {
+            healCooldown = 10;
+        }
     }
 
     public override void Die()
