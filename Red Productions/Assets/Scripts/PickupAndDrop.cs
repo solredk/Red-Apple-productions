@@ -13,6 +13,7 @@ public class PickupAndDrop : MonoBehaviour
     private GameObject itemHolding;
     private bool isHolding = false;
 
+
     void Start()
     {
         if (Camera == null)
@@ -21,7 +22,7 @@ public class PickupAndDrop : MonoBehaviour
         }
     }
 
-    public void Pickup()
+    public void Pickuppp()
     {
         if (isHolding || itemHolding != null) return;
 
@@ -30,7 +31,7 @@ public class PickupAndDrop : MonoBehaviour
 
         if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, maxPickupDistance))
         {
-            Debug.Log("Raycast Hit");
+            Debug.Log(hit, transform.gameObject);
 
             if (hit.transform.CompareTag("Item"))
             {

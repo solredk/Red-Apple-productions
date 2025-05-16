@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerLook playerLook;
     [SerializeField] private TomatoLauncher tomatoLauncher;
-    [SerializeField] private PickupAndDrop pickupAndDrop;
+    [SerializeField] private Pickup pickup;
     [SerializeField] private UIManager UIManager;
     [SerializeField] private PlayerInputManager playerInputManager;
 
@@ -59,26 +59,20 @@ public class InputManager : MonoBehaviour
 
     public void OnPickup(InputAction.CallbackContext context)
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2)
-            return;
-        if (context.performed && pickupAndDrop != null)
+        if (context.performed && pickup != null)
         {
-            currentObjectType = CurrentObjectType.item;
-            pickupAndDrop.Pickup();
+            pickup.PickuP();
         }
     }
 
     public void OnDrop(InputAction.CallbackContext context)
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2)
-            return;
-        if (context.performed && pickupAndDrop != null)
+        if (context.performed && pickup != null)
         {
-            currentObjectType = CurrentObjectType.tomatoLauncher;
-            pickupAndDrop.Drop();
+            pickup.Drop();
         }
     }
-    
+
     public void DoMoving(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2)
@@ -102,15 +96,7 @@ public class InputManager : MonoBehaviour
 
     }
 
-    public void DoAdjustDistance(InputAction.CallbackContext context)
-    {
-        if (context.performed && pickupAndDrop != null)
-        {
-            float scrollDelta = context.ReadValue<float>();
-            pickupAndDrop.AdjustHoldDistance(scrollDelta);
-            Debug.Log(scrollDelta);
-        }
-    }
+
     
     public void DoPause(InputAction.CallbackContext context)
     {
