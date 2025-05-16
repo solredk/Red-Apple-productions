@@ -5,6 +5,7 @@ public class TomatoProjectile : MonoBehaviour
 {
     [SerializeField] private  GameObject damagePopUp;
     [SerializeField] private GameObject blood;
+    public int playerIndex = 0;
 
     public int DamageOutput;
     private void Update()
@@ -29,7 +30,7 @@ public class TomatoProjectile : MonoBehaviour
         else if (collision.gameObject.CompareTag("Enemy"))
         {
 
-            HealthSystem enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 // Maak de damage popup
@@ -37,7 +38,7 @@ public class TomatoProjectile : MonoBehaviour
                 text.GetComponent<TextMeshPro>().text = DamageOutput.ToString();
 
                 // Breng schade aan de vijand
-                enemyHealth.TakeDamage(DamageOutput);
+                enemyHealth.TakeDamage(DamageOutput, playerIndex);
 
                 // Spawn de blood particles een beetje boven de vijand
                 Vector3 bloodSpawnPosition = transform.position + Vector3.up * 0.5f; // Verhoog met 0.5f boven de vijand

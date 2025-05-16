@@ -38,9 +38,15 @@ public class InputManager : MonoBehaviour
             return;
         if (context.performed)
         {
-            if (context.control.device == gamepad)
+            if (context.control.device is Gamepad gp)
             {
-                tomatoLauncher.gamepad = gamepad;
+                gamepad = gp; 
+                tomatoLauncher.gamepad = gp;
+                tomatoLauncher.controllerActive = true;
+            }
+            else
+            {
+                tomatoLauncher.controllerActive = false;
             }
             tomatoLauncher.isShooting = true;
         }

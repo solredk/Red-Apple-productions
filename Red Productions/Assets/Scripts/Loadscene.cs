@@ -6,5 +6,6 @@ public class Loadscene : MonoBehaviour
     public void LoadScene()
     {
         SceneManager.LoadScene(sceneIndex);
+        Time.timeScale = 1f;
     }
 }

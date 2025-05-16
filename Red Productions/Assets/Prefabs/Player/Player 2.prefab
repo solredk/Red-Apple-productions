@@ -271,10 +271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068f2fcaecaac1d4b8edb1b8f3b76b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  sprintSpeed: 8
+  currentSpeed: 5
   gravity: -9.8
-  controller: {fileID: 5643589792693211139}
+  characterController: {fileID: 5643589792693211139}
 --- !u!114 &8716613194155861309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,7 +685,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
   controllerSensitivity: 100
-  Sensitivity: 0
   playerBody: {fileID: 7868262829214704883}
 --- !u!114 &2494620145674366709
 MonoBehaviour:
@@ -1255,6 +1253,7 @@ MonoBehaviour:
   controllerRumble: {fileID: 2284605487968914010}
   fireRate: 0
   isShooting: 0
+  controllerActive: 0
   damage: 0
 --- !u!114 &2284605487968914010
 MonoBehaviour:

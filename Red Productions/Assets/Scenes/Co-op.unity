@@ -658,8 +658,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1284033196}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1284033197}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Pause
         m_Mode: 1
         m_Arguments:
@@ -1600,11 +1600,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombiePrefab: {fileID: 277947306648186914, guid: 4f4ef35a7ed302143b16959cfa7ce53d, type: 3}
-  maxZombies: 10
-  spawnIntervalMin: 1
-  spawnIntervalMax: 10
-  spawnAreaCenter: {x: 0, y: 0, z: 0}
-  spawnAreaSize: {x: 0, y: 0, z: 0}
   PlayerInputManager: {fileID: 1284033195}
 --- !u!4 &1284033194
 Transform:
@@ -1718,7 +1713,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseCanvas: {fileID: 1050060595}
   lobbyCanvas: {fileID: 55671275}
+  lastButton: {fileID: 0}
   playerInputManager: {fileID: 1284033195}
+  eventSystem: {fileID: 1174963529}
   PlayerCountText: {fileID: 227395522}
 --- !u!1 &1327676158
 GameObject:

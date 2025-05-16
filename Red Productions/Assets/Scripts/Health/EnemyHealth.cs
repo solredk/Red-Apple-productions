@@ -8,25 +8,26 @@ public class EnemyHealth : HealthSystem
 
     [SerializeField] private GameObject canvas;
 
+    [SerializeField] private int lastDamagedByPlayer;
+
     private bool isDead = false;
 
     private void Update()
     {
-        UpdateHealthUI();
+        UpdateHealthUI(Color.green);
 
         if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
     }
-    
-    public override void TakeDamage(float damage)
-    {
-        //the base take damage function
-        base.TakeDamage(damage);
 
-        //update the health UI
-        UpdateHealthUI();
+    public void TakeDamage(float damage, int playerIndex)
+    {
+        base.TakeDamage(damage);
+        UpdateHealthUI(Color.green);
+
+        lastDamagedByPlayer = playerIndex;
     }
 
     public override void Heal(float healAmount)
@@ -34,12 +35,13 @@ public class EnemyHealth : HealthSystem
         //the base heal function
         base.Heal(healAmount);
         //update the health UI
-        UpdateHealthUI();
+        UpdateHealthUI(Color.green);
     }
 
     public override void Die()
     {
         base.Die();
+        ScoreSystem.Instance.AddScore(10, lastDamagedByPlayer);
         Destroy(gameObject);
         //isDead = true;
         //StartCoroutine(DieTimer());

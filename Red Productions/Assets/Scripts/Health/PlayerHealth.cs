@@ -13,7 +13,7 @@ public class PlayerHealth : HealthSystem
 
     private void Update()
     {
-        UpdateHealthUI();
+        UpdateHealthUI(Color.red);
         if (Input.GetKeyDown(KeyCode.L))
         {
             TakeDamage(10);
@@ -49,7 +49,7 @@ public class PlayerHealth : HealthSystem
         base.TakeDamage(damage);
 
         //update the health UI
-        UpdateHealthUI();
+        UpdateHealthUI(Color.red);
     }
 
     public override void Heal(float healAmount)

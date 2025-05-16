@@ -3,9 +3,10 @@ using UnityEngine;
 public class ScreenRumble : MonoBehaviour
 {
     [SerializeField] private float duration = 0.3f;  
-    [SerializeField] private float magnitude = 0.2f; // the magnitude of the shake
+    [SerializeField] private float magnitude = 0.2f; 
 
     private Vector3 originalPos;
+
     private float shakeTimer = 0f;
 
     private void Start()
@@ -32,11 +33,6 @@ public class ScreenRumble : MonoBehaviour
     {
         duration = shakeDuration;
         magnitude = shakeMagnitude;
-        shakeTimer = duration;
-    }
-
-    public void TriggerShake()
-    {
         shakeTimer = duration;
     }
 }

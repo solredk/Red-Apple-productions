@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class TomatoLauncher : MonoBehaviour
 {
     [SerializeField] private GameObject tomatoPrefab;
@@ -11,7 +10,7 @@ public class TomatoLauncher : MonoBehaviour
 
     [SerializeField] private ScreenRumble screenRumble;
     [SerializeField] private ControllerRumble controllerRumble;
-
+    [SerializeField] private int playerIndex;
 
     [SerializeField] private float fireRate;
     private float CooldownTimer;
@@ -19,6 +18,7 @@ public class TomatoLauncher : MonoBehaviour
     public Gamepad gamepad;
 
     public bool isShooting;
+    public bool controllerActive;
 
     [SerializeField] private int damage;
 
@@ -47,12 +47,14 @@ public class TomatoLauncher : MonoBehaviour
     private void Shoot()
     {
         GameObject projectile = Instantiate(tomatoPrefab, launchPoint.position, launchPoint.rotation);
-        projectile.GetComponent<TomatoProjectile>().DamageOutput = damage;
+        TomatoProjectile projectileComponent = projectile.GetComponent<TomatoProjectile>();
+        projectileComponent.DamageOutput = damage;
+        projectileComponent.playerIndex = playerIndex;
 
         screenRumble.TriggerShake(.1f, 0.1f);
-        if (gamepad != null)
+        
+        if (controllerActive && gamepad != null)
         {
-            Debug.Log(gamepad);
             controllerRumble.StartRumble(0.5f, 0.5f, rumbleDuration, gamepad);
         }
 

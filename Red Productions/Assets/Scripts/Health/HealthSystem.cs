@@ -37,7 +37,7 @@ public abstract class HealthSystem : MonoBehaviour
         currentHealth += healAmount;
     }
     
-    protected virtual void UpdateHealthUI()
+    protected virtual void UpdateHealthUI(Color Backgroundcolor)
     {
         //putting the front and back fill amount in a variable
         float fillFront = frontHealthBar.fillAmount;
@@ -59,7 +59,7 @@ public abstract class HealthSystem : MonoBehaviour
             //lerp the fill amount of the back health bar to the fraction of the hitpoints to make sure it goes smooth
             backHealthBar.fillAmount = Mathf.Lerp(fillBack, hFraction, percentageComplete);
             //set the color of the back health bar to red so you are able to see that you are taking damage
-            backHealthBar.color = Color.red;
+            backHealthBar.color = Backgroundcolor;
         }
         //if the fill amount of the front health bar is smaller than the fraction of the hitpoints so you heal
         else if (fillFront < hFraction)
