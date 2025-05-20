@@ -5,26 +5,30 @@ public class Pickup : MonoBehaviour
     [SerializeField] private LayerMask pickableLayerMask;
     [SerializeField] private Transform playerCameraTransform;
     [SerializeField] private TomatoLauncher weapon;
-
     [SerializeField] private float rotationSpeed = 30f;
     [SerializeField] private float hitRange = 3;
     [SerializeField] private Transform pickupParent;
     [SerializeField] private float minDistance = 1f;  
-    [SerializeField] private float maxDistance = 3f;  
-    [SerializeField] private float scrollSensitivity = 1f; 
-    private RaycastHit hit;
+    [SerializeField] private float maxDistance = 3f;
+    [SerializeField] private float scrollSensitivity = 1f;
+    [SerializeField] GameObject tomatoWeapon;
+    private RaycastHit hit; 
     private float currentDistance;
     [SerializeField] GameObject inHandItem;
+
 
     void Start()
     {
         currentDistance = Vector3.Distance(pickupParent.position, playerCameraTransform.position);
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
+        tomatoWeapon.SetActive(true);
     }
 
 
     void Update()
     {
+     
+      
         Debug.DrawRay(playerCameraTransform.position, playerCameraTransform.forward * hitRange, Color.red);
         if (hit.collider != null)
         {
@@ -40,6 +44,7 @@ public class Pickup : MonoBehaviour
         {
             hit.collider.GetComponent<HighLight>()?.ToggleHighLight(true);
         }
+
     }
 
     public void AdjustDistance(float scrollDelta)
@@ -47,13 +52,14 @@ public class Pickup : MonoBehaviour
         currentDistance -= scrollDelta * scrollSensitivity;
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
 
-        // Calculate the new position for the pickupParent
         Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
         pickupParent.position = newPosition;
     }
 
     public void PickuP()
     {
+  
+
         Debug.Log("Picked up");
         if (hit.collider != null)
         {
@@ -72,33 +78,35 @@ public class Pickup : MonoBehaviour
                     rb.isKinematic = true;
                     Debug.Log(rb.isKinematic);
                 }
-                return;
+                
             }
-            if (hit.collider.GetComponent<TomatoLauncher>() != null)
-            {
-                // Handle TomatoLauncher pickup
-            }
+            tomatoWeapon.SetActive(false);
+            return;
         }
     }
 
     public void Drop()
     {
-        Debug.Log("Dropped down");
+
         if (inHandItem != null)
         {
-            Rigidbody rb = inHandItem.GetComponent<Rigidbody>(); 
+            Rigidbody rb = inHandItem.GetComponent<Rigidbody>();
             inHandItem.transform.SetParent(null);
             inHandItem = null;
 
             if (rb != null)
             {
                 rb.isKinematic = false;
-                Debug.Log(rb.isKinematic);
-            }
-        }
-    }
 
-    public void Interact()
+            }
+            inHandItem = null;
+            tomatoWeapon.SetActive(true);
+
+
+        }
+     
+    }
+        public void Interact()
     {
         if (hit.collider != null)
         {

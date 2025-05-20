@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour
 {
     private Vector2 moveInput;
     private Vector2 lookInput;
+    private Vector2 ScrollInput;
 
     public CurrentObjectType currentObjectType;
 
@@ -95,7 +96,15 @@ public class InputManager : MonoBehaviour
         }
 
     }
+    public void DoAdjustDistance(InputAction.CallbackContext context)
+    {
+       if (context.performed)
+        {
 
+            ScrollInput = context.ReadValue<Vector2>();
+            Debug.Log(ScrollInput);
+        }
+    }
 
     
     public void DoPause(InputAction.CallbackContext context)
