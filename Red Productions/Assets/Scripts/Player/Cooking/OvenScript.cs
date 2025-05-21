@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class OvenScript : MonoBehaviour
 {
-    public float overlapRadius = 10f;
-    public LayerMask IngredientLayer;
-    public GameObject burgerPrefab;
-    public Transform spawnPoint;
-    public float pickupDelay = 0.1f; // Delay before the burger can be picked up
+    [Header("Oven Settings")]
+    [SerializeField] private GameObject burgerPrefab;
+    [SerializeField] private Transform spawnPoint;
+    
+    private float pickupDelay = 0.1f;
 
+    private float overlapRadius = 10f;
+    private bool burgerSpawned = false; 
+    
+    private GameObject spawnedBurger; 
+    private LayerMask IngredientLayer;
     private List<Ingredient.IngredientType> ingredientsInOven = new List<Ingredient.IngredientType>();
-    private bool burgerSpawned = false; // Track if a burger has been spawned
-    private GameObject spawnedBurger; // Store the spawned burger
 
     void Start()
     {
@@ -70,18 +73,14 @@ public class OvenScript : MonoBehaviour
         // Disable the burger's collider initially
         Collider burgerCollider = burger.GetComponent<Collider>();
         if (burgerCollider != null)
-        {
             burgerCollider.enabled = false;
-        }
 
         // Wait for the specified delay
         yield return new WaitForSeconds(pickupDelay);
 
         // Enable the collider after the delay
         if (burgerCollider != null)
-        {
             burgerCollider.enabled = true;
-        }
     }
 
     void OnDrawGizmosSelected()

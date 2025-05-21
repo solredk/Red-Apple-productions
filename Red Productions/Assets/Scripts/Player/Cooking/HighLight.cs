@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -11,15 +10,12 @@ public class HighLight : MonoBehaviour
     private void Awake()
     {
         materials = new List<Material>();
+        
         foreach (Renderer renderer in renderers)
-        {
             materials.AddRange(new List<Material>(renderer.materials));
-
-        }
     }
 
     public void ToggleHighLight(bool val)
-
     {
         if (val)
         {
@@ -27,9 +23,7 @@ public class HighLight : MonoBehaviour
             {
                 material.EnableKeyword("_EMISSION");
                 material.SetColor("_EmissionColor", color);
-
             }
-
         }
 
         else
@@ -39,15 +33,5 @@ public class HighLight : MonoBehaviour
                 material.DisableKeyword("_EMISSION");
             }
         }
-    }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

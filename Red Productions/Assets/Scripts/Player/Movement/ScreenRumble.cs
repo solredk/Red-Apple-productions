@@ -23,9 +23,7 @@ public class ScreenRumble : MonoBehaviour
             shakeTimer -= Time.deltaTime;
 
             if (shakeTimer <= 0f)
-            {
                 transform.localPosition = originalPos;
-            }
         }
     }
 

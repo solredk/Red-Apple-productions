@@ -5,6 +5,7 @@ public class TomatoProjectile : MonoBehaviour
 {
     [SerializeField] private  GameObject damagePopUp;
     [SerializeField] private GameObject blood;
+
     public int playerIndex = 0;
 
     public int DamageOutput;
@@ -12,6 +13,7 @@ public class TomatoProjectile : MonoBehaviour
     {
         // Move the tomato forward
         transform.Translate(10f * Time.deltaTime * Vector3.forward);
+
         // Destroy the tomato after 5 seconds
         Destroy(gameObject, 5f);
     }

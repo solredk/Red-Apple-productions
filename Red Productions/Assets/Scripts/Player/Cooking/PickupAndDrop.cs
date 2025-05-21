@@ -2,24 +2,25 @@ using UnityEngine;
 
 public class PickupAndDrop : MonoBehaviour
 {
-    public GameObject Camera;
-    public float maxPickupDistance = 5;
-    public float holdDistance = 2.5f; // Initial hold distance
-    public float verticalOffsetY = 0f;
-    public float maxDownY = -0.5f;
-    public float scrollSpeed = 1f; // Adjust this to control scroll speed
-    public float minHoldDistance = 0.5f; // Minimum hold distance
+    [SerializeField] public float scrollSpeed = 1f; 
+
+    private Camera Camera;
+
+    private float verticalOffsetY = 0f;
+    private float maxDownY = -0.5f;
+    private float maxPickupDistance = 5;
+    private float holdDistance = 2.5f;
+    private float minHoldDistance = 0.5f;
 
     private GameObject itemHolding;
+
     private bool isHolding = false;
 
 
     void Start()
     {
         if (Camera == null)
-        {
-            Camera = GetComponentInChildren<Camera>(true)?.gameObject;
-        }
+            Camera = GetComponentInChildren<Camera>();
     }
 
     public void Pickuppp()
@@ -36,10 +37,6 @@ public class PickupAndDrop : MonoBehaviour
             if (hit.transform.CompareTag("Item"))
             {
                 itemHolding = hit.transform.gameObject;
-
-            
-                // ...
-
                 itemHolding.transform.SetParent(Camera.transform);
 
                 verticalOffsetY = Mathf.Clamp(verticalOffsetY, maxDownY, 1f);
@@ -56,20 +53,15 @@ public class PickupAndDrop : MonoBehaviour
         if (!isHolding || itemHolding == null) return;
 
         itemHolding.transform.SetParent(null);
-
      
         RaycastHit hitDown;
         Vector3 dropPosition = transform.position + transform.forward * holdDistance; 
 
         if (Physics.Raycast(dropPosition, -Vector3.up, out hitDown))
-        {
             itemHolding.transform.position = hitDown.point; 
-        }
+
         else
-        {
-           
             itemHolding.transform.position = dropPosition;
-        }
 
         itemHolding = null;
         isHolding = false;

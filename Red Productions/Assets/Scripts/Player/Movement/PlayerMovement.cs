@@ -19,10 +19,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Moving();
+
+        // Check if the player is falling below a certain height and reset position 
         if (transform.position.y < -10f)
-        {
             transform.position = new Vector3(0, 1, 0);
-        }
     }
 
     public void Moving()
@@ -30,9 +30,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = characterController.isGrounded;
         
         if (isGrounded && playerVelocity.y < 0)
-        {
             playerVelocity.y = -2f;  
-        }
 
         float speed = new Vector3(characterController.velocity.x, 0, characterController.velocity.z).magnitude;
         animator.SetFloat("speed", speed);

@@ -4,23 +4,31 @@ using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour
 {
-    private List<GameObject> players = new();
 
-    private GameObject closestPlayer;
-
-    [SerializeField] private NavMeshAgent agent;
 
     [Header("Combat Settings")]
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float attackCooldown = 1f;
     [SerializeField] private int damage = 10;
+    
+    [SerializeField] private NavMeshAgent agent;    
+    
     private float lastAttackTime;
+
+    private GameObject closestPlayer;
+
+    private List<GameObject> players = new List<GameObject>();
+
+
+    private void Start()
+    {
+        // Find all players in the scene and add them to the list
+        GameObject[] foundPlayers = GameObject.FindGameObjectsWithTag("Player");
+        players.AddRange(foundPlayers);
+    }
 
     private void Update()
     {
-        players.Clear();
-        GameObject[] foundPlayers = GameObject.FindGameObjectsWithTag("Player");
-        players.AddRange(foundPlayers);
         FindClosestPlayer();
 
         if (closestPlayer != null && agent != null)
@@ -42,6 +50,7 @@ public class Zombie : MonoBehaviour
 
     private void FindClosestPlayer()
     {
+        
         float closestDistance = Mathf.Infinity;
         GameObject nearest = null;
 
@@ -64,10 +73,9 @@ public class Zombie : MonoBehaviour
         {
             // Check of speler een health script heeft
             PlayerHealth playerHealth = closestPlayer.GetComponent<PlayerHealth>();
+            //if the closestplayer is not null, then make the player take damage
             if (closestPlayer != null)
-            {
                 playerHealth.TakeDamage(damage);
-            }
 
             lastAttackTime = Time.time;
         }

@@ -12,18 +12,14 @@ public class ControllerRumble : MonoBehaviour
         {
             rumbleTimer -= Time.deltaTime;
             if (rumbleTimer <= 0)
-            {
                 StopRumble();
-            }
         }
     }
 
     public void StartRumble(float lowFrequency, float highFrequency, float duration, Gamepad gamepad)
     {
         if (gamepad == null)
-        {
             gamepad = Gamepad.current;
-        }
 
         if (gamepad != null)
         {

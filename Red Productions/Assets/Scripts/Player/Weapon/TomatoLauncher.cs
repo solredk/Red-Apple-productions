@@ -36,14 +36,11 @@ public class TomatoLauncher : MonoBehaviour
     {
         //shoot after the cooldown
         if (isShooting && CooldownTimer <= 0)
-        {
             Shoot();
-        }
+
         //counting down the cooldown timer
         if (CooldownTimer > 0)
-        {
             CooldownTimer -= Time.deltaTime;
-        }
     }
 
     private void Shoot()
@@ -60,10 +57,8 @@ public class TomatoLauncher : MonoBehaviour
         screenRumble.TriggerShake(.1f, 0.1f);
         
         if (controllerActive && gamepad != null)
-        {
             // Start rumble on the controller
             controllerRumble.StartRumble(0.5f, 0.5f, rumbleDuration, gamepad);
-        }
 
         //reseting the cooldown with tfire rate from the stats
         CooldownTimer = fireRate;

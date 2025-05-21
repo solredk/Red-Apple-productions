@@ -25,9 +25,8 @@ public class ScoreSystem : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-
     }
+
     private void Update()
     {
         if (playerInputManager != null && playerInputManager.playerCount == 2 && isCoop && scores.Count < 1)
@@ -52,40 +51,13 @@ public class ScoreSystem : MonoBehaviour
             scores.Add(0);
         }
     }
-    public void OnPlayerJoined(int playerIndex)
-    {
-        if (playerIndex < scoreTexts.Count)
-        {
-            scoreTexts[playerIndex].gameObject.SetActive(true);
-        }
-    }
 
     public void AddScore(int playerIndex, int extraScore)
     {
-        int index = playerIndex; 
-        Debug.Log(playerIndex + "/ of the "+ scores.Count);
-        scores[index] += extraScore;
+        //adding the score to the player
+        scores[playerIndex] += extraScore;
 
-
+        //putting the new score in the text
         scoreTexts[playerIndex].text = scores[playerIndex].ToString();
-
-        // if (playerIndex < 0 || playerIndex >= scores.Length) return;
-
-        //  scores[playerIndex] += extraScore;
-        // if (playerIndex < scoreTexts.Length)
-        //{
-        //  scoreTexts[playerIndex].text = scores[playerIndex].ToString();
-        //}
-    }
-
-    public void AddScoreSinglePlayer(int extraScore)
-    {
-        AddScore(0, extraScore);
-    }
-
-    public int GetScore(int playerIndex)
-    {
-        if (playerIndex < 0 || playerIndex >= scores.Count) return 0;
-        return scores[playerIndex];
     }
 }

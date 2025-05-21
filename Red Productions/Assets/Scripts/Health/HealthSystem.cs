@@ -28,9 +28,8 @@ public abstract class HealthSystem : MonoBehaviour
     {
         // making sure you cant go above the max health
         if (currentHealth + healAmount > maxHealth)
-        {
             healAmount = maxHealth - currentHealth;
-        }
+
         //reset the lerp timer
         lerpTimer = 0;
 

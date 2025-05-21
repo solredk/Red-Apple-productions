@@ -19,13 +19,11 @@ public class InputManager : MonoBehaviour
     private Gamepad gamepad;
 
     [SerializeField] private PlayerMovement PlayerMovement;
-    [SerializeField] private PlayerLook playerLook;
     [SerializeField] private TomatoLauncher tomatoLauncher;
+    [SerializeField] private PlayerLook playerLook;
     [SerializeField] private Pickup pickup;
     [SerializeField] private UIManager UIManager;
     [SerializeField] private PlayerInputManager playerInputManager;
-
-
 
     private void Awake()
     {
@@ -36,6 +34,7 @@ public class InputManager : MonoBehaviour
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2)
             return;
+        
         if (context.performed)
         {
             if (context.control.device is Gamepad gp)
@@ -44,76 +43,60 @@ public class InputManager : MonoBehaviour
                 tomatoLauncher.gamepad = gp;
                 tomatoLauncher.controllerActive = true;
             }
+
             else
-            {
                 tomatoLauncher.controllerActive = false;
-            }
+            
             tomatoLauncher.isShooting = true;
         }
 
         if (context.canceled)
-        {
             tomatoLauncher.isShooting = false;
-        }
     }
 
     public void OnPickup(InputAction.CallbackContext context)
     {
         if (context.performed && pickup != null)
-        {
             pickup.PickuP();
-        }
     }
 
     public void OnDrop(InputAction.CallbackContext context)
     {
         if (context.performed && pickup != null)
-        {
             pickup.Drop();
-        }
     }
 
     public void DoMoving(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2)
             return;
+
         moveInput = context.ReadValue<Vector2>();
         if (PlayerMovement != null)
-        {
             PlayerMovement.ReadMoveVaulue(moveInput);
-        }
     }
-
+ 
     public void DoLooking(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2)
             return;
-        lookInput = context.ReadValue<Vector2>();
-        if (playerLook != null)
-        {
-            playerLook.Look(lookInput,context.control.device == Gamepad.current);
-        }
 
+        lookInput = context.ReadValue<Vector2>();
+
+        if (playerLook != null)
+            playerLook.Look(lookInput,context.control.device == Gamepad.current);
     }
+
     public void DoAdjustDistance(InputAction.CallbackContext context)
     {
        if (context.performed)
-        {
-
             ScrollInput = context.ReadValue<Vector2>();
-            Debug.Log(ScrollInput);
-            
-        }
     }
-
     
     public void DoPause(InputAction.CallbackContext context)
     {
         if (context.performed && UIManager != null)
-        {
             UIManager.Pause();
-            
-        }
     }
 }
 

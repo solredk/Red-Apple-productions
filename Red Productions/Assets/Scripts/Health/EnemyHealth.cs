@@ -16,18 +16,19 @@ public class EnemyHealth : HealthSystem
 
     private void Update()
     {
+        //updating the health bar
         UpdateHealthUI(Color.green,Color.black);
 
+        //checking if you are death and if so, call the die function
         if (currentHealth <= 0 && !isDead)
-        {
             Die();
-        }
     }
 
     public void TakeDamage(float damage, int playerIndex)
     {
         base.TakeDamage(damage);
 
+        //set the lastDamagedByPlayer to the player that damaged this enemy
         lastDamagedByPlayer = playerIndex;
     }
 
@@ -40,23 +41,10 @@ public class EnemyHealth : HealthSystem
     public override void Die()
     {
         base.Die();
-        Debug.Log(ScoreSystem.Instance);
+        //add score to the player that killed this enemy
         ScoreSystem.Instance.AddScore(lastDamagedByPlayer, score);
+
+        //destroy the gameobject
         Destroy(gameObject);
-        //isDead = true;
-        //StartCoroutine(DieTimer());
-    }
-    
-    IEnumerator DieTimer()
-    {
-        GetComponent<Collider>().enabled = false;
-        GetComponent<MeshRenderer>().enabled = false;
-        canvas.SetActive(false);
-        yield return new WaitForSeconds(5f);
-        GetComponent<Collider>().enabled = true;
-        GetComponent<MeshRenderer>().enabled = true;
-        canvas.SetActive(true);
-        Heal(maxHealth);
-        isDead = false;
     }
 }
