@@ -103,6 +103,7 @@ public class InputManager : MonoBehaviour
 
             ScrollInput = context.ReadValue<Vector2>();
             Debug.Log(ScrollInput);
+            
         }
     }
 
@@ -112,6 +113,7 @@ public class InputManager : MonoBehaviour
         if (context.performed && UIManager != null)
         {
             UIManager.Pause();
+            
         }
     }
 }

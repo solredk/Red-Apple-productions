@@ -51,7 +51,7 @@ public class Pickup : MonoBehaviour
     {
         currentDistance -= scrollDelta * scrollSensitivity;
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
-
+            
         Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
         pickupParent.position = newPosition;
     }
@@ -78,9 +78,10 @@ public class Pickup : MonoBehaviour
                     rb.isKinematic = true;
                     Debug.Log(rb.isKinematic);
                 }
-                
+
             }
             tomatoWeapon.SetActive(false);
+            // animation 
             return;
         }
     }
@@ -101,16 +102,20 @@ public class Pickup : MonoBehaviour
             }
             inHandItem = null;
             tomatoWeapon.SetActive(true);
+            // animation
 
 
         }
-     
+
+
+
     }
-        public void Interact()
+    public void Interact()
     {
         if (hit.collider != null)
         {
             Debug.Log(hit.collider.name);
         }
     }
+   
 }
