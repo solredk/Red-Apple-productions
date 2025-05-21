@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4791278385514665167}
   - component: {fileID: 1760541106477570390}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TomatoLauncher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,10 +203,9 @@ MonoBehaviour:
   tomatoData: {fileID: 11400000, guid: 39d81729402df4c48a1480ba65573cf8, type: 2}
   screenRumble: {fileID: 7757721566842407101}
   controllerRumble: {fileID: 1760541106477570390}
-  fireRate: 0
+  playerIndex: 0
   isShooting: 0
   controllerActive: 0
-  damage: 0
 --- !u!114 &1760541106477570390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +486,7 @@ GameObject:
   - component: {fileID: 6410320839398798965}
   - component: {fileID: 5844882499067572854}
   m_Layer: 6
-  m_Name: Canvas
+  m_Name: PlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -694,7 +693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7896352039532397978}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -750,7 +749,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1094641486971934170
 CanvasRenderer:
@@ -780,7 +779,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -805,6 +804,7 @@ GameObject:
   - component: {fileID: 5941767275654635102}
   - component: {fileID: 2522851620291085376}
   - component: {fileID: 7015184530672115442}
+  - component: {fileID: 3819935651626960551}
   m_Layer: 0
   m_Name: player 1
   m_TagString: Player
@@ -1064,6 +1064,7 @@ MonoBehaviour:
   currentSpeed: 5
   gravity: -9.8
   characterController: {fileID: 2038359907157812673}
+  animator: {fileID: 3819935651626960551}
 --- !u!114 &2522851620291085376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1080,7 +1081,7 @@ MonoBehaviour:
   PlayerMovement: {fileID: 5941767275654635102}
   playerLook: {fileID: 5361380435859061134}
   tomatoLauncher: {fileID: 4791278385514665167}
-  pickupAndDrop: {fileID: 7902131497910463762}
+  pickup: {fileID: 0}
   UIManager: {fileID: 0}
   playerInputManager: {fileID: 0}
 --- !u!114 &7015184530672115442
@@ -1104,6 +1105,28 @@ MonoBehaviour:
   deathScreen: {fileID: 2924618336179488415}
   inputManager: {fileID: 2522851620291085376}
   healCooldown: 10
+--- !u!95 &3819935651626960551
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6488575760404605491}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8bc31045c8a73ac4683135d449f13d01, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6932931955543482018
 GameObject:
   m_ObjectHideFlags: 0

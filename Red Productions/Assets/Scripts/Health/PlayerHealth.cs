@@ -13,17 +13,9 @@ public class PlayerHealth : HealthSystem
 
     private void Update()
     {
-        UpdateHealthUI(Color.red);
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            TakeDamage(10);
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Heal(10);
-        }
+        UpdateHealthUI(Color.red, Color.green);
 
-        if (inputManager.currentObjectType == CurrentObjectType.item && currentHealth < maxHealth)
+        if ( currentHealth < maxHealth)
         {
             
             if (healCooldown <= 0)
@@ -43,18 +35,9 @@ public class PlayerHealth : HealthSystem
         }
     }
 
-    public override void TakeDamage(float damage)
-    {
-        //the base take damage function
-        base.TakeDamage(damage);
-
-        //update the health UI
-        UpdateHealthUI(Color.red);
-    }
 
     public override void Heal(float healAmount)
     {
-        //the base heal function
         base.Heal(healAmount);
 
         if (currentHealth >= maxHealth)

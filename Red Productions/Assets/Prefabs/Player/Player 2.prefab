@@ -274,6 +274,7 @@ MonoBehaviour:
   currentSpeed: 5
   gravity: -9.8
   characterController: {fileID: 5643589792693211139}
+  animator: {fileID: 0}
 --- !u!114 &8716613194155861309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +291,7 @@ MonoBehaviour:
   PlayerMovement: {fileID: 573083597612424255}
   playerLook: {fileID: 7990608102326489658}
   tomatoLauncher: {fileID: 4728790530257955950}
-  pickupAndDrop: {fileID: 2494620145674366709}
+  pickup: {fileID: 0}
   UIManager: {fileID: 0}
   playerInputManager: {fileID: 0}
 --- !u!114 &6770227420238539026
@@ -324,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7528924023715746445}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,7 +359,7 @@ GameObject:
   - component: {fileID: 7316897700694591736}
   - component: {fileID: 1104413915961317633}
   m_Layer: 6
-  m_Name: Canvas
+  m_Name: PlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -826,7 +827,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6590715810447641803
 CanvasRenderer:
@@ -856,7 +857,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1138,7 +1139,7 @@ GameObject:
   - component: {fileID: 4728790530257955950}
   - component: {fileID: 2284605487968914010}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TomatoLauncher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1251,10 +1252,9 @@ MonoBehaviour:
   tomatoData: {fileID: 11400000, guid: 39d81729402df4c48a1480ba65573cf8, type: 2}
   screenRumble: {fileID: 6817131333315518849}
   controllerRumble: {fileID: 2284605487968914010}
-  fireRate: 0
+  playerIndex: 0
   isShooting: 0
   controllerActive: 0
-  damage: 0
 --- !u!114 &2284605487968914010
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class EnemyHealth : HealthSystem
 
     private void Update()
     {
-        UpdateHealthUI(Color.green);
+        UpdateHealthUI(Color.green,Color.black);
 
         if (currentHealth <= 0 && !isDead)
         {
@@ -27,7 +27,6 @@ public class EnemyHealth : HealthSystem
     public void TakeDamage(float damage, int playerIndex)
     {
         base.TakeDamage(damage);
-        UpdateHealthUI(Color.green);
 
         lastDamagedByPlayer = playerIndex;
     }
@@ -36,15 +35,13 @@ public class EnemyHealth : HealthSystem
     {
         //the base heal function
         base.Heal(healAmount);
-        //update the health UI
-        UpdateHealthUI(Color.green);
     }
 
     public override void Die()
     {
         base.Die();
         Debug.Log(ScoreSystem.Instance);
-        ScoreSystem.Instance.AddScore(score, lastDamagedByPlayer);
+        ScoreSystem.Instance.AddScore(lastDamagedByPlayer, score);
         Destroy(gameObject);
         //isDead = true;
         //StartCoroutine(DieTimer());

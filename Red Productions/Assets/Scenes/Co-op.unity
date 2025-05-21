@@ -1580,6 +1580,7 @@ GameObject:
   - component: {fileID: 1284033196}
   - component: {fileID: 1284033197}
   - component: {fileID: 1284033195}
+  - component: {fileID: 1284033198}
   m_Layer: 0
   m_Name: managers
   m_TagString: Manager
@@ -1600,6 +1601,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombiePrefab: {fileID: 277947306648186914, guid: 4f4ef35a7ed302143b16959cfa7ce53d, type: 3}
+  maxZombies: 10
+  spawnIntervalMin: 1
+  spawnIntervalMax: 10
+  spawnAreaCenter: {x: 0, y: 0, z: 0}
+  spawnAreaSize: {x: 0, y: 0, z: 0}
   PlayerInputManager: {fileID: 1284033195}
 --- !u!4 &1284033194
 Transform:
@@ -1717,6 +1723,20 @@ MonoBehaviour:
   playerInputManager: {fileID: 1284033195}
   eventSystem: {fileID: 1174963529}
   PlayerCountText: {fileID: 227395522}
+--- !u!114 &1284033198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284033192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f19512bb854f0984ca732680aa865c87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreTexts: []
+  playerInputManager: {fileID: 0}
 --- !u!1 &1327676158
 GameObject:
   m_ObjectHideFlags: 0

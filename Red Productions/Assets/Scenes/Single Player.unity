@@ -1313,7 +1313,7 @@ GameObject:
   - component: {fileID: 1074020669}
   - component: {fileID: 1074020668}
   m_Layer: 0
-  m_Name: wall  (3)
+  m_Name: 'wall  '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1773,7 +1773,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284033192}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1827,6 +1827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreTexts:
   - {fileID: 1328541009}
+  playerInputManager: {fileID: 0}
 --- !u!1 &1328541007
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,18 +2163,6 @@ PrefabInstance:
       propertyPath: UIManager
       value: 
       objectReference: {fileID: 1284033196}
-    - target: {fileID: 4791278385514665167, guid: 1ec180a772f67dc4587dc6ab0e455ffe, type: 3}
-      propertyPath: playerIndex
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5941767275654635102, guid: 1ec180a772f67dc4587dc6ab0e455ffe, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 2092585495}
-    - target: {fileID: 5941767275654635102, guid: 1ec180a772f67dc4587dc6ab0e455ffe, type: 3}
-      propertyPath: characterController
-      value: 
-      objectReference: {fileID: 2092585493}
     - target: {fileID: 6488575760404605491, guid: 1ec180a772f67dc4587dc6ab0e455ffe, type: 3}
       propertyPath: m_Name
       value: player 1
@@ -2181,10 +2170,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6488575760404605491, guid: 1ec180a772f67dc4587dc6ab0e455ffe, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2092585495}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ec180a772f67dc4587dc6ab0e455ffe, type: 3}
 --- !u!1 &1775914022
 GameObject:
@@ -2598,7 +2584,7 @@ GameObject:
   - component: {fileID: 2070320009}
   - component: {fileID: 2070320008}
   m_Layer: 0
-  m_Name: wall  (2)
+  m_Name: 'wall '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2694,38 +2680,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!1 &2092585487 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6488575760404605491, guid: 1ec180a772f67dc4587dc6ab0e455ffe, type: 3}
-  m_PrefabInstance: {fileID: 1555480321}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &2092585493 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 2038359907157812673, guid: 1ec180a772f67dc4587dc6ab0e455ffe, type: 3}
-  m_PrefabInstance: {fileID: 1555480321}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2092585495
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092585487}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8bc31045c8a73ac4683135d449f13d01, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2734,6 +2688,7 @@ SceneRoots:
   - {fileID: 1972361190}
   - {fileID: 1775914026}
   - {fileID: 42348771}
+  - {fileID: 1284033194}
   - {fileID: 287414417}
   - {fileID: 1267410823}
   - {fileID: 663896562}
@@ -2741,7 +2696,6 @@ SceneRoots:
   - {fileID: 2070320011}
   - {fileID: 327847992}
   - {fileID: 768069244}
-  - {fileID: 1284033194}
   - {fileID: 1001594212}
   - {fileID: 1009901666}
   - {fileID: 1555480321}
