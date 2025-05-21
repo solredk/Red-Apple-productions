@@ -7,7 +7,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -9.8f;
 
     [SerializeField] private CharacterController characterController;
-    
+
+    [SerializeField] private Animator animator;
+
     private Vector3 playerVelocity;
 
     private bool isGrounded;
@@ -17,6 +19,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Moving();
+        if (transform.position.y < -10f)
+        {
+            transform.position = new Vector3(0, 1, 0);
+        }
     }
 
     public void Moving()
@@ -27,6 +33,9 @@ public class PlayerMovement : MonoBehaviour
         {
             playerVelocity.y = -2f;  
         }
+
+        float speed = new Vector3(characterController.velocity.x, 0, characterController.velocity.z).magnitude;
+        animator.SetFloat("speed", speed);
 
         //getting the input from the readvalue function
         Vector3 moveDirection = new (moveInput.x, 0, moveInput.y);

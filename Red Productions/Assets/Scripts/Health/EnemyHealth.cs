@@ -10,6 +10,8 @@ public class EnemyHealth : HealthSystem
 
     [SerializeField] private int lastDamagedByPlayer;
 
+    public int score;
+
     private bool isDead = false;
 
     private void Update()
@@ -41,7 +43,8 @@ public class EnemyHealth : HealthSystem
     public override void Die()
     {
         base.Die();
-        ScoreSystem.Instance.AddScore(10, lastDamagedByPlayer);
+        Debug.Log(ScoreSystem.Instance);
+        ScoreSystem.Instance.AddScore(score, lastDamagedByPlayer);
         Destroy(gameObject);
         //isDead = true;
         //StartCoroutine(DieTimer());

@@ -6,13 +6,13 @@ public class WaveSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
     [SerializeField] private GameObject zombiePrefab;
-    private int maxZombies = 10;
-    private float spawnIntervalMin = 1f;
-    private float spawnIntervalMax = 10f;
+    [SerializeField] private int maxZombies = 10;
+    [SerializeField] private float spawnIntervalMin = 1f;
+    [SerializeField] private float spawnIntervalMax = 10f;
 
     [Header("Spawn Area (World Space)")]
-    private Vector3 spawnAreaCenter;
-    private Vector3 spawnAreaSize;
+    [SerializeField] private Vector3 spawnAreaCenter;
+    [SerializeField] private Vector3 spawnAreaSize;
 
     private int currentZombies = 0;
     private List<GameObject> spawnedZombies = new ();

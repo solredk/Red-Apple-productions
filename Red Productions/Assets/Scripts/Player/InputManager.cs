@@ -34,7 +34,6 @@ public class InputManager : MonoBehaviour
 
     public void DoShooting(InputAction.CallbackContext context)
     {
-        Debug.Log(context.control.device);
         if (playerInputManager != null && playerInputManager.playerCount != 2)
             return;
         if (context.performed)

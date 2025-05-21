@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +9,7 @@ public class ScoreSystem : MonoBehaviour
     public static ScoreSystem Instance { get; private set; }
 
     [SerializeField] private TextMeshProUGUI[] scoreTexts;
-    private int[] scores;
+    private List<int> scores = new List<int>();
 
     private bool isCoop;
 
@@ -16,31 +17,12 @@ public class ScoreSystem : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-        }
-        isCoop = GetComponent<PlayerInputManager>() != null;
 
-        if (isCoop)
-        {
-            int maxPlayers = scoreTexts.Length;
-            scores = new int[maxPlayers];
-
-            for (int i = 0; i < scoreTexts.Length; i++)
-            {
-                scoreTexts[i].text = "0";
-                scoreTexts[i].gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            scores = new int[1];
-            scoreTexts[0].text = "0";
-            scoreTexts[0].gameObject.SetActive(true);
-        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void OnPlayerJoined(int playerIndex)
@@ -53,13 +35,21 @@ public class ScoreSystem : MonoBehaviour
 
     public void AddScore(int playerIndex, int extraScore)
     {
-        if (playerIndex < 0 || playerIndex >= scores.Length) return;
+        scores.Add(extraScore);
+        int index = playerIndex - 1; 
 
-        scores[playerIndex] += extraScore;
-        if (playerIndex < scoreTexts.Length)
-        {
-            scoreTexts[playerIndex].text = scores[playerIndex].ToString();
-        }
+           scores[index] += extraScore;
+
+
+        //scoreTexts[playerIndex-1].text = scores[playerIndex-1].ToString();
+
+        // if (playerIndex < 0 || playerIndex >= scores.Length) return;
+
+        //  scores[playerIndex] += extraScore;
+        // if (playerIndex < scoreTexts.Length)
+        //{
+        //  scoreTexts[playerIndex].text = scores[playerIndex].ToString();
+        //}
     }
 
     public void AddScoreSinglePlayer(int extraScore)
@@ -69,7 +59,7 @@ public class ScoreSystem : MonoBehaviour
 
     public int GetScore(int playerIndex)
     {
-        if (playerIndex < 0 || playerIndex >= scores.Length) return 0;
+        if (playerIndex < 0 || playerIndex >= scores.Count) return 0;
         return scores[playerIndex];
     }
 }

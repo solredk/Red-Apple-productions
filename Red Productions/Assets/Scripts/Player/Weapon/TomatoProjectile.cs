@@ -11,7 +11,7 @@ public class TomatoProjectile : MonoBehaviour
     private void Update()
     {
         // Move the tomato forward
-        transform.Translate(Vector3.forward * Time.deltaTime * 10f);
+        transform.Translate(10f * Time.deltaTime * Vector3.forward);
         // Destroy the tomato after 5 seconds
         Destroy(gameObject, 5f);
     }
@@ -22,7 +22,7 @@ public class TomatoProjectile : MonoBehaviour
         {
  
             HealthSystem playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            if (collision.gameObject != null)
             {
                 playerHealth.TakeDamage(10f); 
             }
@@ -31,7 +31,7 @@ public class TomatoProjectile : MonoBehaviour
         {
 
             EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
+            if (collision.gameObject != null)
             {
                 // Maak de damage popup
                 GameObject text = Instantiate(damagePopUp, transform.position, Quaternion.identity);
@@ -39,7 +39,6 @@ public class TomatoProjectile : MonoBehaviour
 
                 // Breng schade aan de vijand
                 enemyHealth.TakeDamage(DamageOutput, playerIndex);
-
                 // Spawn de blood particles een beetje boven de vijand
                 Vector3 bloodSpawnPosition = transform.position + Vector3.up * 0.5f; // Verhoog met 0.5f boven de vijand
                 Instantiate(blood, bloodSpawnPosition, Quaternion.identity);
