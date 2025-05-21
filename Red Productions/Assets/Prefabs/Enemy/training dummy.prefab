@@ -141,14 +141,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a3f6ea86a397543a62b67d72bf74d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 100
-  maxHealth: 100
+  currentHealth: 20
+  maxHealth: 20
   frontHealthBar: {fileID: 4020897689844274079}
   backHealthBar: {fileID: 5770129882599970742}
   lerpTimer: 0
   chipSpeed: 2
   damagePopUp: {fileID: 2067116603789273713, guid: 3d7d27f13f7dd634895ecfa847a9be15, type: 3}
   canvas: {fileID: 3001980588152997423}
+  lastDamagedByPlayer: 0
+  score: 10
 --- !u!195 &3370361000792584045
 NavMeshAgent:
   m_ObjectHideFlags: 0

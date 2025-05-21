@@ -64,7 +64,7 @@ public class Zombie : MonoBehaviour
         {
             // Check of speler een health script heeft
             PlayerHealth playerHealth = closestPlayer.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            if (closestPlayer != null)
             {
                 playerHealth.TakeDamage(damage);
             }
