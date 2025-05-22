@@ -1736,7 +1736,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreTexts: []
-  playerInputManager: {fileID: 0}
+  playerInputManager: {fileID: 1284033195}
+  playerPrefab: []
+  isCoop: 1
 --- !u!1 &1327676158
 GameObject:
   m_ObjectHideFlags: 0

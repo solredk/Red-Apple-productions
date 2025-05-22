@@ -43,6 +43,6 @@ public class PlayerHealth : HealthSystem
     public override void Die()
     {
         base.Die();
-        deathScreen.gameObject.SetActive(true);
+      //  deathScreen.gameObject.SetActive(true);
     }
 }

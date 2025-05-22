@@ -11,9 +11,11 @@ public class ScoreSystem : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> scoreTexts;
     [SerializeField] private PlayerInputManager playerInputManager;
 
+    [SerializeField] private GameObject[] playerPrefab;
+
     private List<int> scores = new List<int>();
 
-    private bool isCoop;
+    [SerializeField] private bool isCoop;
 
     private void Awake()
     {
@@ -29,19 +31,17 @@ public class ScoreSystem : MonoBehaviour
 
     private void Update()
     {
-        if (playerInputManager != null && playerInputManager.playerCount == 2 && isCoop && scores.Count < 1)
+        if (playerInputManager != null && playerInputManager.playerCount == 2 && isCoop && scores.Count <= 1)
         {
-            for (int i = 0; i < 2; i++)
+            scores.Add(0);
+
+            playerPrefab = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in playerPrefab)
             {
-                scores.Add(0);
-
-                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-
-                TextMeshProUGUI scoreText = playerObj.GetComponentInChildren<TextMeshProUGUI>();
-
-                if (!scoreTexts.Contains(scoreText))
+                TextMeshProUGUI text = player.GetComponentInChildren<TextMeshProUGUI>();
+                if (text != null && !scoreTexts.Contains(text))
                 {
-                    scoreTexts.Add(scoreText);
+                    scoreTexts.Add(text);
                 }
             }
         }
@@ -54,6 +54,19 @@ public class ScoreSystem : MonoBehaviour
 
     public void AddScore(int playerIndex, int extraScore)
     {
+        // Check if the playerIndex is valid
+        if (playerIndex < 0 || playerIndex >= scores.Count)
+        {
+            Debug.LogWarning($"AddScore: Ongeldige playerIndex {playerIndex}");
+            return;
+        }
+        // Check if the scoreTexts list is valid
+        if (playerIndex >= scoreTexts.Count || scoreTexts[playerIndex] == null)
+        {
+            Debug.LogWarning($"AddScore: Geen scoreText gevonden voor speler {playerIndex}");
+            return;
+        }
+
         //adding the score to the player
         scores[playerIndex] += extraScore;
 
