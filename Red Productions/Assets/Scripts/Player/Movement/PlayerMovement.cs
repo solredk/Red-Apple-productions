@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (moveInput == Vector2.zero)
+            return;
         Moving();
 
         // Check if the player is falling below a certain height and reset position 

@@ -4,23 +4,24 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
-{
-    [Header("canvasses and buttons")]
-    [SerializeField] private GameObject pauseCanvas;
-    [SerializeField] private GameObject lobbyCanvas;
+{   
+    [Header("single player en co-op settings")]   
+    [SerializeField] private GameObject pauseCanvas;    
+    
     [SerializeField] private GameObject lastButton;
 
-    [Header("Player Input and Event System")]   
+    [SerializeField] private EventSystem eventSystem;   
+    
+    [Header("co-op settings")]
+    [SerializeField] private GameObject lobbyCanvas;
     [SerializeField] private PlayerInputManager playerInputManager;
-    [SerializeField] private EventSystem eventSystem;
-
-    [Header("text components")]
     [SerializeField] private TextMeshProUGUI PlayerCountText;
 
     private bool isPaused = false;
 
     private void Awake()
     {
+        if (pauseCanvas != null) 
         pauseCanvas.SetActive(false);
     }
 

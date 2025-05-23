@@ -54,13 +54,11 @@ public class TomatoLauncher : MonoBehaviour
         projectileComponent.playerIndex = playerIndex;
 
         //shake the screen
-        screenRumble.TriggerShake(.1f, 0.1f);
+        screenRumble.TriggerShake(0.1f, 0.1f);
         
-        if (controllerActive && gamepad != null)
-            // Start rumble on the controller
+        if (controllerActive && gamepad != null) 
             controllerRumble.StartRumble(0.5f, 0.5f, rumbleDuration, gamepad);
 
-        //reseting the cooldown with tfire rate from the stats
         CooldownTimer = fireRate;
     }
 }

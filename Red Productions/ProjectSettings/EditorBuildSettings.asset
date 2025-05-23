@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/game scenes/MainMenu.unity
     guid: 8bed3747da961d146bdd280bd377d2ff
   - enabled: 1
-    path: Assets/Scenes/Co-op.unity
+    path: Assets/Scenes/game scenes/Co-op.unity
     guid: bfe34c3cf01582d48b4d5d3c265c794b
   - enabled: 1
-    path: Assets/Scenes/Single Player.unity
+    path: Assets/Scenes/game scenes/Single Player.unity
     guid: 4cb204f35f7b13547ba92d274ac43acc
+  - enabled: 1
+    path: Assets/Scenes/game scenes/DeathScreen.unity
+    guid: 12d6f8c851a131944b864f1274fb34a7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

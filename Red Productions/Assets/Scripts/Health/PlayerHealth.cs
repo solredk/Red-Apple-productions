@@ -1,6 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+public enum PlayerState
+{
+    alive,
+    dead
+}
 
 public class PlayerHealth : HealthSystem
 {
@@ -11,6 +19,10 @@ public class PlayerHealth : HealthSystem
 
     [SerializeField] private float healCooldown = 5f;
 
+    [SerializeField] private bool isCoop;
+    
+    public PlayerState playerState = PlayerState.alive;
+
     private void Update()
     {
         UpdateHealthUI(Color.red, Color.green);
@@ -18,7 +30,7 @@ public class PlayerHealth : HealthSystem
         if (currentHealth <= 0)
             Die();
 
-        if (currentHealth < maxHealth)
+        if (currentHealth < maxHealth && playerState == PlayerState.alive)
         {
             //if the cooldown is not at 0, then decrease the cooldown
             if (healCooldown > 0)
@@ -27,6 +39,18 @@ public class PlayerHealth : HealthSystem
             //if the cooldown is at 0, then heal the player
             else
                 Heal(1 * Time.deltaTime);
+        }
+        
+        if (playerState == PlayerState.dead && !isCoop)
+            SceneManager.LoadScene(3);
+
+        else if (playerState == PlayerState.dead && isCoop)
+        {
+            gameObject.GetComponent<Collider>().enabled = false;
+            foreach (Renderer r in GetComponentsInChildren<Renderer>())
+            {
+                r.enabled = false;
+            }
         }
     }
 
@@ -39,10 +63,18 @@ public class PlayerHealth : HealthSystem
         if (currentHealth >= maxHealth)
             healCooldown = 10;
     }
+    
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        //reset the cooldown
+        healCooldown = 10f;
+    }
 
     public override void Die()
     {
         base.Die();
-      //  deathScreen.gameObject.SetActive(true);
+        ScoreSystem.Instance.SaveData();
+        playerState = PlayerState.dead;
     }
 }
