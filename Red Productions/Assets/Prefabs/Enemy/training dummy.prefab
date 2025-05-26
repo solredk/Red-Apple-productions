@@ -125,10 +125,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33496990d14805c4cb861fc02dff0593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 3370361000792584045}
   attackRange: 2
   attackCooldown: 1
   damage: 10
+  enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
+  agent: {fileID: 3370361000792584045}
 --- !u!114 &4239457722402795264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +151,7 @@ MonoBehaviour:
   damagePopUp: {fileID: 2067116603789273713, guid: 3d7d27f13f7dd634895ecfa847a9be15, type: 3}
   canvas: {fileID: 3001980588152997423}
   lastDamagedByPlayer: 0
+  enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
   score: 10
 --- !u!195 &3370361000792584045
 NavMeshAgent:
@@ -185,10 +187,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33496990d14805c4cb861fc02dff0593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
   attackRange: 2
   attackCooldown: 1
   damage: 10
+  enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
+  agent: {fileID: 3370361000792584045}
 --- !u!1 &297105834760798037
 GameObject:
   m_ObjectHideFlags: 0

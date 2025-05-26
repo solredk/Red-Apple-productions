@@ -5,11 +5,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] private GameObject SecondPlayer;
-
-    [SerializeField] private PlayerInputManager playerInputManager;
-
+    [Header("single player en co-op settings")]
     [SerializeField] private WaveSpawner waveSpawner;
+
+    [Header("co-op settings")]
+    [SerializeField] private GameObject SecondPlayer;
+    [SerializeField] private PlayerInputManager playerInputManager;
 
     private void Awake()
     {

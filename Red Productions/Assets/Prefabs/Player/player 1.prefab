@@ -86,11 +86,8 @@ GameObject:
   - component: {fileID: 3866276140520679025}
   - component: {fileID: 3957186127297039171}
   - component: {fileID: 1776060960648303939}
-  - component: {fileID: 4690115254244181835}
-  - component: {fileID: 4791278385514665167}
-  - component: {fileID: 1760541106477570390}
   m_Layer: 0
-  m_Name: TomatoLauncher
+  m_Name: meches
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +107,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7896352039532397978}
-  m_Father: {fileID: 8797428451774664302}
+  m_Father: {fileID: 2174100458463117605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3957186127297039171
 MeshFilter:
@@ -165,59 +162,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4690115254244181835
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508342059363580358}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4791278385514665167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508342059363580358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76fdf92328d40140a8a6f3f14536a0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tomatoPrefab: {fileID: 4578710047296779920, guid: af3eba7b57bc75045b2dc77f9e9ea9e1, type: 3}
-  launchPoint: {fileID: 7896352039532397978}
-  tomatoData: {fileID: 11400000, guid: 39d81729402df4c48a1480ba65573cf8, type: 2}
-  screenRumble: {fileID: 7757721566842407101}
-  controllerRumble: {fileID: 1760541106477570390}
-  playerIndex: 0
-  isShooting: 0
-  controllerActive: 0
---- !u!114 &1760541106477570390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508342059363580358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef47f94b3f419144923069260b06053, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1509129480494636446
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +196,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3866276140520679025}
+  - {fileID: 2174100458463117605}
   m_Father: {fileID: 1889701461732227632}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &8399997349822199092
@@ -426,7 +370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 199.55011, y: -30.000336}
+  m_AnchoredPosition: {x: 199.55005, y: -35.00043}
   m_SizeDelta: {x: 400, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1488370650978845048
@@ -637,7 +581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 199.55011, y: -30.000336}
+  m_AnchoredPosition: {x: 199.55005, y: -35.00043}
   m_SizeDelta: {x: 400, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7734536986096419880
@@ -703,12 +647,78 @@ Transform:
   m_GameObject: {fileID: 3607329839926761538}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0149999, y: 0, z: 0.99}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3866276140520679025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3841523124251757789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2174100458463117605}
+  - component: {fileID: 903461378793928725}
+  - component: {fileID: 5956837296156717662}
+  m_Layer: 0
+  m_Name: TomatoLauncher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2174100458463117605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841523124251757789}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3866276140520679025}
+  m_Father: {fileID: 8797428451774664302}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &903461378793928725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841523124251757789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76fdf92328d40140a8a6f3f14536a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tomatoPrefab: {fileID: 4578710047296779920, guid: af3eba7b57bc75045b2dc77f9e9ea9e1, type: 3}
+  launchPoint: {fileID: 7896352039532397978}
+  tomatoData: {fileID: 11400000, guid: 39d81729402df4c48a1480ba65573cf8, type: 2}
+  screenRumble: {fileID: 7757721566842407101}
+  controllerRumble: {fileID: 5956837296156717662}
+  playerIndex: 0
+  isShooting: 0
+  controllerActive: 0
+--- !u!114 &5956837296156717662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841523124251757789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef47f94b3f419144923069260b06053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4270860376475182507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,11 +1219,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentObjectType: 0
   PlayerMovement: {fileID: 5941767275654635102}
-  tomatoLauncher: {fileID: 4791278385514665167}
+  tomatoLauncher: {fileID: 903461378793928725}
+  playerHealth: {fileID: 7015184530672115442}
   playerLook: {fileID: 5361380435859061134}
   pickup: {fileID: 0}
-  UIManager: {fileID: 0}
-  playerInputManager: {fileID: 0}
 --- !u!114 &7015184530672115442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,6 +1244,8 @@ MonoBehaviour:
   deathScreen: {fileID: 2924618336179488415}
   inputManager: {fileID: 2522851620291085376}
   healCooldown: 10
+  isCoop: 0
+  playerState: 0
 --- !u!95 &3819935651626960551
 Animator:
   serializedVersion: 7
@@ -1380,7 +1391,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 200, y: -34}
-  m_SizeDelta: {x: 400, y: 60}
+  m_SizeDelta: {x: 400, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6734900472746451448
 CanvasRenderer:
@@ -1455,7 +1466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -154.80002, y: -50}
+  m_AnchoredPosition: {x: -154.79999, y: -50}
   m_SizeDelta: {x: 307.5, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5414318676411566376

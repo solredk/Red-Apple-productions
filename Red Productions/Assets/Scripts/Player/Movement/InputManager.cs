@@ -18,21 +18,27 @@ public class InputManager : MonoBehaviour
 
     private Gamepad gamepad;
 
+    private GameObject manager;
+
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private TomatoLauncher tomatoLauncher;
+    [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private PlayerLook playerLook;
     [SerializeField] private Pickup pickup;
-    [SerializeField] private UIManager UIManager;
-    [SerializeField] private PlayerInputManager playerInputManager;
 
-    private void Awake()
+    private PlayerInputManager playerInputManager;
+    private UIManager UIManager;
+
+
+    private void Start()
     {
-        UIManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>();
+        manager = GameObject.FindGameObjectWithTag("Manager");
+        UIManager = manager.GetComponent<UIManager>();        
+        playerInputManager = manager.GetComponent<PlayerInputManager>();
     }
-
     public void DoShooting(InputAction.CallbackContext context)
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2)
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
             return;
         
         if (context.performed)
@@ -56,19 +62,25 @@ public class InputManager : MonoBehaviour
 
     public void OnPickup(InputAction.CallbackContext context)
     {
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
+            return;
+
         if (context.performed && pickup != null)
             pickup.PickuP();
     }
 
     public void OnDrop(InputAction.CallbackContext context)
     {
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
+            return;
+
         if (context.performed && pickup != null)
             pickup.Drop();
     }
 
     public void DoMoving(InputAction.CallbackContext context)
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2)
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
             return;
 
         moveInput = context.ReadValue<Vector2>();
@@ -78,7 +90,7 @@ public class InputManager : MonoBehaviour
  
     public void DoLooking(InputAction.CallbackContext context)
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2)
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
             return;
 
         lookInput = context.ReadValue<Vector2>();
@@ -89,12 +101,18 @@ public class InputManager : MonoBehaviour
 
     public void DoAdjustDistance(InputAction.CallbackContext context)
     {
-       if (context.performed)
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
+            return;
+
+        if (context.performed)
             ScrollInput = context.ReadValue<Vector2>();
     }
     
     public void DoPause(InputAction.CallbackContext context)
     {
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
+            return;
+
         if (context.performed && UIManager != null)
             UIManager.Pause();
     }
