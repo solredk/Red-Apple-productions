@@ -11,8 +11,17 @@ public class ScoreText : MonoBehaviour
     private void Start()
     {
         LoadData();
-        scoreText.text = "last score" + saveData.singlePlayerLastScore.ToString();
-        highScoreText.text = "high score" + saveData.singlePlayerHighscore.ToString();
+        if (GameManager.Instance.gameMode == GameMode.SinglePlayer)
+        {
+            scoreText.text = "last score" + saveData.singlePlayerLastScore.ToString();
+            highScoreText.text = "high score" + saveData.singlplayerHighscore.ToString();
+        }
+        else if (GameManager.Instance.gameMode == GameMode.CoOp)
+        {
+            scoreText.text = "last score" + saveData.coOpLastScore.ToString();
+            highScoreText.text = "high score" + saveData.coOpHighScore.ToString();
+        }
+
     }
 
     public void LoadData()

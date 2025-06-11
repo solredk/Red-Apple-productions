@@ -9,13 +9,13 @@ public class ScoreSystem : MonoBehaviour
     public static ScoreSystem Instance { get; private set; }
 
     [Header("single player en co-op settings")]
-    [SerializeField] private List<TextMeshProUGUI> scoreTexts;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     [SerializeField] private WaveSpawner waveSpawner;
 
     [SerializeField] private GameObject[] playerPrefab;
 
-    private List<int> scores = new List<int>();
+    private int score;
 
     [Header("co-op settings")]
     [SerializeField] private PlayerInputManager playerInputManager;
@@ -31,65 +31,43 @@ public class ScoreSystem : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
-
-        LoadData();
     }
 
-    private void Update()
-    {
-        if (playerInputManager != null && playerInputManager.playerCount == 2 && isCoop && scores.Count <= 1)
-        {   
-            scores.Add(0);
 
-            playerPrefab = GameObject.FindGameObjectsWithTag("Player");
-
-            foreach (GameObject player in playerPrefab)
-            {
-                TextMeshProUGUI text = player.GetComponentInChildren<TextMeshProUGUI>();
-
-                if (text != null && !scoreTexts.Contains(text))
-                    scoreTexts.Add(text);
-            }
-        }
-
-        else if (scores.Count < 1 &&!isCoop)
-            scores.Add(0);
-    }
-
-    public void AddScore(int playerIndex, int extraScore)
+    public void AddScore(int extraScore)
     {
         waveSpawner.zombiesKilled++;
 
-        //adding the score to the player
-        scores[playerIndex] += extraScore;
+        score += extraScore;
 
         //putting the new score in the text
-        scoreTexts[playerIndex].text = scores[playerIndex].ToString();
+        scoreText.text = score.ToString();
     }
-
+    
     public void SaveData()
     {        
-        if (isCoop)
+        if (GameManager.Instance.gameMode == GameMode.CoOp)
         {
-            saveData.multiPlayerPlayerScore = new List<int>(scores);
+            if (score > saveData.coOpHighScore)
+            {
+                saveData.coOpHighScore = score;
+            }
+            saveData.coOpLastScore = score;
         }
 
-        else if (!isCoop)
+        else
         {
-            saveData.singlePlayerScore = scores[0];
-            saveData.singlePlayerLastScore = scores[0];
-            saveData.singlePlayerHighscore = Math.Max(saveData.singlePlayerHighscore, saveData.singlePlayerScore);
-            saveData.gameMode = GameMode.SinglePlayer;
+            if (score > saveData.singlePlayerLastScore)
+            {
+                saveData.singlplayerHighscore = score;
+            }
+
+            saveData.singlePlayerLastScore = score;
         }
 
         SaveSystem.SerializeData(saveData);
     }
-
-
-
-
 
     public void LoadData()
     {

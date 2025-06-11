@@ -40,12 +40,15 @@ public class PlayerLook : MonoBehaviour
     public void Look(Vector2 lookInput, bool controllerActive)
     {
         if (controllerActive)
+        {
             //if the controller is active, use the controller sensitivity
             Sensitivity = controllerSensitivity;
-
-        else  
+        }
+        else
+        {
             //if the controller is not active, use the mouse sensitivity
             Sensitivity = mouseSensitivity;
+        }
 
         //save the input to be used in the update function
         input = lookInput;

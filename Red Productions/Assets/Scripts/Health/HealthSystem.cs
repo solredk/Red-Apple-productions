@@ -11,11 +11,11 @@ public abstract class HealthSystem : MonoBehaviour
 
     [SerializeField] protected float lerpTimer;
     [SerializeField] protected float chipSpeed = 2f;
-
     private void Start()
     {
         currentHealth = maxHealth;
     }
+
 
     public virtual void TakeDamage(float damage)
     {

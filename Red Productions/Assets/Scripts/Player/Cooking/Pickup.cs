@@ -27,7 +27,9 @@ public class Pickup : MonoBehaviour
     void Start()
     {
         currentDistance = Vector3.Distance(pickupParent.position, playerCameraTransform.position);
+
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
+
         tomatoWeapon.SetActive(true);
     }
 
@@ -36,7 +38,9 @@ public class Pickup : MonoBehaviour
         Debug.DrawRay(playerCameraTransform.position, playerCameraTransform.forward * hitRange, Color.red);
 
         if (hit.collider != null)
+        {
             hit.collider.GetComponent<HighLight>()?.ToggleHighLight(false);
+        }
 
         if (inHandItem != null)
         {
@@ -45,7 +49,9 @@ public class Pickup : MonoBehaviour
         }
 
         if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out hit, hitRange, pickableLayerMask))
+        {
             hit.collider.GetComponent<HighLight>()?.ToggleHighLight(true);
+        }
     }
 
     public void AdjustDistance(float scrollDelta)

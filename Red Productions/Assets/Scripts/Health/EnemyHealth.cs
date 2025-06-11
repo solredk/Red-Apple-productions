@@ -25,31 +25,20 @@ public class EnemyHealth : HealthSystem
     {
         //updating the health bar
         UpdateHealthUI(Color.green,Color.black);
-        
+
         //checking if you are death and if so, call the die function
         if (currentHealth <= 0 && !isDead)
+        {
             Die();
-    }
-
-    public void TakeDamage(float damage, int playerIndex)
-    {
-        base.TakeDamage(damage);
-
-        //set the lastDamagedByPlayer to the player that damaged this enemy
-        lastDamagedByPlayer = playerIndex;
-    }
-
-    public override void Heal(float healAmount)
-    {
-        //the base heal function
-        base.Heal(healAmount);
+        }
     }
 
     public override void Die()
     {
         base.Die();
+
         //add score to the player that killed this enemy
-        ScoreSystem.Instance.AddScore(lastDamagedByPlayer, score);
+        ScoreSystem.Instance.AddScore(score);
 
         //destroy the gameobject
         Destroy(gameObject);

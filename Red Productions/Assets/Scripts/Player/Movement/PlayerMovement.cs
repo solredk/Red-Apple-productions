@@ -20,11 +20,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (moveInput == Vector2.zero)
             return;
+
         Moving();
 
         // Check if the player is falling below a certain height and reset position 
         if (transform.position.y < -10f)
+        {
             transform.position = new Vector3(0, 1, 0);
+        }
     }
 
     public void Moving()
@@ -49,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void ReadMoveVaulue(Vector2 input)
     {
-        //saving the input to be used in the update function
         moveInput = input;
     }
 }

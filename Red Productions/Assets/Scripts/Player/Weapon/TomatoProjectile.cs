@@ -29,7 +29,7 @@ public class TomatoProjectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             //putting the enemyhealth script on an variabel to make it easier to use
-            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            HealthSystem healthSystem = collision.gameObject.GetComponent<EnemyHealth>();
 
             //checking if the enemyhealth script is not null so nothing has gone wrong
             if (collision.gameObject != null)
@@ -39,7 +39,7 @@ public class TomatoProjectile : MonoBehaviour
                 text.GetComponent<TextMeshPro>().text = DamageOutput.ToString();
 
                 // make the enemy take damage
-                enemyHealth.TakeDamage(DamageOutput, playerIndex);
+                healthSystem.TakeDamage(DamageOutput);
 
                 Instantiate(blood, spawnpoint, Quaternion.identity);
             }
