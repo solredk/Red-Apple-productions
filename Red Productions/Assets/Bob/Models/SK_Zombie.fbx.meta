@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: metarig.002|Spawn (1)
-      takeName: metarig.002|Spawn
+      name: metarig.002|Attack
+      takeName: metarig.002|Attack
       internalID: 5576525840855339931
       firstFrame: 0
-      lastFrame: 34
+      lastFrame: 44
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
