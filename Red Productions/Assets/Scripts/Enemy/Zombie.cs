@@ -9,10 +9,20 @@ public class Zombie : MonoBehaviour
     [SerializeField] private float attackCooldown = 1f;
     [SerializeField] private int damage = 10;
 
+
+    [SerializeField] private bool enteredlevel;
+
     [SerializeField] private Enemybehavior enemyBehavior;
 
-    [SerializeField] private NavMeshAgent agent;    
-    
+    [SerializeField] private NavMeshAgent agent;
+
+    [SerializeField] private Animator zombieAnimator;
+
+    [SerializeField] private EnemyHealth enemyHealth;
+
+    [SerializeField] private Collider zombieCollider;
+
+    float counter;
     private float lastAttackTime;
 
     private GameObject closestPlayer;
@@ -22,6 +32,8 @@ public class Zombie : MonoBehaviour
 
     private void Awake()
     {
+        zombieCollider.enabled = false;
+        agent.updateRotation = true;
         // Find all players in the scene and add them to the list
         GameObject[] foundPlayers = GameObject.FindGameObjectsWithTag("Player");
         players.AddRange(foundPlayers);
@@ -34,7 +46,26 @@ public class Zombie : MonoBehaviour
 
     private void Update()
     {
+        if (!zombieCollider.enabled )
+        {
+            counter += Time.deltaTime;
+            if (counter >= 2f) 
+            {
+                zombieCollider.enabled = true;
+                counter = 0f; 
+            }
+        }
+        if (enemyHealth.isDead)
+        {
+            agent.isStopped = true;
+            return; 
+        }
+
+        float movementSpeed = agent.velocity.magnitude;
+        zombieAnimator.SetFloat("speed", movementSpeed);
+
         FindClosestPlayer();
+
 
         if (closestPlayer != null && agent != null)
         {
@@ -54,7 +85,9 @@ public class Zombie : MonoBehaviour
     }
 
     private void FindClosestPlayer()
-    {    
+    {
+        if (enemyHealth.isDead) return;
+
         float closestDistance = Mathf.Infinity;
         GameObject nearest = null;
 
@@ -79,8 +112,11 @@ public class Zombie : MonoBehaviour
 
     private void AttackPlayer()
     {
+        if (enemyHealth.isDead) return;
+        zombieAnimator.SetTrigger("attack");
         if (Time.time - lastAttackTime >= attackCooldown)
         {
+
             // Check of speler een health script heeft
             PlayerHealth playerHealth = closestPlayer.GetComponent<PlayerHealth>();
             //if the closestplayer is not null, then make the player take damage

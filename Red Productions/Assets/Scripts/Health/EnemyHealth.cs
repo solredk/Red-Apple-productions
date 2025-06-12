@@ -12,9 +12,11 @@ public class EnemyHealth : HealthSystem
 
     [SerializeField] private Enemybehavior enemyBehavior;
 
+    [SerializeField] private Animator zombieAnimator;
+
     public int score;
 
-    private bool isDead = false;
+    public bool isDead = false;
 
     private void Awake()
     {
@@ -36,11 +38,14 @@ public class EnemyHealth : HealthSystem
     public override void Die()
     {
         base.Die();
-
-        //add score to the player that killed this enemy
-        ScoreSystem.Instance.AddScore(score);
-
+        if (!isDead)
+        {
+            //add score to the player that killed this enemy
+            ScoreSystem.Instance.AddScore(score);
+            isDead = true;
+        }
+        zombieAnimator.SetTrigger("die");
         //destroy the gameobject
-        Destroy(gameObject);
+        Destroy(gameObject ,2);
     }
 }
