@@ -29,9 +29,14 @@ public class PlayerHealth : HealthSystem
 
     public PlayerState playerState = PlayerState.alive;
 
-
+        
+    private void Awake()
+    {
+        upgradeItem.amount = maxHealth;        
+    }
     private void Update()
     {
+
         maxHealth = upgradeItem.amount;
 
         if (currentHealth <= 0)
@@ -100,7 +105,7 @@ public class PlayerHealth : HealthSystem
     {
         base.Die();
 
-        ScoreSystem.Instance.SaveData();
+       // ScoreSystem.Instance.SaveData();
 
         playerState = PlayerState.dead;
     }

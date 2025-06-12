@@ -8,4 +8,5 @@ public class Enemybehavior : ScriptableObject
     public int maxhealth;
     public float attackCooldown;
     public float speed;
+    public int reward;
 }

@@ -40,7 +40,7 @@ public class ShopManager : MonoBehaviour
             }
         }
 
-        switch (upgrade.level)
+        switch (upgrade.level)  
         {
             case 1:
                 upgrade.cost = 100;

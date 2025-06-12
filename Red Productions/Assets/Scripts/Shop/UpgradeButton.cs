@@ -21,15 +21,21 @@ public class UpgradeButton : MonoBehaviour
         upgradeItem.amount = 100; 
     }
 
+    private void Update()
+    {
+        UpdateButtonUI();
+    }
+    
     public void UpgradeMaxHealth()
     {
         shopManager.MaxHealthUp();
+        ScoreSystem.Instance.score -= upgradeItem.cost; // Assuming you want to add score when upgrading
         UpdateButtonUI();
     }
 
     private void UpdateButtonUI()
     {
-        if (shopManager.coinsAmount >= upgradeItem.cost)
+        if (ScoreSystem.Instance.score >= upgradeItem.cost)
         {
             button.interactable = true;
         }

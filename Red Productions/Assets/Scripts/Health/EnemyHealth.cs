@@ -13,6 +13,7 @@ public class EnemyHealth : HealthSystem
     [SerializeField] private Enemybehavior enemyBehavior;
 
     [SerializeField] private Animator zombieAnimator;
+    [SerializeField] private Enemybehavior enemyStats;
 
     public int score;
 
@@ -41,7 +42,7 @@ public class EnemyHealth : HealthSystem
         if (!isDead)
         {
             //add score to the player that killed this enemy
-            ScoreSystem.Instance.AddScore(score);
+            ScoreSystem.Instance.AddScore(enemyStats.reward);
             isDead = true;
         }
         zombieAnimator.SetTrigger("die");

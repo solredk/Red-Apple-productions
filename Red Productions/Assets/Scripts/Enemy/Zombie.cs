@@ -9,9 +9,6 @@ public class Zombie : MonoBehaviour
     [SerializeField] private float attackCooldown = 1f;
     [SerializeField] private int damage = 10;
 
-
-    [SerializeField] private bool enteredlevel;
-
     [SerializeField] private Enemybehavior enemyBehavior;
 
     [SerializeField] private NavMeshAgent agent;
@@ -22,18 +19,18 @@ public class Zombie : MonoBehaviour
 
     [SerializeField] private Collider zombieCollider;
 
-    float counter;
-    private float lastAttackTime;
-
     private GameObject closestPlayer;
 
     private List<GameObject> players = new List<GameObject>();
 
+    private float lastAttackTime;
+    private float counter;
 
     private void Awake()
     {
         zombieCollider.enabled = false;
         agent.updateRotation = true;
+
         // Find all players in the scene and add them to the list
         GameObject[] foundPlayers = GameObject.FindGameObjectsWithTag("Player");
         players.AddRange(foundPlayers);
@@ -46,6 +43,16 @@ public class Zombie : MonoBehaviour
 
     private void Update()
     {
+        if (enemyHealth.isDead)
+        {
+            agent.isStopped = true;
+            return; 
+        }
+
+        float movementSpeed = agent.velocity.magnitude;
+
+        zombieAnimator.SetFloat("speed", movementSpeed);        
+        
         if (!zombieCollider.enabled )
         {
             counter += Time.deltaTime;
@@ -55,17 +62,6 @@ public class Zombie : MonoBehaviour
                 counter = 0f; 
             }
         }
-        if (enemyHealth.isDead)
-        {
-            agent.isStopped = true;
-            return; 
-        }
-
-        float movementSpeed = agent.velocity.magnitude;
-        zombieAnimator.SetFloat("speed", movementSpeed);
-
-        FindClosestPlayer();
-
 
         if (closestPlayer != null && agent != null)
         {
@@ -82,6 +78,8 @@ public class Zombie : MonoBehaviour
                 agent.SetDestination(closestPlayer.transform.position);
             }
         }
+
+        FindClosestPlayer();
     }
 
     private void FindClosestPlayer()
@@ -116,9 +114,9 @@ public class Zombie : MonoBehaviour
         zombieAnimator.SetTrigger("attack");
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-
             // Check of speler een health script heeft
             PlayerHealth playerHealth = closestPlayer.GetComponent<PlayerHealth>();
+            
             //if the closestplayer is not null, then make the player take damage
             if (closestPlayer != null)
             {

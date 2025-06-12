@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         if (playerInputManager == null)
         {
             StartCoroutine(waveSpawner.SpawnLoop());

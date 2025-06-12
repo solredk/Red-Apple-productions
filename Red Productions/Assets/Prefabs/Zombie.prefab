@@ -81,6 +81,7 @@ MonoBehaviour:
   lastDamagedByPlayer: 0
   enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
   zombieAnimator: {fileID: 8646652469877314198}
+  enemyStats: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
   score: 10
   isDead: 0
 --- !u!195 &2392379762035671602
@@ -895,6 +896,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 11.584388
       objectReference: {fileID: 0}
+    - target: {fileID: 3610007721603977192, guid: 6bd678a3f34790143a72e0c7db3c9e5c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4142536168494659383, guid: 6bd678a3f34790143a72e0c7db3c9e5c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -89.98021
@@ -1340,8 +1345,7 @@ PrefabInstance:
       value: 3.1870267
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 2908753219951106373, guid: 6bd678a3f34790143a72e0c7db3c9e5c, type: 3}
-    - {fileID: 3610007721603977192, guid: 6bd678a3f34790143a72e0c7db3c9e5c, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

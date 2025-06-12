@@ -28,9 +28,6 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private List<GameObject> players;
     [SerializeField] private float safeDistanceFromPlayer = 1.5f;
 
-    [Header("No Spawn Zone")]
-    [SerializeField] private Vector3 noSpawnZoneCenter;
-    [SerializeField] private Vector3 noSpawnZoneSize;
 
     [Header("Jump In Points")]
     [SerializeField] private List<Transform> jumpInPoints;
@@ -69,88 +66,27 @@ public class WaveSpawner : MonoBehaviour
             {
                 Vector3 spawnPos = GetRandomJumpInPosition();
 
-                // Veiligheid check: spawnPos mag NIET in noSpawnZone of te dichtbij speler zijn
-                if (!IsPointInsideBox(spawnPos, noSpawnZoneCenter, noSpawnZoneSize) &&
-                    IsSafeDistanceFromPlayers(spawnPos))
-                {
-                    GameObject newZombie = Instantiate(zombiePrefab, spawnPos, Quaternion.identity);
-                    spawnedZombies.Add(newZombie);
-                    currentZombies++;
-                }
-                // Anders skip spawn deze keer, volgende keer nieuwe positie
+                GameObject newZombie = Instantiate(zombiePrefab, spawnPos, Quaternion.identity);
+                spawnedZombies.Add(newZombie);
+                currentZombies++;
             }
         }
     }
 
     private Vector3 GetRandomJumpInPosition()
     {
-        if (jumpInPoints.Count == 0)
-            return GetRandomPositionInArea(); // fallback
-
         int index = Random.Range(0, jumpInPoints.Count);
         return jumpInPoints[index].position;
-    }
-
-    private bool IsSafeDistanceFromPlayers(Vector3 position)
-    {
-        foreach (GameObject player in players)
-        {
-            if (player == null) continue;
-            float distance = Vector3.Distance(position, player.transform.position);
-            if (distance < safeDistanceFromPlayer)
-                return false;
-        }
-        return true;
-    }
-
-    private Vector3 GetRandomPositionInArea()
-    {
-        Vector3 spawnPos;
-        bool validPosition = false;
-
-        int maxAttempts = 50;
-        int attempts = 0;
-
-        do
-        {
-            Vector3 randomOffset = new Vector3(
-                Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
-                0,
-                Random.Range(-spawnAreaSize.z / 2, spawnAreaSize.z / 2)
-            );
-
-            spawnPos = spawnAreaCenter + randomOffset;
-            validPosition = true;
-
-            if (IsPointInsideBox(spawnPos, noSpawnZoneCenter, noSpawnZoneSize))
-                validPosition = false;
-
-            if (validPosition && !IsSafeDistanceFromPlayers(spawnPos))
-                validPosition = false;
-
-            attempts++;
-
-        } while (!validPosition && attempts < maxAttempts);
-
-        return spawnPos;
-    }
-
-    private bool IsPointInsideBox(Vector3 point, Vector3 boxCenter, Vector3 boxSize)
-    {
-        Vector3 min = boxCenter - boxSize / 2f;
-        Vector3 max = boxCenter + boxSize / 2f;
-
-        return (point.x >= min.x && point.x <= max.x) &&
-               (point.y >= min.y && point.y <= max.y) &&
-               (point.z >= min.z && point.z <= max.z);
     }
 
     private void NextWave()
     {
         zombiesKilled = 0;
-        waveRequirments = Mathf.CeilToInt(waveRequirments * 1.2f);
+        waveRequirments = Mathf.CeilToInt(waveRequirments * 1.01f);
 
         enemyBehavior.currentWave++;
+
+        enemyBehavior.reward += 5;
 
         if (enemyBehavior.attackCooldown > 0.3f)
             enemyBehavior.attackCooldown *= 0.95f;
@@ -166,6 +102,8 @@ public class WaveSpawner : MonoBehaviour
     private void SetZombieStartStats()
     {
         enemyBehavior.currentWave = startWave;
+
+        enemyBehavior.reward = 10; 
 
         enemyBehavior.maxhealth = startMaxhealth;
 
@@ -183,7 +121,7 @@ public class WaveSpawner : MonoBehaviour
 
         // No spawn zone
         Gizmos.color = new Color(1f, 0f, 0f, 0.25f);
-        Gizmos.DrawCube(noSpawnZoneCenter, noSpawnZoneSize);
+
 
         // Jump in points
         if (jumpInPoints != null)

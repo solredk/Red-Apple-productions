@@ -15,7 +15,7 @@ public class ScoreSystem : MonoBehaviour
 
     [SerializeField] private GameObject[] playerPrefab;
 
-    private int score;
+    public int score;
 
     [Header("co-op settings")]
     [SerializeField] private PlayerInputManager playerInputManager;
