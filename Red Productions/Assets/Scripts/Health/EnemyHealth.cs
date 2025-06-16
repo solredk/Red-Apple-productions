@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,10 @@ public class EnemyHealth : HealthSystem
     [SerializeField] private Enemybehavior enemyBehavior;
 
     [SerializeField] private Animator zombieAnimator;
+
     [SerializeField] private Enemybehavior enemyStats;
+
+    [SerializeField] private Collider enemyCollider;
 
     public int score;
 
@@ -39,6 +43,7 @@ public class EnemyHealth : HealthSystem
     public override void Die()
     {
         base.Die();
+        enemyCollider.enabled = false;
         if (!isDead)
         {
             //add score to the player that killed this enemy

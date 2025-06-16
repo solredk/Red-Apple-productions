@@ -49,10 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33496990d14805c4cb861fc02dff0593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 2
+  attackRange: 5
   attackCooldown: 2
   damage: 20
-  enteredlevel: 0
   enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
   agent: {fileID: 2392379762035671602}
   zombieAnimator: {fileID: 8646652469877314198}
@@ -82,6 +81,7 @@ MonoBehaviour:
   enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
   zombieAnimator: {fileID: 8646652469877314198}
   enemyStats: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
+  enemyCollider: {fileID: 1648793424108685404}
   score: 10
   isDead: 0
 --- !u!195 &2392379762035671602

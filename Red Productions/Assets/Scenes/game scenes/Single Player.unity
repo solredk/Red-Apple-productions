@@ -7928,7 +7928,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 7441928604198462156}
   waveSpawner: {fileID: 1284033193}
-  playerPrefab: []
   score: 0
   playerInputManager: {fileID: 0}
   isCoop: 0
@@ -8826,9 +8825,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: a0471f34c886107468c9b8a4e61ad454, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7896352038923287195}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: a0471f34c886107468c9b8a4e61ad454, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1311707487}
@@ -13527,6 +13523,7 @@ GameObject:
   - component: {fileID: 7757721567860225980}
   - component: {fileID: 5361380435264603791}
   - component: {fileID: 7902131497179959827}
+  - component: {fileID: 8797428450756866417}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -14051,7 +14048,7 @@ GameObject:
   - component: {fileID: 3819935650093070758}
   - component: {fileID: 755003693}
   m_Layer: 0
-  m_Name: player 1
+  m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14319,11 +14316,11 @@ Transform:
   m_GameObject: {fileID: 3607329841465452355}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.3908625, y: 4.047689, z: 5.9700003}
-  m_LocalScale: {x: 1.7598649, y: 1.7598649, z: 8.799323}
+  m_LocalPosition: {x: 0, y: 0, z: 1.245}
+  m_LocalScale: {x: 0.20000005, y: 0.20000005, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1430077064}
+  m_Father: {fileID: 8797428450756866415}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7902131497179959827
 MonoBehaviour:
@@ -14657,9 +14654,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7896352038923287195}
   - {fileID: 2174100459055480356}
   m_Father: {fileID: 1889701463150773553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &8797428450756866417
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509129479476568735}
+  m_Enabled: 1
 --- !u!114 &8919984818397283132
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,8 +13,6 @@ public class ScoreSystem : MonoBehaviour
 
     [SerializeField] private WaveSpawner waveSpawner;
 
-    [SerializeField] private GameObject[] playerPrefab;
-
     public int score;
 
     [Header("co-op settings")]

@@ -106,7 +106,6 @@ public class PlayerHealth : HealthSystem
         base.Die();
 
        // ScoreSystem.Instance.SaveData();
-
         playerState = PlayerState.dead;
     }
 }
