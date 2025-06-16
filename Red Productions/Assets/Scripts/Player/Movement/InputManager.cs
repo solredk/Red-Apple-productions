@@ -56,7 +56,7 @@ public class InputManager : MonoBehaviour
             tomatoLauncher.isShooting = true;
         }
 
-        if (context.canceled)
+        if (context.canceled    )
             tomatoLauncher.isShooting = false;
     }
 

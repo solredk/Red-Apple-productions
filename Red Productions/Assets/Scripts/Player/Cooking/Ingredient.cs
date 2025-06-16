@@ -12,11 +12,24 @@ public class Ingredient : MonoBehaviour
 
     public enum Ingredients
     {
+        // burger ingredients
         tomato,
         cheese,
         bread,
         meat,
+
+        // ingredients
+        cup,
+        fruitbasket,
+
+        // fries
+        fries,
+        friesbag,
+        // nuggets 
+        nuggets,
+        nuggetbag,
     }
+    public Ingredients ingredients;
 
     public IngredientType type;
 
