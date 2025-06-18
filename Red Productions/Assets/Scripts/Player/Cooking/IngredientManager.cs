@@ -59,25 +59,20 @@ public class IngredientManager : MonoBehaviour
 
         List<GameObject> spawnedIngredients = new List<GameObject>();
 
-        // Check if prefabs array length matches required ingredients count
-        if (group.foodPrefabs.Length != group.requiredIngredients.Count)
+        // For final product, we should only instantiate one complete item, not all ingredients
+        if (group.foodPrefabs != null && group.foodPrefabs.Length > 0)
         {
-            Debug.LogError($"Mismatch between prefab count and required ingredients for {type}");
+            // Just spawn the first food prefab (the completed recipe)
+            GameObject completedFood = Instantiate(group.foodPrefabs[0], position, rotation);
+            spawnedIngredients.Add(completedFood);
+            Debug.Log($"Spawned completed {type} prefab: {completedFood.name}");
+            return spawnedIngredients;
+        }
+        else
+        {
+            Debug.LogError($"No food prefabs found for {type}");
             return null;
         }
-
-        for (int i = 0; i < group.foodPrefabs.Length; i++)
-        {
-            if (group.foodPrefabs[i] != null)
-            {
-                GameObject spawnedObj = Instantiate(group.foodPrefabs[i], position, rotation);
-                spawnedIngredients.Add(spawnedObj);
-
-                position += new Vector3(0.5f, 0, 0);
-
-            }
-        }
-        return spawnedIngredients;
     }
 
 
