@@ -5210,7 +5210,7 @@ MonoBehaviour:
   inHandItem: {fileID: 0}
   pickableLayerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   rotationSpeed: 30
   scrollSensitivity: 1
   hitRange: 3
@@ -10924,13 +10924,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569828199}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: -2.2}
+  m_LocalRotation: {x: 0.731839, y: 0.00000008940696, z: 0.000000059604638, w: 0.6814777}
+  m_LocalPosition: {x: -4.6506118e-10, y: -0.00000015685433, z: -5.900001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1191561155}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 94.08099, y: 0, z: 0}
 --- !u!1 &1598403601 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8976563264795703511, guid: 86cbcb71c31462e4594230f9b0a8af5a, type: 3}
