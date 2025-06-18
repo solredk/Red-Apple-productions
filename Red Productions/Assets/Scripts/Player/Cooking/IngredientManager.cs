@@ -43,7 +43,6 @@ public class IngredientManager : MonoBehaviour
     {
         foreach (IngredientGroup group in ingredientGroups)
         {
-         
             group.InitializeDictionary();
             groupDictionary[group.groupType] = group;
         }
@@ -59,41 +58,41 @@ public class IngredientManager : MonoBehaviour
 
         List<GameObject> spawnedIngredients = new List<GameObject>();
 
-        // Check if prefabs array length matches required ingredients count
-        if (group.foodPrefabs.Length != group.requiredIngredients.Count)
+        // Check if we have food prefabs to spawn
+        if (group.foodPrefabs == null || group.foodPrefabs.Length == 0)
         {
-            Debug.LogError($"Mismatch between prefab count and required ingredients for {type}");
+            Debug.LogError($"No food prefabs defined for {type}");
             return null;
         }
 
-        for (int i = 0; i < group.foodPrefabs.Length; i++)
+        // For food items, just spawn the first one (the completed recipe)
+        GameObject spawnedObj = Instantiate(group.foodPrefabs[0], position, rotation);
+
+        // Make sure it has a Food component to be recognized by delivery points
+        if (!spawnedObj.GetComponent<Food>())
         {
-            if (group.foodPrefabs[i] != null)
-            {
-                GameObject spawnedObj = Instantiate(group.foodPrefabs[i], position, rotation);
-                spawnedIngredients.Add(spawnedObj);
-
-                position += new Vector3(0.5f, 0, 0);
-
-            }
+            spawnedObj.AddComponent<Food>();
         }
+
+        spawnedIngredients.Add(spawnedObj);
+        Debug.Log($"Successfully spawned {type} food item: {spawnedObj.name}");
+
         return spawnedIngredients;
     }
-
 
     public bool CheckIngredientsInRadius(Ingredient.IngredientType type, Vector3 center)
     {
         if (!groupDictionary.TryGetValue(type, out IngredientGroup group))
         {
             Debug.LogError(" No group found for type");
-            return false;   
+            return false;
         }
 
         Collider[] colliders = Physics.OverlapSphere(center, ingredientCheckRadius, ingredientLayer);
-        
+
         // Use HashSet instead of List to automatically handle duplicates
         HashSet<Ingredient.Ingredients> foundIngredients = new HashSet<Ingredient.Ingredients>();
-        
+
         foreach (Collider collider in colliders)
         {
             Ingredient ingredient = collider.GetComponent<Ingredient>();
@@ -103,17 +102,17 @@ public class IngredientManager : MonoBehaviour
                 {
                     if (ingredient.ingredients == pair.Key)
                     {
-                       
                         foundIngredients.Add(ingredient.ingredients);
                     }
                 }
             }
         }
-        
-        //  ingredients found
+
+        // Check if we found all the required ingredients
         int foundCount = foundIngredients.Count;
         return foundCount >= group.requiredIngredients.Count;
     }
+
     public float GetCheckRadius()
     {
         return ingredientCheckRadius;
@@ -123,10 +122,10 @@ public class IngredientManager : MonoBehaviour
     {
         return ingredientLayer;
     }
+
     public void startIngredientCheck(Ingredient.IngredientType type, Vector3 center, IIngredientCheckListener listener)
     {
         StartCoroutine(IngredientCheckCoroutine(type, center, listener));
-
     }
 
     IEnumerator IngredientCheckCoroutine(Ingredient.IngredientType type, Vector3 center, IIngredientCheckListener listener)
@@ -140,14 +139,9 @@ public class IngredientManager : MonoBehaviour
             {
                 listener?.OnIngredientsReady();
                 yield break;
-
             }
             elapsed += checkInterval;
             yield return new WaitForSeconds(checkInterval);
         }
-
     }
-
-
-
 }
