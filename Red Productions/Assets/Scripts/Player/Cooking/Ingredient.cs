@@ -31,6 +31,6 @@ public class Ingredient : MonoBehaviour
     }
     public Ingredients ingredients;
 
-    public IngredientType type;
+    public IngredientType recipetype;
 
 }

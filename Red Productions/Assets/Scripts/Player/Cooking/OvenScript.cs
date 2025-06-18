@@ -22,35 +22,7 @@ public class OvenScript : MonoBehaviour
         ingredientsInOven = new List<Ingredient.IngredientType>();
     }
 
-    void Update()
-    {
-        if (!burgerSpawned)
-        {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, overlapRadius, IngredientLayer);
-
-            ingredientsInOven.Clear();
-
-            foreach (var collider in colliders)
-            {
-                Ingredient ingredient = collider.GetComponent<Ingredient>();
-                if (ingredient != null)
-                {
-                    if (!ingredientsInOven.Contains(ingredient.type))
-                    {
-                        ingredientsInOven.Add(ingredient.type);
-                        Debug.Log("Ingredient added to oven: " + ingredient.type); 
-                    }
-                }
-            }
-
-            if (ingredientsInOven.Count == 3)
-            {
-                SpawnBurger();
-                burgerSpawned = true;
-            }
-        }
-    }
-
+  
     void SpawnBurger()
     {
         spawnedBurger = Instantiate(burgerPrefab, spawnPoint.position, Quaternion.identity);
