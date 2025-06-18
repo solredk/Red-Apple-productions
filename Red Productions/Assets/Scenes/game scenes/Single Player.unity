@@ -16174,7 +16174,19 @@ MonoBehaviour:
     m_ActionId: 04887459-624a-4947-9b9a-ddc501a3751a
     m_ActionName: 'Player/Drop[/Keyboard/q]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2522851621034965825}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: DoAdjustDistance
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: fbf87392-4437-44f0-aeeb-f9c14d005988
     m_ActionName: Player/Adjust
   - m_PersistentCalls:
@@ -16197,7 +16209,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2522851621034965825}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnInteract
+        m_MethodName: OnPickup
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

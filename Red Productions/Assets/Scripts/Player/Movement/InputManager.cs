@@ -124,7 +124,7 @@ public class InputManager : MonoBehaviour
         {
             pickup.Interact();
         }
-            pickup.Interact();
+          
     }
 }
 
