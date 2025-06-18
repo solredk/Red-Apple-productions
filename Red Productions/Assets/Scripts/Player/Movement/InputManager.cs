@@ -121,11 +121,15 @@ public class InputManager : MonoBehaviour
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
             return;
         if (context.performed && pickup != null)
+<<<<<<< Updated upstream
         {
 
             pickup.Interact();
             Debug.Log("Interacted");
         }
+=======
+            pickup.Interact();
+>>>>>>> Stashed changes
     }
 }
 

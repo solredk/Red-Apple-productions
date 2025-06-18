@@ -313,7 +313,11 @@
                 {
                     "name": "",
                     "id": "77b111c9-c3db-482d-bef6-28d5aec23ff9",
+<<<<<<< Updated upstream
                     "path": "<Keyboard>/q",
+=======
+                    "path": "<Keyboard>/e",
+>>>>>>> Stashed changes
                     "interactions": "",
                     "processors": "",
                     "groups": "",
