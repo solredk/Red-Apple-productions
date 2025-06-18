@@ -363,7 +363,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cheese 1 (3)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 3453895475781074299, guid: 5db677a365c8319439a9268c5872f13b, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -376,8 +375,6 @@ PrefabInstance:
       propertyPath: ingredients
       value: 1
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1477,24 +1474,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-<<<<<<< Updated upstream
     - target: {fileID: 4881684693548754969, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: ingredients
       value: 2
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6114041076493126574, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_Name
       value: bovenkant broodje We are cooked (3)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 6114041076493126574, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6886777180722123028, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_LocalScale.x
       value: 700
@@ -2825,13 +2816,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Meat 1 (3)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 6095850904315922955, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6904863431913820337, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_LocalScale.y
       value: 700
@@ -2842,7 +2830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6904863431913820337, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.43
+      value: -30.41
       objectReference: {fileID: 0}
     - target: {fileID: 6904863431913820337, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2850,7 +2838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6904863431913820337, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.92
+      value: 5.92
       objectReference: {fileID: 0}
     - target: {fileID: 6904863431913820337, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2880,7 +2868,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 7341533346434426977, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: type
       value: 0
@@ -2889,8 +2876,6 @@ PrefabInstance:
       propertyPath: ingredients
       value: 3
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2908,13 +2893,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Meat 1 (1)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 6095850904315922955, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6904863431913820337, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_LocalScale.y
       value: 700
@@ -2963,7 +2945,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 7341533346434426977, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: type
       value: 0
@@ -2972,8 +2953,6 @@ PrefabInstance:
       propertyPath: ingredients
       value: 3
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4485,7 +4464,6 @@ Transform:
   - {fileID: 1260272843}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
 --- !u!1 &672151122
 GameObject:
   m_ObjectHideFlags: 0
@@ -4517,8 +4495,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
->>>>>>> Stashed changes
 --- !u!1001 &679460155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4527,24 +4503,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-<<<<<<< Updated upstream
     - target: {fileID: 4881684693548754969, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: ingredients
       value: 2
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6114041076493126574, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_Name
       value: bovenkant broodje We are cooked (4)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 6114041076493126574, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6886777180722123028, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_LocalScale.x
       value: 700
@@ -5235,10 +5205,6 @@ GameObject:
   - component: {fileID: 789626202}
   - component: {fileID: 789626201}
   - component: {fileID: 789626200}
-<<<<<<< Updated upstream
-=======
-  - component: {fileID: 789626199}
->>>>>>> Stashed changes
   - component: {fileID: 789626198}
   - component: {fileID: 789626197}
   m_Layer: 0
@@ -5261,13 +5227,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recipeType: 0
-<<<<<<< Updated upstream
   ingredientManager: {fileID: 425787736}
   finalProductSpawnPoint: {fileID: 139609484}
-=======
-  ingredientManager: {fileID: 0}
-  finalProductSpawnPoint: {fileID: 0}
->>>>>>> Stashed changes
   destroyIngredientsOnComplete: 1
 --- !u!65 &789626198
 BoxCollider:
@@ -5290,36 +5251,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000001, y: 1.0000002, z: 1.0000004}
   m_Center: {x: -0.000000014901161, y: 0, z: -0.00000071525574}
-<<<<<<< Updated upstream
-=======
---- !u!54 &789626199
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 789626196}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
->>>>>>> Stashed changes
 --- !u!23 &789626200
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5381,23 +5312,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789626196}
   serializedVersion: 2
-<<<<<<< Updated upstream
   m_LocalRotation: {x: 0.50108063, y: -0.4891315, z: 0.5016348, w: 0.50796765}
-  m_LocalPosition: {x: -30.01, y: 2.09, z: -2.66}
-=======
-  m_LocalRotation: {x: 0.48497996, y: -0.5050999, z: 0.5178196, w: 0.49145848}
-  m_LocalPosition: {x: -29.949, y: 1.9, z: -2.658}
->>>>>>> Stashed changes
-  m_LocalScale: {x: -3.22, y: -1.35, z: 0.057203997}
+  m_LocalPosition: {x: -30.03, y: 2.07, z: -3.5}
+  m_LocalScale: {x: -6.88, y: -1.71, z: 0.18}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 139609484}
   m_Father: {fileID: 0}
-<<<<<<< Updated upstream
   m_LocalEulerAnglesHint: {x: 88.843, y: 16.677, z: 105.629}
-=======
-  m_LocalEulerAnglesHint: {x: 88.843, y: 16.677, z: 109.341}
->>>>>>> Stashed changes
 --- !u!1 &792666063
 GameObject:
   m_ObjectHideFlags: 0
@@ -8102,15 +8024,8 @@ GameObject:
   - component: {fileID: 1191561155}
   - component: {fileID: 1191561154}
   - component: {fileID: 1191561153}
-<<<<<<< Updated upstream
   - component: {fileID: 1191561151}
   - component: {fileID: 1191561150}
-=======
-  - component: {fileID: 1191561152}
-  - component: {fileID: 1191561151}
-  - component: {fileID: 1191561150}
-  - component: {fileID: 1191561156}
->>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Griddle 2
   m_TagString: Untagged
@@ -8131,13 +8046,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recipeType: 0
-<<<<<<< Updated upstream
   ingredientManager: {fileID: 425787736}
   finalProductSpawnPoint: {fileID: 1569828200}
-=======
-  ingredientManager: {fileID: 0}
-  finalProductSpawnPoint: {fileID: 0}
->>>>>>> Stashed changes
   destroyIngredientsOnComplete: 1
 --- !u!65 &1191561151
 BoxCollider:
@@ -8160,36 +8070,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000001, y: 1.0000002, z: 1.0000004}
   m_Center: {x: -0.000000014901161, y: 0, z: -0.00000071525574}
-<<<<<<< Updated upstream
-=======
---- !u!54 &1191561152
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191561149}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
->>>>>>> Stashed changes
 --- !u!23 &1191561153
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8253,32 +8133,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.5118346, y: -0.47786698, z: 0.490214, w: 0.5189979}
   m_LocalPosition: {x: -29.879, y: 1.918, z: 4.624}
-  m_LocalScale: {x: -3.22, y: -1.35, z: 0.057203997}
+  m_LocalScale: {x: -6.49, y: -1.89, z: -0.17}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1569828200}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 88.844, y: 16.677, z: 103.081}
-<<<<<<< Updated upstream
-=======
---- !u!114 &1191561156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191561149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4102ebd6bac2c0438278966d335d60e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ingredientGroups: []
-  ingredientCheckRadius: 2
-  ingredientLayer:
-    serializedVersion: 2
-    m_Bits: 0
->>>>>>> Stashed changes
 --- !u!1 &1210336123 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6340059999295192654, guid: 244f39759a3e5804c8789f1cc26a5b0c, type: 3}
@@ -8425,14 +8285,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-<<<<<<< Updated upstream
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7409634640750807269, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1610413683}
-=======
-    m_AddedComponents: []
->>>>>>> Stashed changes
   m_SourcePrefab: {fileID: 100100000, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
 --- !u!1 &1226731100
 GameObject:
@@ -10420,7 +10276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2640625668973537217, guid: 5db677a365c8319439a9268c5872f13b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.96
+      value: -30.35
       objectReference: {fileID: 0}
     - target: {fileID: 2640625668973537217, guid: 5db677a365c8319439a9268c5872f13b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10428,7 +10284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2640625668973537217, guid: 5db677a365c8319439a9268c5872f13b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.8
+      value: 3.59
       objectReference: {fileID: 0}
     - target: {fileID: 2640625668973537217, guid: 5db677a365c8319439a9268c5872f13b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10462,7 +10318,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cheese 1 (2)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 3453895475781074299, guid: 5db677a365c8319439a9268c5872f13b, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -10475,8 +10330,6 @@ PrefabInstance:
       propertyPath: ingredients
       value: 1
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10997,13 +10850,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Meat 1 (2)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 6095850904315922955, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6904863431913820337, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: m_LocalScale.y
       value: 700
@@ -11052,7 +10902,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 7341533346434426977, guid: 8b2ed7ccfe12c9146a225e6f692fd37b, type: 3}
       propertyPath: type
       value: 0
@@ -11061,8 +10910,6 @@ PrefabInstance:
       propertyPath: ingredients
       value: 3
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11194,11 +11041,7 @@ Transform:
   m_GameObject: {fileID: 1569828199}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-<<<<<<< Updated upstream
   m_LocalPosition: {x: 0, y: 0, z: -2.2}
-=======
-  m_LocalPosition: {x: 0, y: -0, z: -2.2}
->>>>>>> Stashed changes
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12551,24 +12394,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-<<<<<<< Updated upstream
     - target: {fileID: 4881684693548754969, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: ingredients
       value: 2
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6114041076493126574, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_Name
       value: bovenkant broodje We are cooked (5)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 6114041076493126574, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     - target: {fileID: 6886777180722123028, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_LocalScale.x
       value: 700
@@ -12583,7 +12420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6886777180722123028, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.61
+      value: -30.17
       objectReference: {fileID: 0}
     - target: {fileID: 6886777180722123028, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12591,7 +12428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6886777180722123028, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.87
+      value: 4.98
       objectReference: {fileID: 0}
     - target: {fileID: 6886777180722123028, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15851,7 +15688,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cheese 1 (1)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 3453895475781074299, guid: 5db677a365c8319439a9268c5872f13b, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -15864,8 +15700,6 @@ PrefabInstance:
       propertyPath: ingredients
       value: 1
       objectReference: {fileID: 0}
-=======
->>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15946,8 +15780,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16392,7 +16226,6 @@ MonoBehaviour:
     m_ActionId: e5dcce4e-a26c-4912-a450-4e572d6cd857
     m_ActionName: 'Player/pause[/Keyboard/escape,/DualSenseGamepadHID1/start]'
   - m_PersistentCalls:
-<<<<<<< Updated upstream
       m_Calls:
       - m_Target: {fileID: 2522851621034965825}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
@@ -16406,9 +16239,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-=======
-      m_Calls: []
->>>>>>> Stashed changes
     m_ActionId: 214af965-30ee-4bdb-8194-84cdd992fcc9
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0

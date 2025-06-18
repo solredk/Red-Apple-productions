@@ -110,6 +110,7 @@ public class Pickup : MonoBehaviour
     public void Interact()
     {
         if (hit.collider != null)
+            Debug.Log(hit.collider.name);
         {
             // First check if what we're looking at directly has CookingStation
             CookingStation directStation = hit.collider.GetComponent<CookingStation>();
