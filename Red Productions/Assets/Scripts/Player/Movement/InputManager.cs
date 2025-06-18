@@ -116,5 +116,12 @@ public class InputManager : MonoBehaviour
         if (context.performed && UIManager != null)
             UIManager.Pause();
     }
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
+            return;
+        if (context.performed && pickup != null)
+            pickup.Interact();
+    }
 }
 
