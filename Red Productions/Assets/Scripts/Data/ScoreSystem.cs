@@ -11,6 +11,10 @@ public class ScoreSystem : MonoBehaviour
     [Header("single player en co-op settings")]
     [SerializeField] private TextMeshProUGUI scoreText;
 
+    [SerializeField] private GameObject scoreCanvas;
+
+    [SerializeField] private GameMode gameMode;
+
     [SerializeField] private WaveSpawner waveSpawner;
 
     public int score;
@@ -32,7 +36,17 @@ public class ScoreSystem : MonoBehaviour
         Instance = this;
     }
 
-
+    private void Update()
+    {
+        if (gameMode == GameMode.CoOp && playerInputManager.playerCount == 2)
+        {
+            scoreCanvas.SetActive(true);
+        }
+        else if (gameMode == GameMode.CoOp && playerInputManager.playerCount < 2)
+        {
+            scoreCanvas.SetActive(false);
+        }
+    }
     public void AddScore(int extraScore)
     {
         waveSpawner.zombiesKilled++;

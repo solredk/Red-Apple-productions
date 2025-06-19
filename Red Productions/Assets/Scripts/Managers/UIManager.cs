@@ -4,7 +4,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
-{   
+{
+    public static UIManager Instance;
+
     [Header("single player en co-op settings")]   
     [SerializeField] private GameObject pauseCanvas;    
     
@@ -21,6 +23,8 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         if (pauseCanvas != null) 
         pauseCanvas.SetActive(false);
     }

@@ -27,13 +27,12 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Pickup pickup;
 
     private PlayerInputManager playerInputManager;
-    private UIManager UIManager;
+
 
 
     private void Start()
     {
-        manager = GameObject.FindGameObjectWithTag("Manager");
-        UIManager = manager.GetComponent<UIManager>();        
+        manager = GameObject.FindGameObjectWithTag("Manager");     
         playerInputManager = manager.GetComponent<PlayerInputManager>();
     }
     public void DoShooting(InputAction.CallbackContext context)
@@ -113,8 +112,8 @@ public class InputManager : MonoBehaviour
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
             return;
 
-        if (context.performed && UIManager != null)
-            UIManager.Pause();
+        if (context.performed && UIManager.Instance != null)
+            UIManager.Instance.Pause();
     }
     public void OnInteract(InputAction.CallbackContext context)
     {

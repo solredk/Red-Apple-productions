@@ -29,6 +29,7 @@ public class PlayerHealth : HealthSystem
 
     public PlayerState playerState = PlayerState.alive;
 
+    [SerializeField] private Animator Animator;
         
     private void Awake()
     {
@@ -65,11 +66,7 @@ public class PlayerHealth : HealthSystem
         else if (playerState == PlayerState.dead && isCoop)
         {
             gameObject.GetComponent<Collider>().enabled = false;
-
-            foreach (Renderer r in GetComponentsInChildren<Renderer>())
-            {
-                r.enabled = false;
-            }
+            Animator.SetTrigger("die");
         }
 
         UpdateHealthUI(Color.red, Color.green);

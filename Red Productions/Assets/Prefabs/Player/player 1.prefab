@@ -618,6 +618,7 @@ MonoBehaviour:
   screenRumble: {fileID: 7757721566842407101}
   controllerRumble: {fileID: 5956837296156717662}
   playerIndex: 0
+  animator: {fileID: 0}
   isShooting: 0
   controllerActive: 0
 --- !u!114 &5956837296156717662
@@ -699,8 +700,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -922,7 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 74804bc4f30d25a4191fb8ea9bb662f6, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -1024,57 +1025,9 @@ MonoBehaviour:
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2522851620291085376}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: e2137801-d09c-4ed8-9e39-b85b6989733a
-    m_ActionName: 'Player/Pickup[/Keyboard/e]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2522851620291085376}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnDrop
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 04887459-624a-4947-9b9a-ddc501a3751a
-    m_ActionName: 'Player/Drop[/Keyboard/q]'
-  - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: fbf87392-4437-44f0-aeeb-f9c14d005988
-    m_ActionName: Player/Adjust
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2522851620291085376}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: DoPause
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: e5dcce4e-a26c-4912-a450-4e572d6cd857
-    m_ActionName: 'Player/pause[/Keyboard/escape,/DualSenseGamepadHID1/start]'
+    m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
+    m_ActionName: 'Player/Interact[/Keyboard/e,/DualSenseGamepadHID/buttonNorth]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1118,6 +1071,7 @@ MonoBehaviour:
   currentSpeed: 5
   gravity: -9.8
   characterController: {fileID: 2038359907157812673}
+  animator: {fileID: 0}
 --- !u!114 &2522851620291085376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1158,6 +1112,8 @@ MonoBehaviour:
   inputManager: {fileID: 2522851620291085376}
   healCooldown: 10
   isCoop: 0
+  healthText: {fileID: 0}
+  upgradeItem: {fileID: 0}
   playerState: 0
 --- !u!95 &3819935651626960551
 Animator:

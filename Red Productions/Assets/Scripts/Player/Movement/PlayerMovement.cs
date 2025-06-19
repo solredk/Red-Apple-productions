@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private CharacterController characterController;
 
-   // [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator;
+
+    // [SerializeField] private Animator animator;
 
     private Vector3 playerVelocity;
 
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        animator.SetFloat("speed", moveInput.magnitude);
         if (moveInput == Vector2.zero)
             return;
 
