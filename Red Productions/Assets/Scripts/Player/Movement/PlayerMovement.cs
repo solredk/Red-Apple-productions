@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private CharacterController characterController;
 
-   // [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator;
 
     private Vector3 playerVelocity;
 
@@ -18,8 +18,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        animator.SetFloat("speed", moveInput.magnitude);
+
         if (moveInput == Vector2.zero)
             return;
+
 
         Moving();
 
@@ -35,13 +38,14 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = characterController.isGrounded;
         
         if (isGrounded && playerVelocity.y < 0)
-            playerVelocity.y = -2f;  
+            playerVelocity.y = -2f;
 
-        float speed = new Vector3(characterController.velocity.x, 0, characterController.velocity.z).magnitude;
-        //animator.SetFloat("speed", speed);
+
+
 
         //getting the input from the readvalue function
         Vector3 moveDirection = new (moveInput.x, 0, moveInput.y);
+
 
         characterController.Move(currentSpeed * Time.deltaTime * transform.TransformDirection(moveDirection));
 
