@@ -6,17 +6,21 @@ public class Loadscene : MonoBehaviour
     [Header("scene index")]
     [SerializeField] private int sceneIndex;
 
+    [SerializeField] private Animator animator;
+
+    private float timer;
+
     public void LoadScene()
     {
         //resetting the time scale to 1
         Time.timeScale = 1f;        
         
-        SceneManager.LoadScene(sceneIndex);
-    }
+  //      animator.SetTrigger("FadeOut");
 
-    public void ExitGame()
-    {
-         // Exiting the game
-        Application.Quit();
+    //    timer += Time.deltaTime;
+
+//        if (timer >= 1)
+            //loading the scene with the given index
+            SceneManager.LoadScene(sceneIndex);
     }
 }

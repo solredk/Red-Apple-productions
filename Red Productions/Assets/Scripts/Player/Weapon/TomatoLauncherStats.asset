@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a242b6a8a5b208144a5dac89a92a035f, type: 3}
   m_Name: TomatoLauncherStats
   m_EditorClassIdentifier: 
-  fireRate: 1.06
+  fireRate: 1
   damageOutput: 10
