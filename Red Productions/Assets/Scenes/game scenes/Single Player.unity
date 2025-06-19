@@ -4868,7 +4868,7 @@ MonoBehaviour:
   inHandItem: {fileID: 0}
   pickableLayerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   rotationSpeed: 30
   scrollSensitivity: 1
   hitRange: 3
@@ -17144,6 +17144,7 @@ MonoBehaviour:
   healthText: {fileID: 262947918}
   upgradeItem: {fileID: 11400000, guid: 20731f7ed05af9640b9cef1070239caf, type: 2}
   playerState: 0
+  Animator: {fileID: 0}
 --- !u!1 &7024239914132553139
 GameObject:
   m_ObjectHideFlags: 0
