@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject SecondPlayer;
     [SerializeField] private PlayerInputManager playerInputManager;
 
+    private int aliveCount;
+
     private bool waveStarted = false;
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(waveSpawner.SpawnLoop());
         }
+
     }
     private void Update()
     {
@@ -44,6 +47,12 @@ public class GameManager : MonoBehaviour
             StartCoroutine(waveSpawner.SpawnLoop());
         }
     }
+
+    public void PlayerDied()
+    {
+        aliveCount--;
+    }
+
     public void DoJoinLobby()
     {
         //if there are 2 players you can spawn waves
