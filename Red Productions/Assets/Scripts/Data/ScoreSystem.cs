@@ -34,6 +34,8 @@ public class ScoreSystem : MonoBehaviour
             return;
         }
         Instance = this;
+
+        LoadData();
     }
 
     private void Update()
