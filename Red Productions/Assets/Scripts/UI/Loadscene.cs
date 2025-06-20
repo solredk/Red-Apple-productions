@@ -14,13 +14,12 @@ public class Loadscene : MonoBehaviour
     {
         //resetting the time scale to 1
         Time.timeScale = 1f;        
-        
-  //      animator.SetTrigger("FadeOut");
+        //      animator.SetTrigger("FadeOut");
 
-    //    timer += Time.deltaTime;
+        //    timer += Time.deltaTime;
 
-//        if (timer >= 1)
-            //loading the scene with the given index
-            SceneManager.LoadScene(sceneIndex);
+        //        if (timer >= 1)
+        //loading the scene with the given index
+        SceneManager.LoadScene(sceneIndex);
     }
 }

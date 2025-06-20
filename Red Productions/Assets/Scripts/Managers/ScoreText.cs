@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ScoreText : MonoBehaviour
 {
+    [SerializeField] private GameMode gameMode;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI highScoreText;
     
@@ -12,13 +13,13 @@ public class ScoreText : MonoBehaviour
     {
         LoadData();
 
-        if (GameManager.Instance.gameMode == GameMode.SinglePlayer)
+        if (gameMode == GameMode.SinglePlayer)
         {
             scoreText.text = "last score" + saveData.singlePlayerLastScore.ToString();
             highScoreText.text = "high score" + saveData.singlplayerHighscore.ToString();
         }
 
-        else if (GameManager.Instance.gameMode == GameMode.CoOp)
+        else if (gameMode == GameMode.CoOp)
         {
             scoreText.text = "last score" + saveData.coOpLastScore.ToString();
             highScoreText.text = "high score" + saveData.coOpHighScore.ToString();
