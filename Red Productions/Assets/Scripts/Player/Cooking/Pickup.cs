@@ -60,11 +60,23 @@ public class Pickup : MonoBehaviour
 
     public void AdjustDistance(float scrollDelta)
     {
-        currentDistance -= scrollDelta * scrollSensitivity;
-        currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
+        // Calculate potential new distance before applying it
+        float potentialDistance = currentDistance - scrollDelta * scrollSensitivity;
 
-        Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
-        pickupParent.position = newPosition;
+        // Check if the new position would be valid
+        // Only enforce minimum distance when scrolling inward (positive scrollDelta)
+        if (scrollDelta <= 0 || potentialDistance >= minDistance)
+        {
+            // Apply the change
+            currentDistance = potentialDistance;
+
+            // Ensure we stay within allowed distance range
+            currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
+
+            // Update position based on new distance
+            Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
+            pickupParent.position = newPosition;
+        }
     }
 
     public void PickuP()
