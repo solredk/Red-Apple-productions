@@ -66,8 +66,9 @@ public class PlayerHealth : HealthSystem
 
         else if (playerState == PlayerState.dead && isCoop)
         {
+            Debug.Log("Player died, disabling collider and playing death animation");
             gameObject.GetComponent<Collider>().enabled = false;
-            Animator.SetTrigger("die");
+            Animator.SetTrigger("died");
         }
 
         UpdateHealthUI(Color.red, Color.green);
