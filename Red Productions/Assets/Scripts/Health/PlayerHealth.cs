@@ -60,6 +60,7 @@ public class PlayerHealth : HealthSystem
 
         if (playerState == PlayerState.dead && !isCoop)
         {
+            ScoreSystem.Instance.SaveData();
             SceneManager.LoadScene(3);
         }
 
