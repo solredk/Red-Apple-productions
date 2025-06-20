@@ -105,6 +105,7 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
             ScrollInput = context.ReadValue<Vector2>();
+            Debug.Log("Scroll Input: " + ScrollInput.y);
     }
     
     public void DoPause(InputAction.CallbackContext context)
