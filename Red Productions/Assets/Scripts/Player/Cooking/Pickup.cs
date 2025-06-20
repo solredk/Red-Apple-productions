@@ -81,6 +81,10 @@ public class Pickup : MonoBehaviour
 
     public void PickuP()
     {
+        // Don't pick up if already holding something
+        if (inHandItem != null)
+            return;
+
         if (hit.collider != null)
         {
             // Only pick up objects with Ingredient or Food component
@@ -89,34 +93,46 @@ public class Pickup : MonoBehaviour
 
             if (ingredient != null || food != null)
             {
-                Rigidbody rb = hit.collider.gameObject.GetComponent<Rigidbody>();
-
                 inHandItem = hit.collider.gameObject;
                 inHandItem.transform.SetParent(pickupParent.transform, true);
                 inHandItem.transform.localPosition = Vector3.zero;
                 inHandItem.transform.localRotation = Quaternion.identity;
 
-                if (rb != null)
-                    rb.isKinematic = true;
+                // Set up physics components for better handling
+                RigidbodySetup();
+                ConfigJSetup();
 
                 tomatoWeapon.SetActive(false);
             }
         }
     }
 
+
     public void Drop()
     {
-        if (inHandItem != null)
+        // Don't try to drop if nothing is held
+        if (inHandItem == null)
+            return;
+
+        Rigidbody rb = inHandItem.GetComponent<Rigidbody>();
+        ConfigurableJoint joint = inHandItem.GetComponent<ConfigurableJoint>();
+
+        // Clean up the ConfigurableJoint if it exists
+        if (joint != null)
+            Destroy(joint);
+
+        inHandItem.transform.SetParent(null);
+
+        if (rb != null)
         {
-            Rigidbody rb = inHandItem.GetComponent<Rigidbody>();
-            inHandItem.transform.SetParent(null);
-
-            if (rb != null)
-                rb.isKinematic = false;
-
-            inHandItem = null;
-            tomatoWeapon.SetActive(true);
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.angularDamping = 10f;        // Reset to default values
+            rb.linearDamping = 10f; // Reset to default values
         }
+
+        inHandItem = null;
+        tomatoWeapon.SetActive(true);
     }
 
     public void Interact()
@@ -146,5 +162,87 @@ public class Pickup : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void RigidbodySetup()
+    {
+        if (inHandItem == null) return;
+
+        Rigidbody rb = inHandItem.GetComponent<Rigidbody>();
+        if (rb == null)
+            rb = inHandItem.AddComponent<Rigidbody>();
+
+
+        rb.mass = 0.5f;
+        rb.linearDamping = 25f;              // Linear damping
+        rb.angularDamping = 25f;       // Angular damping
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.isKinematic = false;    
+        rb.useGravity = true;    
+    }
+
+    private void ConfigJSetup()
+    {
+        if (inHandItem == null) return;
+
+        // Remove any existing ConfigurableJoint
+        ConfigurableJoint existingJoint = inHandItem.GetComponent<ConfigurableJoint>();
+        if (existingJoint != null)
+            Destroy(existingJoint);
+
+        // Add new ConfigurableJoint
+        ConfigurableJoint joint = inHandItem.AddComponent<ConfigurableJoint>();
+
+        // Make sure the pickup parent has a rigidbody
+        Rigidbody parentRb = pickupParent.GetComponent<Rigidbody>();
+        if (parentRb == null)
+        {
+            parentRb = pickupParent.gameObject.AddComponent<Rigidbody>();
+            parentRb.isKinematic = true;
+            parentRb.useGravity = false;
+        }
+
+        // Connect to pickup parent
+        joint.connectedBody = parentRb;
+
+        // Configure joint with exact specifications
+        joint.autoConfigureConnectedAnchor = true;
+
+        // Lock all linear motion
+        joint.xMotion = ConfigurableJointMotion.Locked;
+        joint.yMotion = ConfigurableJointMotion.Locked;
+        joint.zMotion = ConfigurableJointMotion.Locked;
+
+        // Limited angular motion
+        joint.angularXMotion = ConfigurableJointMotion.Limited;
+        joint.angularYMotion = ConfigurableJointMotion.Limited;
+        joint.angularZMotion = ConfigurableJointMotion.Limited;
+
+        // Configure X-drive
+        JointDrive xDrive = joint.xDrive;
+        xDrive.positionSpring = 1000f;
+        xDrive.positionDamper = 500f;
+        xDrive.maximumForce = 2000f;
+        joint.xDrive = xDrive;
+
+        // Configure Y-drive
+        JointDrive yDrive = joint.yDrive;
+        yDrive.positionSpring = 1000f;
+        yDrive.positionDamper = 500f;
+        yDrive.maximumForce = 0f;
+        joint.yDrive = yDrive;
+
+        // Configure Z-drive
+        JointDrive zDrive = joint.zDrive;
+        zDrive.positionSpring = 1000f;
+        zDrive.positionDamper = 500f;
+        zDrive.maximumForce = 2000f;
+        joint.zDrive = zDrive;
+
+        // Configure X-limit - Fix for the spring property
+        SoftJointLimit angularXLimit = joint.highAngularXLimit;
+        angularXLimit.limit = 1000;
+        joint.highAngularXLimit = angularXLimit;
     }
 }
