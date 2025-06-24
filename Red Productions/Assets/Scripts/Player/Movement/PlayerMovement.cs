@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        animator.SetFloat("speed", moveInput.magnitude);
+        animator.SetFloat("Speed", moveInput.magnitude);
         if (moveInput == Vector2.zero)
             return;
 

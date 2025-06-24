@@ -47,7 +47,7 @@ public class TomatoLauncher : MonoBehaviour
 
     private void Shoot()
     {
-        animator.SetTrigger("shoot");
+        animator.SetTrigger("Shoot");
         //instantiate the tomato prefab at the launch point with the rotation of the launch point and putting it in an variabel
         GameObject projectile = Instantiate(tomatoPrefab, launchPoint.position, launchPoint.rotation);
         TomatoProjectile projectileComponent = projectile.GetComponent<TomatoProjectile>();

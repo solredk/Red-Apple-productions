@@ -68,7 +68,7 @@ public class PlayerHealth : HealthSystem
         {
             Debug.Log("Player died, disabling collider and playing death animation");
             gameObject.GetComponent<Collider>().enabled = false;
-            Animator.SetTrigger("died");
+            Animator.SetTrigger("Died");
         }
 
         UpdateHealthUI(Color.red, Color.green);
