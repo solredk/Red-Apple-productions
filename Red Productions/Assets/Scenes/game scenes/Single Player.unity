@@ -5392,8 +5392,7 @@ Transform:
   m_LocalPosition: {x: 0.37, y: 0.23, z: 0.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1610413687}
+  m_Children: []
   m_Father: {fileID: 1311707487}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &811265205
@@ -8058,7 +8057,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 811265203}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5356786768033583026, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
       propertyPath: m_Drag
@@ -8106,15 +8105,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.071245
+      value: -6.031245
       objectReference: {fileID: 0}
     - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9299998
+      value: 2.63
       objectReference: {fileID: 0}
     - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8899999
+      value: 11.95
       objectReference: {fileID: 0}
     - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10949,11 +10948,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredients: 2
   type: 0
---- !u!4 &1610413687 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
-  m_PrefabInstance: {fileID: 1214743618}
-  m_PrefabAsset: {fileID: 0}
 --- !u!153 &1610413688
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -10962,7 +10956,7 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610413678}
   serializedVersion: 4
-  m_ConnectedBody: {fileID: 1311707488}
+  m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
@@ -18992,6 +18986,7 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1214743618}
   - {fileID: 939145617}
   - {fileID: 1972361190}
   - {fileID: 2029691439}
