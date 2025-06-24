@@ -4,7 +4,6 @@ using UnityEngine;
 public class TomatoProjectile : MonoBehaviour
 {
     [SerializeField] private  GameObject damagePopUp;
-    [SerializeField] private GameObject blood;
     [SerializeField] private GameObject tomatoSplatter;
 
     public int playerIndex = 0;
@@ -40,8 +39,6 @@ public class TomatoProjectile : MonoBehaviour
 
                 // make the enemy take damage
                 healthSystem.TakeDamage(DamageOutput);
-
-                Instantiate(blood, spawnpoint, Quaternion.identity);
             }
         }
 
