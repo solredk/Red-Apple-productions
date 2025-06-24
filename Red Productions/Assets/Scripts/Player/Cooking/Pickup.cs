@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    [SerializeField] private TomatoLauncher weapon;
 
+    [SerializeField] public Transform pickupSlot;
     [SerializeField] private Transform pickupParent;
     [SerializeField] private Transform playerCameraTransform;
 
@@ -20,9 +20,16 @@ public class Pickup : MonoBehaviour
     [SerializeField] private float minDistance = 1f;
     [SerializeField] private float maxDistance = 3f;
 
+    // Item follow parameters
+    [SerializeField] private float followSpeed = 12f;
+    [SerializeField] private float rotationLerpSpeed = 8f;
+    [SerializeField] private bool isHolding = false;
+
     private RaycastHit hit;
 
     private float currentDistance;
+    private Vector3 targetPosition;
+    private Quaternion targetRotation;
 
     void Start()
     {
@@ -40,9 +47,21 @@ public class Pickup : MonoBehaviour
             hit.collider.GetComponent<HighLight>()?.ToggleHighLight(false);
         }
 
+        // Handle held item
         if (inHandItem != null)
         {
-            inHandItem.transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.Self);
+            if (!isHolding)
+            {
+                // Regular rotation for when not in "held" mode
+                inHandItem.transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.Self);
+            }
+            else
+            {
+                UpdatePickupParentPosition();
+                // Active holding behavior - make item follow the pickup slot
+                UpdateHeldItemPosition();
+
+            }
             return;
         }
 
@@ -58,22 +77,81 @@ public class Pickup : MonoBehaviour
         }
     }
 
+    private void UpdatePickupParentPosition()
+    {
+        // Position the pickup parent along the player's forward direction
+        Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
+        pickupParent.position = Vector3.Lerp(pickupParent.position, newPosition, followSpeed * Time.deltaTime);
+
+        // Make pickup parent rotation match the camera rotation exactly
+        pickupParent.rotation = Quaternion.Lerp(pickupParent.rotation, playerCameraTransform.rotation, rotationLerpSpeed * Time.deltaTime);
+
+        // Optional: Ensure the pickupSlot is properly aligned
+        // Remove this if pickupSlot is already correctly positioned in the parent's space
+        pickupSlot.rotation = playerCameraTransform.rotation;
+    }
+    private void UpdateHeldItemPosition()
+    {
+        if (inHandItem == null) return;
+
+        // Get the exact position along the ray where the item should be
+        Vector3 rayPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
+
+        // Use stronger vertical correction to prevent falling appearance
+        Vector3 currentPos = inHandItem.transform.position;
+        float horizontalLerp = followSpeed * Time.deltaTime;
+        float verticalLerp = followSpeed * 2f * Time.deltaTime; // Stronger Y correction
+
+        Vector3 newPos = new Vector3(
+            Mathf.Lerp(currentPos.x, pickupSlot.position.x, horizontalLerp),
+            Mathf.Lerp(currentPos.y, pickupSlot.position.y, verticalLerp),
+            Mathf.Lerp(currentPos.z, pickupSlot.position.z, horizontalLerp)
+        );
+
+        // Apply position and rotation
+        inHandItem.transform.position = newPos;
+        inHandItem.transform.rotation = Quaternion.Slerp(
+            inHandItem.transform.rotation,
+            playerCameraTransform.rotation,
+            rotationLerpSpeed * Time.deltaTime);
+    }
+
+    public void ToggleHoldMode()
+    {
+        // Toggle hold mode when E is pressed
+        if (inHandItem != null)
+        {
+            isHolding = !isHolding;
+
+            Rigidbody rb = inHandItem.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                if (isHolding)
+                {
+                    rb.isKinematic = true;
+                    rb.useGravity = false;
+                }
+                else
+                {
+                    rb.isKinematic = true;  // Still kinematic but not in hold mode
+                }
+            }
+        }
+    }
+
     public void AdjustDistance(float scrollDelta)
     {
         // Calculate potential new distance before applying it
         float potentialDistance = currentDistance - scrollDelta * scrollSensitivity;
 
-        // Check if the new position would be valid
-        // Only enforce minimum distance when scrolling inward (positive scrollDelta)
         if (scrollDelta <= 0 || potentialDistance >= minDistance)
         {
             // Apply the change
             currentDistance = potentialDistance;
 
-            // Ensure we stay within allowed distance range
             currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
 
-            // Update position based on new distance
+
             Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
             pickupParent.position = newPosition;
         }
@@ -94,19 +172,22 @@ public class Pickup : MonoBehaviour
             if (ingredient != null || food != null)
             {
                 inHandItem = hit.collider.gameObject;
-                inHandItem.transform.SetParent(pickupParent.transform, true);
+
+                // Initially parent to the pickup slot
+                inHandItem.transform.SetParent(pickupSlot.transform, true);
                 inHandItem.transform.localPosition = Vector3.zero;
                 inHandItem.transform.localRotation = Quaternion.identity;
 
-                // Set up physics components for better handling
+                // Set up physics components
                 RigidbodySetup();
-                ConfigJSetup();
+
+                // Automatically start in held mode when picking up
+                isHolding = true;
 
                 tomatoWeapon.SetActive(false);
             }
         }
     }
-
 
     public void Drop()
     {
@@ -115,20 +196,15 @@ public class Pickup : MonoBehaviour
             return;
 
         Rigidbody rb = inHandItem.GetComponent<Rigidbody>();
-        ConfigurableJoint joint = inHandItem.GetComponent<ConfigurableJoint>();
-
-        // Clean up the ConfigurableJoint if it exists
-        if (joint != null)
-            Destroy(joint);
 
         inHandItem.transform.SetParent(null);
+        isHolding = false;
 
         if (rb != null)
         {
             rb.isKinematic = false;
             rb.useGravity = true;
-            rb.angularDamping = 10f;        // Reset to default values
-            rb.linearDamping = 10f; // Reset to default values
+
         }
 
         inHandItem = null;
@@ -172,77 +248,12 @@ public class Pickup : MonoBehaviour
         if (rb == null)
             rb = inHandItem.AddComponent<Rigidbody>();
 
-
-        rb.mass = 0.5f;
-        rb.linearDamping = 25f;              // Linear damping
-        rb.angularDamping = 25f;       // Angular damping
+        rb.mass = 25f;
+        rb.linearDamping = 0.5f;
+        rb.angularDamping = 0.5f;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        rb.isKinematic = false;    
-        rb.useGravity = true;    
-    }
-
-    private void ConfigJSetup()
-    {
-        if (inHandItem == null) return;
-
-        // Remove any existing ConfigurableJoint
-        ConfigurableJoint existingJoint = inHandItem.GetComponent<ConfigurableJoint>();
-        if (existingJoint != null)
-            Destroy(existingJoint);
-
-        // Add new ConfigurableJoint
-        ConfigurableJoint joint = inHandItem.AddComponent<ConfigurableJoint>();
-
-        // Make sure the pickup parent has a rigidbody
-        Rigidbody parentRb = pickupParent.GetComponent<Rigidbody>();
-        if (parentRb == null)
-        {
-            parentRb = pickupParent.gameObject.AddComponent<Rigidbody>();
-            parentRb.isKinematic = true;
-            parentRb.useGravity = false;
-        }
-
-        // Connect to pickup parent
-        joint.connectedBody = parentRb;
-
-        // Configure joint with exact specifications
-        joint.autoConfigureConnectedAnchor = true;
-
-        // Lock all linear motion
-        joint.xMotion = ConfigurableJointMotion.Locked;
-        joint.yMotion = ConfigurableJointMotion.Locked;
-        joint.zMotion = ConfigurableJointMotion.Locked;
-
-        // Limited angular motion
-        joint.angularXMotion = ConfigurableJointMotion.Limited;
-        joint.angularYMotion = ConfigurableJointMotion.Limited;
-        joint.angularZMotion = ConfigurableJointMotion.Limited;
-
-        // Configure X-drive
-        JointDrive xDrive = joint.xDrive;
-        xDrive.positionSpring = 1000f;
-        xDrive.positionDamper = 500f;
-        xDrive.maximumForce = 2000f;
-        joint.xDrive = xDrive;
-
-        // Configure Y-drive
-        JointDrive yDrive = joint.yDrive;
-        yDrive.positionSpring = 1000f;
-        yDrive.positionDamper = 500f;
-        yDrive.maximumForce = 0f;
-        joint.yDrive = yDrive;
-
-        // Configure Z-drive
-        JointDrive zDrive = joint.zDrive;
-        zDrive.positionSpring = 1000f;
-        zDrive.positionDamper = 500f;
-        zDrive.maximumForce = 2000f;
-        joint.zDrive = zDrive;
-
-        // Configure X-limit - Fix for the spring property
-        SoftJointLimit angularXLimit = joint.highAngularXLimit;
-        angularXLimit.limit = 1000;
-        joint.highAngularXLimit = angularXLimit;
+        rb.isKinematic = true;
+        rb.useGravity = false;
     }
 }
