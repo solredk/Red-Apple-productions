@@ -30,7 +30,8 @@ public class PlayerHealth : HealthSystem
     public PlayerState playerState = PlayerState.alive;
 
     [SerializeField] private Animator Animator;
-        
+
+    [SerializeField] private Loadscene loadscene;
     private void Awake()
     {
         upgradeItem.amount = maxHealth;        
@@ -61,7 +62,7 @@ public class PlayerHealth : HealthSystem
         if (playerState == PlayerState.dead && !isCoop)
         {
             ScoreSystem.Instance.SaveData();
-            SceneManager.LoadScene(3);
+            loadscene.LoadScene();
         }
 
         else if (playerState == PlayerState.dead && isCoop)
