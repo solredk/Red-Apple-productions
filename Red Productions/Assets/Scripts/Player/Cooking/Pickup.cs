@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-
     [SerializeField] public Transform pickupSlot;
     [SerializeField] private Transform pickupParent;
     [SerializeField] private Transform playerCameraTransform;
@@ -28,8 +27,7 @@ public class Pickup : MonoBehaviour
     private RaycastHit hit;
 
     private float currentDistance;
-    private Vector3 targetPosition;
-    private Quaternion targetRotation;
+
 
     void Start()
     {
@@ -46,7 +44,6 @@ public class Pickup : MonoBehaviour
         {
             hit.collider.GetComponent<HighLight>()?.ToggleHighLight(false);
         }
-
         // Handle held item
         if (inHandItem != null)
         {
@@ -58,21 +55,45 @@ public class Pickup : MonoBehaviour
             else
             {
                 UpdatePickupParentPosition();
-                // Active holding behavior - make item follow the pickup slot
                 UpdateHeldItemPosition();
-
             }
             return;
         }
 
-        // Use Physics.Raycast with all layers
-        if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out hit, hitRange))
+        // First check for ingredients and food with pickableLayerMask
+        if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out hit, hitRange, pickableLayerMask))
         {
             // Only highlight if it has Ingredient or Food component
             if (hit.collider.GetComponent<Ingredient>() != null ||
                 hit.collider.GetComponent<Food>() != null)
             {
                 hit.collider.GetComponent<HighLight>()?.ToggleHighLight(true);
+            }
+        }
+
+        // Now check for cooking stations (use a separate raycast)
+        RaycastHit stationHit;
+        if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out stationHit, hitRange))
+        {
+            // Check for CookingStation first
+            CookingStation station = stationHit.collider.GetComponent<CookingStation>();
+            if (station != null)
+            {
+                station.ShowInteractionIndicator(true);
+            }
+            else
+            {
+                // Check nearby cooking stations
+                Collider[] nearbyColliders = Physics.OverlapSphere(stationHit.point, 3f);
+                foreach (Collider col in nearbyColliders)
+                {
+                    station = col.GetComponent<CookingStation>();
+                    if (station != null)
+                    {
+                        station.ShowInteractionIndicator(true);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -85,11 +106,8 @@ public class Pickup : MonoBehaviour
 
         // Make pickup parent rotation match the camera rotation exactly
         pickupParent.rotation = Quaternion.Lerp(pickupParent.rotation, playerCameraTransform.rotation, rotationLerpSpeed * Time.deltaTime);
-
-        // Optional: Ensure the pickupSlot is properly aligned
-        // Remove this if pickupSlot is already correctly positioned in the parent's space
-        pickupSlot.rotation = playerCameraTransform.rotation;
     }
+
     private void UpdateHeldItemPosition()
     {
         if (inHandItem == null) return;
@@ -204,37 +222,68 @@ public class Pickup : MonoBehaviour
         {
             rb.isKinematic = false;
             rb.useGravity = true;
-
         }
 
         inHandItem = null;
         tomatoWeapon.SetActive(true);
     }
 
-    public void Interact()
+    public void OnInteract()
     {
-        if (hit.collider != null)
-            Debug.Log(hit.collider.name);
+        Debug.LogError("PICKUP: OnInteract CALLED");
+
+        // Cast ray - use a special layer mask that includes EVERYTHING
+        RaycastHit interactHit;
+        int layerMask = ~0; // This means "everything"
+        bool hitSomething = Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out interactHit, hitRange, layerMask);
+
+        Debug.LogError($"Raycast hit something: {hitSomething}");
+
+        if (hitSomething)
         {
-            // First check if what we're looking at directly has CookingStation
-            CookingStation directStation = hit.collider.GetComponent<CookingStation>();
-            if (directStation != null)
+            Debug.LogError($"Hit object: {interactHit.collider.gameObject.name}");
+
+            // METHOD 1: Try direct component
+            CookingStation station = interactHit.collider.GetComponent<CookingStation>();
+
+            // METHOD 2: Try parent if needed
+            if (station == null && interactHit.collider.transform.parent != null)
             {
-                directStation.Interact();
-                return;
+                station = interactHit.collider.transform.parent.GetComponent<CookingStation>();
             }
 
-            // If not, check for nearby CookingStations
-            float checkRadius = 3f;
-            Collider[] nearbyColliders = Physics.OverlapSphere(hit.point, checkRadius);
-
-            foreach (Collider col in nearbyColliders)
+            // METHOD 3: Try GetComponentInParent (searches up the hierarchy)
+            if (station == null)
             {
-                CookingStation station = col.GetComponent<CookingStation>();
-                if (station != null)
+                station = interactHit.collider.GetComponentInParent<CookingStation>();
+            }
+
+            // METHOD 4: Check children of hit object
+            if (station == null)
+            {
+                station = interactHit.collider.GetComponentInChildren<CookingStation>();
+            }
+
+            if (station != null)
+            {
+                Debug.LogError($"Found CookingStation - Calling Interact()");
+                station.Interact();
+            }
+            else
+            {
+                Debug.LogError("No CookingStation found on hit object or related objects");
+
+                // METHOD 5: Last resort - check nearby area
+                Collider[] nearbyColliders = Physics.OverlapSphere(interactHit.point, 2f);
+                foreach (Collider col in nearbyColliders)
                 {
-                    station.Interact();
-                    return;
+                    CookingStation nearbyStation = col.GetComponentInParent<CookingStation>();
+                    if (nearbyStation != null)
+                    {
+                        Debug.LogError($"Found nearby CookingStation - Calling Interact()");
+                        nearbyStation.Interact();
+                        return;
+                    }
                 }
             }
         }

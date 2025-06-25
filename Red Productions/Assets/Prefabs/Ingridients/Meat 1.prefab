@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f31acec9fa7dba440b33c62d1a49916d, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f31acec9fa7dba440b33c62d1a49916d, type: 3}
       propertyPath: m_TagString
@@ -118,8 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a8b7412c8905f44804320e50644a3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredients: 0
-  type: 1
+  ingredients: 3
+  type: 0
 --- !u!65 &1411870330808892905
 BoxCollider:
   m_ObjectHideFlags: 0
