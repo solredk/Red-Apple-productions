@@ -4,30 +4,26 @@ using System.Collections;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [Header("Spawn Settings")]
+    [Header("the zombie prefab")]
     [SerializeField] private GameObject zombiePrefab;
-
+    [Header("the maximum amount of zombies that can be spawned at once")]
     [SerializeField] private int maxZombies = 10;
-    public int zombiesKilled;
+    
+    // the ammount of zombies that have been killed in the current wave
+    private int zombiesKilled;
 
+    //the amount of zombies that need to be killed to start the next wave
     private int waveRequirments = 10;
 
+    [Header("the time in between te zombies will randomly spawn")]
     [SerializeField] private float spawnIntervalMin = 1f;
     [SerializeField] private float spawnIntervalMax = 10f;
-
-    [Header("Spawn Area (World Space)")]
-    [SerializeField] private Vector3 spawnAreaCenter;
-    [SerializeField] private Vector3 spawnAreaSize;
 
     [SerializeField] private Enemybehavior enemyBehavior;
 
     private List<GameObject> spawnedZombies = new List<GameObject>();
 
     private int currentZombies = 0;
-
-    [SerializeField] private List<GameObject> players;
-    [SerializeField] private float safeDistanceFromPlayer = 1.5f;
-
 
     [Header("Jump In Points")]
     [SerializeField] private List<Transform> jumpInPoints;
@@ -47,14 +43,13 @@ public class WaveSpawner : MonoBehaviour
     private void Update()
     {
         if (zombiesKilled > waveRequirments)
+        {
             NextWave();
+        }
     }
 
     public IEnumerator SpawnLoop()
     {
-        if (players.Count == 0)
-            players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(spawnIntervalMin, spawnIntervalMax));
@@ -81,20 +76,29 @@ public class WaveSpawner : MonoBehaviour
 
     private void NextWave()
     {
+        // Reset the zombies killed counter
         zombiesKilled = 0;
+
+        // Increase the wave requirements by 1% to make it harder
         waveRequirments = Mathf.CeilToInt(waveRequirments * 1.01f);
 
+        //increase the current wave of the enemy behavior
         enemyBehavior.currentWave++;
 
+        //increase the kill reward
         enemyBehavior.reward += 5;
 
+        //increate the attack interval
         if (enemyBehavior.attackCooldown > 0.3f)
             enemyBehavior.attackCooldown *= 0.95f;
 
+        //increase the zombie health
         enemyBehavior.maxhealth = Mathf.CeilToInt(enemyBehavior.maxhealth * 1.2f);
 
+        //increase the zombie damage
         enemyBehavior.damage = Mathf.CeilToInt(enemyBehavior.damage * 1.15f);
 
+        //increase the zombie speed
         if (enemyBehavior.speed < 10f)
             enemyBehavior.speed *= 1.05f;
     }
@@ -113,25 +117,8 @@ public class WaveSpawner : MonoBehaviour
         enemyBehavior.speed = startSpeed;
     }
 
-    private void OnDrawGizmosSelected()
+    public void ZombieKilled()
     {
-        // Spawn area
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(spawnAreaCenter, spawnAreaSize);
-
-        // No spawn zone
-        Gizmos.color = new Color(1f, 0f, 0f, 0.25f);
-
-
-        // Jump in points
-        if (jumpInPoints != null)
-        {
-            Gizmos.color = Color.green;
-            foreach (var t in jumpInPoints)
-            {
-                if (t != null)
-                    Gizmos.DrawSphere(t.position, 0.5f);
-            }
-        }
+        zombiesKilled++;
     }
 }
