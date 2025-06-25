@@ -14,27 +14,23 @@ public class InputManager : MonoBehaviour
     private Vector2 lookInput;
     private Vector2 ScrollInput;
 
-    public CurrentObjectType currentObjectType;
+    [Header("Player input Components")]
+    [SerializeField] private PlayerMovement PlayerMovement;
+    [SerializeField] private PlayerLook playerLook;
+    [SerializeField] private PlayerInputManager playerInputManager;
+
+    [Header("Health Component")]
+    [SerializeField] private PlayerHealth playerHealth;
+
+    [Header("Weapon Component")]
+    [SerializeField] private TomatoLauncher tomatoLauncher;
+
+    [Header("Pickup Component")]
+    [SerializeField] private Pickup pickup;
+
 
     private Gamepad gamepad;
 
-    private GameObject manager;
-
-    [SerializeField] private PlayerMovement PlayerMovement;
-    [SerializeField] private TomatoLauncher tomatoLauncher;
-    [SerializeField] private PlayerHealth playerHealth;
-    [SerializeField] private PlayerLook playerLook;
-    [SerializeField] private Pickup pickup;
-
-    private PlayerInputManager playerInputManager;
-
-
-
-    private void Start()
-    {
-        manager = GameObject.FindGameObjectWithTag("Manager");     
-        playerInputManager = manager.GetComponent<PlayerInputManager>();
-    }
     public void DoShooting(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
@@ -122,7 +118,7 @@ public class InputManager : MonoBehaviour
             return;
         if (context.performed && pickup != null)
         {
-            pickup.Interact();
+            pickup.OnInteract();
             Debug.Log("Interacted");
         }
 

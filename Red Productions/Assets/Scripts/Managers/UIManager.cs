@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class UIManager : MonoBehaviour
     [Header("single player en co-op settings")]   
     [SerializeField] private GameObject pauseCanvas;    
     
-    [SerializeField] private GameObject lastButton;
 
     [SerializeField] private EventSystem eventSystem;   
     
@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject lobbyCanvas;
     [SerializeField] private PlayerInputManager playerInputManager;
     [SerializeField] private TextMeshProUGUI PlayerCountText;
+
+    [SerializeField] private GameObject singlePlayerButton;
+    [SerializeField] private Button lastButton;
 
     private bool isPaused = false;
 
@@ -58,12 +61,18 @@ public class UIManager : MonoBehaviour
         // Check if the current selected game object is null and set it to the last button pressed
         if (eventSystem.currentSelectedGameObject == null && lastButton != null)
         {
-            eventSystem.SetSelectedGameObject(lastButton);
+            if (lastButton.interactable)
+            eventSystem.SetSelectedGameObject(lastButton.gameObject);
+            else
+            {
+                eventSystem.SetSelectedGameObject(singlePlayerButton);
+            }
+
         }
         else
         {
             // If the current selected game object is not null, set the last button to the current selected game object
-            lastButton = eventSystem.currentSelectedGameObject;
+            lastButton = eventSystem.currentSelectedGameObject.GetComponent<Button>();
         }
     }
 

@@ -80,38 +80,44 @@ public class IngredientManager : MonoBehaviour
         return spawnedIngredients;
     }
 
-    public bool CheckIngredientsInRadius(Ingredient.IngredientType type, Vector3 center)
+ public bool CheckIngredientsInRadius(Ingredient.IngredientType type, Vector3 center)
+{
+    if (!groupDictionary.TryGetValue(type, out IngredientGroup group))
     {
-        if (!groupDictionary.TryGetValue(type, out IngredientGroup group))
+        Debug.LogError(" No group found for type");
+        return false;
+    }
+
+    Collider[] colliders = Physics.OverlapSphere(center, ingredientCheckRadius, ingredientLayer);
+    List<Ingredient.Ingredients> foundIngredients = new List<Ingredient.Ingredients>();
+    
+    foreach (Collider collider in colliders)
+    {
+        Ingredient ingredient = collider.GetComponent<Ingredient>();
+        if (ingredient != null)
         {
-            Debug.LogError(" No group found for type");
-            return false;
-        }
-
-        Collider[] colliders = Physics.OverlapSphere(center, ingredientCheckRadius, ingredientLayer);
-
-        // Use HashSet instead of List to automatically handle duplicates
-        HashSet<Ingredient.Ingredients> foundIngredients = new HashSet<Ingredient.Ingredients>();
-
-        foreach (Collider collider in colliders)
-        {
-            Ingredient ingredient = collider.GetComponent<Ingredient>();
-            if (ingredient != null)
+                foreach (Ingredient.Ingredients ing in group.requiredIngredients.Keys)
             {
-                foreach (KeyValuePair<Ingredient.Ingredients, int> pair in group.requiredIngredients)
+                System.Reflection.FieldInfo field = ingredient.GetType().GetField("ingredients");
+                if (field != null)
                 {
-                    if (ingredient.ingredients == pair.Key)
+                    object ingredientType = field.GetValue(ingredient);
+                    if (ingredientType is Ingredient.Ingredients && (Ingredient.Ingredients)ingredientType == ing)
                     {
-                        foundIngredients.Add(ingredient.ingredients);
+                        foundIngredients.Add(ing);
+                        Debug.Log($"Found ingredient: {ing} for recipe {type}");
                     }
                 }
             }
         }
-
-        // Check if we found all the required ingredients
-        int foundCount = foundIngredients.Count;
-        return foundCount >= group.requiredIngredients.Count;
     }
+
+    int foundCount = foundIngredients.Count;
+    bool hasAllIngredients = foundCount >= group.requiredIngredients.Count;
+    Debug.Log($"Recipe {type}: Found {foundCount}/{group.requiredIngredients.Count} required ingredients");
+    
+    return hasAllIngredients;
+}
 
     public float GetCheckRadius()
     {
