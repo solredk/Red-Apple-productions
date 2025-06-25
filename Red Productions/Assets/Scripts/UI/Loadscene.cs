@@ -39,11 +39,8 @@ public class Loadscene : MonoBehaviour
         GetComponent<Button>().interactable = false;
 
         singlePlayerButton.SetActive(true);
-        singlePlayerButton.GetComponent<Animator>().SetTrigger("FadeIn");
 
         //coOpPlayerButton.SetActive(true);
-        //coOpPlayerButton.GetComponent<Animator>().SetTrigger("FadeIn");
-        
     }
 
 

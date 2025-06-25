@@ -51,7 +51,7 @@ public class ScoreSystem : MonoBehaviour
     }
     public void AddScore(int extraScore)
     {
-        waveSpawner.zombiesKilled++;
+        waveSpawner.ZombieKilled();
 
         score += extraScore;
 
