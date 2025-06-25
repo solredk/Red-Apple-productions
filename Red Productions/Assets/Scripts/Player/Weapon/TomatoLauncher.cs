@@ -22,7 +22,7 @@ public class TomatoLauncher : MonoBehaviour
     public bool controllerActive;
 
     private  float rumbleDuration = 0.2f; 
-    private float fireRate;
+    [SerializeField] private float fireRate;
     private int damage;
 
     private float CooldownTimer;
