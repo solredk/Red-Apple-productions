@@ -122,7 +122,7 @@ public class InputManager : MonoBehaviour
             return;
         if (context.performed && pickup != null)
         {
-            pickup.Interact();
+            pickup.OnInteract();
             Debug.Log("Interacted");
         }
 
