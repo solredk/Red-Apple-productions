@@ -15844,7 +15844,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
-  inputManager: {fileID: 0}
   waveSpawner: {fileID: 1284033193}
   SecondPlayer: {fileID: 0}
   playerInputManager: {fileID: 0}
@@ -15861,12 +15860,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseCanvas: {fileID: 1001594208}
+  lastButton: {fileID: 0}
   eventSystem: {fileID: 1009901665}
   lobbyCanvas: {fileID: 0}
   playerInputManager: {fileID: 0}
   PlayerCountText: {fileID: 0}
-  singlePlayerButton: {fileID: 0}
-  lastButton: {fileID: 0}
 --- !u!114 &1284033197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26298,11 +26296,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9de6ac8433c2abc4e97a1a2dc00dd743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentObjectType: 0
   PlayerMovement: {fileID: 5941767276399812959}
-  playerLook: {fileID: 5361380435264603791}
-  playerInputManager: {fileID: 0}
-  playerHealth: {fileID: 7015184532209951219}
   tomatoLauncher: {fileID: 903461377530480404}
+  playerHealth: {fileID: 7015184532209951219}
+  playerLook: {fileID: 5361380435264603791}
   pickup: {fileID: 755003693}
 --- !u!4 &2620675316159502124
 Transform:
@@ -27986,12 +27984,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889701463150773553}
-  - component: {fileID: 8714108275602597144}
   - component: {fileID: 2038359908293581504}
-  - component: {fileID: 3819935650093070758}
+  - component: {fileID: 8714108275602597144}
   - component: {fileID: 5941767276399812959}
   - component: {fileID: 2522851621034965825}
   - component: {fileID: 7015184532209951219}
+  - component: {fileID: 3819935650093070758}
   - component: {fileID: 755003693}
   - component: {fileID: 8714108275602597145}
   m_Layer: 0
@@ -28239,11 +28237,15 @@ MonoBehaviour:
   backHealthBar: {fileID: 246067407404600884}
   lerpTimer: 0
   chipSpeed: 2
-  Animator: {fileID: 1907569604676840153}
+  deathScreen: {fileID: 2924618337581545886}
+  inputManager: {fileID: 2522851621034965825}
+  healCooldown: 10
+  isCoop: 0
   healthText: {fileID: 262947918}
   upgradeItem: {fileID: 11400000, guid: 20731f7ed05af9640b9cef1070239caf, type: 2}
-  loadscene: {fileID: 8714108275602597145}
   playerState: 0
+  Animator: {fileID: 1907569604676840153}
+  loadscene: {fileID: 8714108275602597145}
 --- !u!1 &7024239914132553139
 GameObject:
   m_ObjectHideFlags: 0
