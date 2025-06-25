@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public GameMode gameMode;
 
+
+    [SerializeField] private InputManager inputManager;
     [Header("single player en co-op settings")]
     [SerializeField] private WaveSpawner waveSpawner;
 

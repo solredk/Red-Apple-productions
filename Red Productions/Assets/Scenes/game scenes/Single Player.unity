@@ -3144,75 +3144,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7136760939158760132, guid: 03643ebdc2a935e478efc2f0c2abaf77, type: 3}
---- !u!1001 &261175524
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -23.331768
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.1977707
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351439100047984413, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3164392041167936935, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
-      propertyPath: m_Name
-      value: stoel We are cooked prefab
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b7d078a31d33d9a4ca121b3316294132, type: 3}
 --- !u!1 &262947917
 GameObject:
   m_ObjectHideFlags: 0
@@ -8085,6 +8016,7 @@ MonoBehaviour:
   ingredientManager: {fileID: 425787736}
   finalProductSpawnPoint: {fileID: 139609484}
   destroyIngredientsOnComplete: 1
+  interactionSprite: {fileID: 0}
 --- !u!65 &789626198
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13627,6 +13559,7 @@ MonoBehaviour:
   ingredientManager: {fileID: 425787736}
   finalProductSpawnPoint: {fileID: 1569828200}
   destroyIngredientsOnComplete: 1
+  interactionSprite: {fileID: 0}
 --- !u!65 &1191561151
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15584,6 +15517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
+  inputManager: {fileID: 0}
   waveSpawner: {fileID: 1284033193}
   SecondPlayer: {fileID: 0}
   playerInputManager: {fileID: 0}
@@ -15600,11 +15534,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseCanvas: {fileID: 1001594208}
-  lastButton: {fileID: 0}
   eventSystem: {fileID: 1009901665}
   lobbyCanvas: {fileID: 0}
   playerInputManager: {fileID: 0}
   PlayerCountText: {fileID: 0}
+  singlePlayerButton: {fileID: 0}
+  lastButton: {fileID: 0}
 --- !u!114 &1284033197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22284,6 +22219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneIndex: 0
   Animator: {fileID: 0}
+  singlePlayerButton: {fileID: 0}
+  coOpPlayerButton: {fileID: 0}
 --- !u!114 &1883431632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25984,11 +25921,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9de6ac8433c2abc4e97a1a2dc00dd743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentObjectType: 0
   PlayerMovement: {fileID: 5941767276399812959}
-  tomatoLauncher: {fileID: 903461377530480404}
-  playerHealth: {fileID: 7015184532209951219}
   playerLook: {fileID: 5361380435264603791}
+  playerInputManager: {fileID: 0}
+  playerHealth: {fileID: 7015184532209951219}
+  tomatoLauncher: {fileID: 903461377530480404}
   pickup: {fileID: 755003693}
 --- !u!4 &2620675316159502124
 Transform:
@@ -27672,12 +27609,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889701463150773553}
-  - component: {fileID: 2038359908293581504}
   - component: {fileID: 8714108275602597144}
+  - component: {fileID: 2038359908293581504}
+  - component: {fileID: 3819935650093070758}
   - component: {fileID: 5941767276399812959}
   - component: {fileID: 2522851621034965825}
   - component: {fileID: 7015184532209951219}
-  - component: {fileID: 3819935650093070758}
   - component: {fileID: 755003693}
   - component: {fileID: 8714108275602597145}
   m_Layer: 0
@@ -27925,15 +27862,11 @@ MonoBehaviour:
   backHealthBar: {fileID: 246067407404600884}
   lerpTimer: 0
   chipSpeed: 2
-  deathScreen: {fileID: 2924618337581545886}
-  inputManager: {fileID: 2522851621034965825}
-  healCooldown: 10
-  isCoop: 0
+  Animator: {fileID: 1907569604676840153}
   healthText: {fileID: 262947918}
   upgradeItem: {fileID: 11400000, guid: 20731f7ed05af9640b9cef1070239caf, type: 2}
-  playerState: 0
-  Animator: {fileID: 1907569604676840153}
   loadscene: {fileID: 8714108275602597145}
+  playerState: 0
 --- !u!1 &7024239914132553139
 GameObject:
   m_ObjectHideFlags: 0
@@ -29090,6 +29023,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneIndex: 3
   Animator: {fileID: 883719527}
+  singlePlayerButton: {fileID: 0}
+  coOpPlayerButton: {fileID: 0}
 --- !u!137 &8742836344954306487
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -29378,4 +29313,3 @@ SceneRoots:
   - {fileID: 341959104}
   - {fileID: 796574762}
   - {fileID: 813425976}
-  - {fileID: 261175524}

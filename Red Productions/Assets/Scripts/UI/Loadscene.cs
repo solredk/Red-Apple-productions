@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class Loadscene : MonoBehaviour
 {
     [Header("scene index")]
@@ -35,6 +36,8 @@ public class Loadscene : MonoBehaviour
 
     public void ButtonAnimation()
     {
+        GetComponent<Button>().interactable = false;
+
         singlePlayerButton.SetActive(true);
         singlePlayerButton.GetComponent<Animator>().SetTrigger("FadeIn");
 

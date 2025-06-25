@@ -14,28 +14,29 @@ public enum PlayerState
 
 public class PlayerHealth : HealthSystem
 {
-    [Header("health bar display")]
-    [SerializeField] private Image deathScreen;
-
-    [SerializeField] private InputManager inputManager;
-
-    [SerializeField] private float healCooldown = 5f;
-
-    [SerializeField] private bool isCoop;
-
-    [SerializeField] private TextMeshProUGUI healthText;
-
-    [SerializeField] private UpgradeItem upgradeItem;
-
-    public PlayerState playerState = PlayerState.alive;
-
+    [Header("Player Animator Component")]
     [SerializeField] private Animator Animator;
 
+    [Header("Health Text Component")]
+    [SerializeField] private TextMeshProUGUI healthText;
+
+    [Header("Player Health Upgrade Component")]
+    [SerializeField] private UpgradeItem upgradeItem;
+    
+    [Header("LoadScene Component")]
     [SerializeField] private Loadscene loadscene;
+
+    [Header("Playerstate Component")]
+    public PlayerState playerState;
+
+    private float healCooldown = 5f;
+
+
     private void Awake()
     {
         upgradeItem.amount = maxHealth;        
     }
+
     private void Update()
     {
 
@@ -59,13 +60,13 @@ public class PlayerHealth : HealthSystem
             }
         }
 
-        if (playerState == PlayerState.dead && !isCoop)
+        if (playerState == PlayerState.dead && GameManager.Instance.gameMode == GameMode.SinglePlayer)
         {
             ScoreSystem.Instance.SaveData();
             loadscene.LoadScene();
         }
 
-        else if (playerState == PlayerState.dead && isCoop)
+        else if (playerState == PlayerState.dead && GameManager.Instance.gameMode == GameMode.CoOp)
         {
             Debug.Log("Player died, disabling collider and playing death animation");
             gameObject.GetComponent<Collider>().enabled = false;

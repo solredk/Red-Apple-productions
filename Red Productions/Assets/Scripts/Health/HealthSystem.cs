@@ -3,12 +3,15 @@ using UnityEngine.UI;
 
 public abstract class HealthSystem : MonoBehaviour
 {
+    [Header("Health Ammounts")]
     [SerializeField] protected float currentHealth;
     [SerializeField] protected float maxHealth;
 
+    [Header("Health Bar Components")]
     [SerializeField] protected Image frontHealthBar;
     [SerializeField] protected Image backHealthBar;
 
+    [Header("Health Chip Components")]
     [SerializeField] protected float lerpTimer;
     [SerializeField] protected float chipSpeed = 2f;
     private void Start()
