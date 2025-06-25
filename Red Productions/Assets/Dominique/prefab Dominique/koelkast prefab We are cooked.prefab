@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 880587dc85c57db4783893629f1df801, type: 2}
     - target: {fileID: 919132149155446097, guid: 8a8d0e2ebc9fda84c82ed4d16caffdba, type: 3}
       propertyPath: m_Name
-      value: koelkast We are cooked
+      value: koelkast prefab We are cooked
       objectReference: {fileID: 0}
     - target: {fileID: 1129496810705857465, guid: 8a8d0e2ebc9fda84c82ed4d16caffdba, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -103,5 +103,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8a8d0e2ebc9fda84c82ed4d16caffdba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 418303323692546899}
   m_SourcePrefab: {fileID: 100100000, guid: 8a8d0e2ebc9fda84c82ed4d16caffdba, type: 3}
+--- !u!1 &3260089073372307443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8a8d0e2ebc9fda84c82ed4d16caffdba, type: 3}
+  m_PrefabInstance: {fileID: 2449747557974287010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &418303323692546899
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260089073372307443}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
