@@ -10,6 +10,10 @@ public class Loadscene : MonoBehaviour
 
     private float timer;
 
+    [SerializeField] private GameObject singlePlayerButton;
+    [SerializeField] private GameObject coOpPlayerButton;
+
+
     public void LoadScene()
     {
         //resetting the time scale to 1
@@ -28,6 +32,19 @@ public class Loadscene : MonoBehaviour
         // Load the scene after the animation
         SceneManager.LoadScene(sceneIndex);
     }
+
+    public void ButtonAnimation()
+    {
+        singlePlayerButton.SetActive(true);
+        singlePlayerButton.GetComponent<Animator>().SetTrigger("FadeIn");
+
+        //coOpPlayerButton.SetActive(true);
+        //coOpPlayerButton.GetComponent<Animator>().SetTrigger("FadeIn");
+        
+    }
+
+
+
 }
 
 
