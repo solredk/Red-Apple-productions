@@ -27419,9 +27419,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1836365274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d5f227b7a5e2054da7974af358a513d, type: 3}
+  m_Script: {fileID: 11500000, guid: f1867f44df905944b979f650c760f1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useEvents: 0
+  promptMessage: Hold Q to
+  recipeType: 0
+  ingredientManager: {fileID: 0}
+  finalProductSpawnPoint: {fileID: 0}
+  destroyIngredientsOnComplete: 1
+  interactionSprite: {fileID: 0}
 --- !u!1001 &1843986430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32895,7 +32902,11 @@ PrefabInstance:
     - target: {fileID: 3412366682820255256, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: Animator
       value: 
-      objectReference: {fileID: 1004574763340546796}
+      objectReference: {fileID: 883719527}
+    - target: {fileID: 3412366682820255256, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
+      propertyPath: singlePlayerButton
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4229125001414389180, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: tomatoWeapon
       value: 
@@ -32931,11 +32942,6 @@ MonoBehaviour:
 --- !u!1 &1004574763340546795 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3433165790410332388, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
-  m_PrefabInstance: {fileID: 1004574763340546793}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1004574763340546796 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8930380815106923291, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
   m_PrefabInstance: {fileID: 1004574763340546793}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
