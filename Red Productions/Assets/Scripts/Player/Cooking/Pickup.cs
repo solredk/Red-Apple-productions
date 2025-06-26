@@ -250,40 +250,7 @@ public class Pickup : MonoBehaviour
         tomatoWeapon.SetActive(true);
     }
 
-    public void OnInteract()
-    {
-        Debug.LogError("PICKUP: OnInteract CALLED");
 
-
-        RaycastHit interactHit;
-        
-        bool hitSomething = Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out interactHit, hitRange, detectableLayerMask);
-
-        Debug.LogError($"Raycast hit something: {hitSomething}");
-
-        if (hitSomething)
-        {
-            Debug.LogError($"Hit object: {interactHit.collider.gameObject.name}");
-
-           
-            CookingStation station = interactHit.collider.GetComponent<CookingStation>();
-            IngredientSpawner ingredientSpawner = interactHit.collider.GetComponent<IngredientSpawner>();
-            if (station != null)
-            {
-                Debug.LogError($"Found CookingStation - Calling Interact()");
-                station.Interact();
-            }
-            if (ingredientSpawner != null)
-            {
-                ingredientSpawner.Interact();
-            }
-            
-            else
-            {
-                Debug.LogError("Nothing  found ");
-            }
-        }
-    }
     private void RigidbodySetup()
     {
         if (inHandItem == null) return;

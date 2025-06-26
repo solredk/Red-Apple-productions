@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CookingStation : MonoBehaviour, IIngredientCheckListener
+public class CookingStation : Interactable, IIngredientCheckListener
 {
     [SerializeField] private Ingredient.IngredientType recipeType;
     [SerializeField] private IngredientManager ingredientManager;
@@ -20,6 +20,10 @@ public class CookingStation : MonoBehaviour, IIngredientCheckListener
             finalProductSpawnPoint = transform;
         if (interactionSprite != null)
             interactionSprite.SetActive(false);
+
+        // Set default prompt message if none is provided
+        if (string.IsNullOrEmpty(promptMessage))
+            promptMessage = $"Hold Q to cook {recipeType}";
 
         // Make sure we have an IngredientManager
         if (ingredientManager == null)
@@ -97,12 +101,13 @@ public class CookingStation : MonoBehaviour, IIngredientCheckListener
         // Use the manager to check if we have all requirements
         bool hasAllIngredients = ingredientManager.CheckIngredientsInRadius(recipeType, transform.position);
         Debug.LogError($"<color=yellow>[CookingStation]</color> Has all ingredients: {hasAllIngredients}");
-
-       
     }
 
-    public void Interact()
+    // Override the Interact method from the Interactable base class
+    protected override void Interact()
     {
+        base.Interact(); // Call base implementation to handle events if needed
+        
         Debug.LogError($"<color=red>[CookingStation]</color> INTERACT CALLED on {gameObject.name}");
 
         if (!isInteractionActive)
