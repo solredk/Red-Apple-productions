@@ -3184,8 +3184,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4455,6 +4455,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5145948401840135867, guid: 9bd03ff17fd6f3f4ebaa8f49d6e10027, type: 3}
       insertIndex: -1
       addedObject: {fileID: 780504725}
+    - targetCorrespondingSourceObject: {fileID: 5145948401840135867, guid: 9bd03ff17fd6f3f4ebaa8f49d6e10027, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 780504727}
   m_SourcePrefab: {fileID: 100100000, guid: 9bd03ff17fd6f3f4ebaa8f49d6e10027, type: 3}
 --- !u!1001 &343274211
 PrefabInstance:
@@ -8238,6 +8241,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5485881746410685441, guid: 9bd03ff17fd6f3f4ebaa8f49d6e10027, type: 3}
   m_PrefabInstance: {fileID: 341959104}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &780504727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780504724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c313b5bd6f3ac42a3a6149902b730d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useEvents: 0
+  promptMessage: Press Q to spawn Bread
 --- !u!1001 &785651643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15798,14 +15815,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombiePrefab: {fileID: 280956781658265001, guid: f75be445e0802ef48897cd227d48877c, type: 3}
   maxZombies: 4
-  zombiesKilled: 0
   spawnIntervalMin: 5
   spawnIntervalMax: 9
-  spawnAreaCenter: {x: 0, y: 0, z: 0}
-  spawnAreaSize: {x: 50, y: 5, z: 50}
   enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
-  players: []
-  safeDistanceFromPlayer: 1.5
   jumpInPoints:
   - {fileID: 612186810}
   - {fileID: 1247526116}
@@ -15844,6 +15856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
+  inputManager: {fileID: 0}
   waveSpawner: {fileID: 1284033193}
   SecondPlayer: {fileID: 0}
   playerInputManager: {fileID: 0}
@@ -15860,11 +15873,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseCanvas: {fileID: 1001594208}
-  lastButton: {fileID: 0}
   eventSystem: {fileID: 1009901665}
   lobbyCanvas: {fileID: 0}
   playerInputManager: {fileID: 0}
   PlayerCountText: {fileID: 0}
+  singlePlayerButton: {fileID: 0}
+  lastButton: {fileID: 0}
 --- !u!114 &1284033197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26296,11 +26310,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9de6ac8433c2abc4e97a1a2dc00dd743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentObjectType: 0
   PlayerMovement: {fileID: 5941767276399812959}
-  tomatoLauncher: {fileID: 903461377530480404}
-  playerHealth: {fileID: 7015184532209951219}
   playerLook: {fileID: 5361380435264603791}
+  playerInputManager: {fileID: 0}
+  playerHealth: {fileID: 7015184532209951219}
+  tomatoLauncher: {fileID: 903461377530480404}
   pickup: {fileID: 755003693}
 --- !u!4 &2620675316159502124
 Transform:
@@ -27393,7 +27407,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
   controllerSensitivity: 100
+  cam: {fileID: 8399997351240485429}
   playerBody: {fileID: 1889701463150773553}
+  interactDistance: 3
+  interactLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  inputManager: {fileID: 0}
+  playerUI: {fileID: 0}
 --- !u!137 &5390834329098254483
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -27984,12 +28005,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889701463150773553}
-  - component: {fileID: 2038359908293581504}
   - component: {fileID: 8714108275602597144}
+  - component: {fileID: 2038359908293581504}
+  - component: {fileID: 3819935650093070758}
   - component: {fileID: 5941767276399812959}
   - component: {fileID: 2522851621034965825}
   - component: {fileID: 7015184532209951219}
-  - component: {fileID: 3819935650093070758}
   - component: {fileID: 755003693}
   - component: {fileID: 8714108275602597145}
   m_Layer: 0
@@ -28237,15 +28258,11 @@ MonoBehaviour:
   backHealthBar: {fileID: 246067407404600884}
   lerpTimer: 0
   chipSpeed: 2
-  deathScreen: {fileID: 2924618337581545886}
-  inputManager: {fileID: 2522851621034965825}
-  healCooldown: 10
-  isCoop: 0
+  Animator: {fileID: 1907569604676840153}
   healthText: {fileID: 262947918}
   upgradeItem: {fileID: 11400000, guid: 20731f7ed05af9640b9cef1070239caf, type: 2}
-  playerState: 0
-  Animator: {fileID: 1907569604676840153}
   loadscene: {fileID: 8714108275602597145}
+  playerState: 0
 --- !u!1 &7024239914132553139
 GameObject:
   m_ObjectHideFlags: 0
@@ -28404,8 +28421,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
