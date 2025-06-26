@@ -112,6 +112,16 @@ public class InputManager : MonoBehaviour
         if (context.performed && UIManager.Instance != null)
             UIManager.Instance.Pause();
     }
+
+
+    public void DoResume(InputAction.CallbackContext context)
+    {
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
+            return;
+
+        if (context.performed && UIManager.Instance != null)
+            UIManager.Instance.Resume();
+    }
     public void OnInteract(InputAction.CallbackContext context)
     {
         Debug.Log("InputManager.OnInteract called!");
