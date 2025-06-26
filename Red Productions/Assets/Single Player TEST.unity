@@ -27708,7 +27708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeed: 5
   gravity: -9.8
-  controller: {fileID: 0}
+  controller: {fileID: 2038359908293581504}
   animator: {fileID: 1907569604676840153}
 --- !u!114 &5956837295155744095
 MonoBehaviour:
