@@ -1626,6 +1626,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4758605235932999092, guid: fc8f60168a8ef5043b0a35318ca681c1, type: 3}
   m_PrefabInstance: {fileID: 1199908814}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &166588251
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -1180701864950837106, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: renderers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356786768033583026, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356786768033583026, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409634640750807269, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_Name
+      value: burger compleet We are cooked (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -24.620106
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0429142
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.6616483
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7899208048333410911, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
 --- !u!1 &170612968
 GameObject:
   m_ObjectHideFlags: 0
@@ -19186,9 +19255,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombiePrefab: {fileID: 280956781658265001, guid: f75be445e0802ef48897cd227d48877c, type: 3}
-  maxZombies: 5
-  spawnIntervalMin: 8
-  spawnIntervalMax: 12
+  maxZombies: 1
+  spawnIntervalMin: 10
+  spawnIntervalMax: 11
   enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}
   jumpInPoints:
   - {fileID: 612186810}
@@ -27389,8 +27458,56 @@ MonoBehaviour:
   deliveryRadius: 5.5
   foodLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   interactionSprite: {fileID: 0}
+--- !u!54 &1836365280
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836365274}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1836365281
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836365274}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.96616656, y: 1.2704825, z: 0.9336635}
+  m_Center: {x: -0.049574774, y: 0.63524127, z: -0.000000014901165}
 --- !u!1001 &1843986430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31660,6 +31777,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cash Register (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8684259864066437584, guid: 7f672a3719e51a94aa6a0b3f7fe4a5ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31667,6 +31788,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8684259864066437584, guid: 7f672a3719e51a94aa6a0b3f7fe4a5ed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1836365279}
+    - targetCorrespondingSourceObject: {fileID: 8684259864066437584, guid: 7f672a3719e51a94aa6a0b3f7fe4a5ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1836365281}
+    - targetCorrespondingSourceObject: {fileID: 8684259864066437584, guid: 7f672a3719e51a94aa6a0b3f7fe4a5ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1836365280}
   m_SourcePrefab: {fileID: 100100000, guid: 7f672a3719e51a94aa6a0b3f7fe4a5ed, type: 3}
 --- !u!4 &2069069122 stripped
 Transform:
@@ -32986,3 +33113,4 @@ SceneRoots:
   - {fileID: 8029026483321336573}
   - {fileID: 320733187}
   - {fileID: 1499657856}
+  - {fileID: 166588251}

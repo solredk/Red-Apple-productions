@@ -174,7 +174,7 @@ public class CookingStation : Interactable, IIngredientCheckListener
         Gizmos.color = new Color(0.2f, 0.5f, 1f, 1f);
         Gizmos.DrawWireSphere(transform.position, interactionRange);
     }
-
+    
 }
 
 

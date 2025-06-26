@@ -9,6 +9,10 @@ public class DeliverInteract : Interactable
 
     private void Start()
     {
+        // Set default prompt message
+        if (string.IsNullOrEmpty(promptMessage))
+            promptMessage = "Press Q to deliver food";
+
         // Hide interaction indicator by default
         if (interactionSprite != null)
             interactionSprite.SetActive(false);
@@ -48,6 +52,10 @@ public class DeliverInteract : Interactable
         if (deliveredCount > 0)
         {
             Debug.Log($"<color=green>[DeliverInteract]</color> Delivered {deliveredCount} food items! +{deliveredCount * 100} points");
+        }
+        else
+        {
+            Debug.Log("<color=orange>[DeliverInteract]</color> No food found to deliver!");
         }
     }
 
