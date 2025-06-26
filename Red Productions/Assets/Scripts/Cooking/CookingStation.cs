@@ -23,20 +23,7 @@ public class CookingStation : Interactable, IIngredientCheckListener
 
         // Set default prompt message if none is provided
         if (string.IsNullOrEmpty(promptMessage))
-            promptMessage = $"Hold Q to cook {recipeType}";
-
-        // Make sure we have an IngredientManager
-        if (ingredientManager == null)
-        {
-            // Try to find one in the scene
-            ingredientManager = GameObject.FindFirstObjectByType<IngredientManager>();
-
-            // Log appropriate message based on whether we found one
-            if (ingredientManager != null)
-                Debug.LogError($"<color=orange>[CookingStation]</color> Auto-assigned IngredientManager from scene");
-            else
-                Debug.LogError($"<color=red>[CookingStation]</color> WARNING: No IngredientManager found! Cooking won't work!");
-        }
+            promptMessage = $"Hold Q    to cook {recipeType}";
 
         Debug.Log($"<color=cyan>[CookingStation]</color> Initialized with recipe type: {recipeType}");
     }

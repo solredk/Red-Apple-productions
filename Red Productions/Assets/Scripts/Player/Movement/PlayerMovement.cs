@@ -6,51 +6,57 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float currentSpeed = 5f;
     [SerializeField] private float gravity = -9.8f;
 
-    [SerializeField] private CharacterController characterController;
+    [Header("Character Controle")]
+    [SerializeField] private CharacterController controller;
 
+    [Header("Animator")]
     [SerializeField] private Animator animator;
-
-    // [SerializeField] private Animator animator;
 
     private Vector3 playerVelocity;
 
+    private Vector2 moveInput;
+    
     private bool isGrounded;
 
-    private Vector2 moveInput;
 
     private void Update()
     {
-        animator.SetFloat("Speed", moveInput.magnitude);
-        if (moveInput == Vector2.zero)
-            return;
-
-        Moving();
-
         // Check if the player is falling below a certain height and reset position 
         if (transform.position.y < -10f)
         {
             transform.position = new Vector3(0, 1, 0);
-        }
+        }        
+        
+        //if no input, return imidiately
+        if (moveInput == Vector2.zero)
+            return;      
+
+        // the player starts the move animation
+        animator.SetFloat("Speed", moveInput.magnitude);
+
+        //call the move function
+        Moving();
     }
 
     public void Moving()
     {
-        isGrounded = characterController.isGrounded;
-        
+        // Check if the player is grounded
+        isGrounded = controller.isGrounded;
+
         if (isGrounded && playerVelocity.y < 0)
-            playerVelocity.y = -2f;  
+        {
+            playerVelocity.y = -2f;
+        }
 
-        float speed = new Vector3(characterController.velocity.x, 0, characterController.velocity.z).magnitude;
-        //animator.SetFloat("speed", speed);
-
-        //getting the input from the readvalue function
+        //checking the direction of the movement by calculating the input vector
         Vector3 moveDirection = new (moveInput.x, 0, moveInput.y);
 
-        characterController.Move(currentSpeed * Time.deltaTime * transform.TransformDirection(moveDirection));
+        //move the player in the direction of the input
+        controller.Move(currentSpeed * Time.deltaTime * transform.TransformDirection(moveDirection));
 
         playerVelocity.y += gravity * Time.deltaTime;
 
-        characterController.Move(playerVelocity * Time.deltaTime);
+        controller.Move(playerVelocity * Time.deltaTime);
     }
 
     public void ReadMoveVaulue(Vector2 input)

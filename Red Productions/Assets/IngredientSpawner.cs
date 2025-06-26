@@ -3,24 +3,30 @@ using UnityEngine;
 public class IngredientSpawner : Interactable
 {
     [Header("Spawner Settings")]
-    [SerializeField] private GameObject ingredientPrefab;
-    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private GameObject[] ingredientPrefabs; // Array of possible prefabs
+    [SerializeField] private Transform[] spawnPoints;        // Array of possible spawn points
     [SerializeField] private int costToSpawn = 5;
     [SerializeField] private float cooldownTime = 2f;
     [SerializeField] private GameObject interactionSprite;
+
+    [Header("Spawn Count")]
+    [SerializeField] private int minIngredientsPerSpawn = 1;
+    [SerializeField] private int maxIngredientsPerSpawn = 3;
 
     private bool canSpawn = true;
     private float cooldownTimer = 0f;
 
     private void Start()
     {
-        if (spawnPoint == null)
-            spawnPoint = transform;
+        // If no spawn points are defined, use this transform as default
+        if (spawnPoints == null || spawnPoints.Length == 0)
+        {
+            spawnPoints = new Transform[1];
+            spawnPoints[0] = transform;
+        }
 
         if (interactionSprite != null)
             interactionSprite.SetActive(false);
-
-     
     }
 
     private void Update()
@@ -45,7 +51,8 @@ public class IngredientSpawner : Interactable
 
     protected override void Interact()
     {
-        base.Interact();
+    
+
         Debug.LogError($"<color=blue>[IngredientSpawner]</color> Interact called on {gameObject.name}");
 
         if (!canSpawn)
@@ -60,14 +67,20 @@ public class IngredientSpawner : Interactable
             // Deduct points
             ScoreSystem.Instance.AddScore(-costToSpawn);
 
-            // Spawn the ingredient
-            SpawnIngredient();
+            // Determine how many ingredients to spawn
+            int spawnCount = Random.Range(minIngredientsPerSpawn, maxIngredientsPerSpawn + 1);
+
+            // Spawn multiple ingredients
+            for (int i = 0; i < spawnCount; i++)
+            {
+                SpawnIngredient();
+            }
+
+            Debug.LogError($"<color=green>[IngredientSpawner]</color> Spawned {spawnCount} ingredients and deducted {costToSpawn} points");
 
             // Set cooldown
             canSpawn = false;
             cooldownTimer = cooldownTime;
-
-            Debug.LogError($"<color=green>[IngredientSpawner]</color> Spawned ingredient and deducted {costToSpawn} points");
         }
         else
         {
@@ -77,28 +90,47 @@ public class IngredientSpawner : Interactable
 
     private void SpawnIngredient()
     {
-        if (ingredientPrefab == null)
+        // Check if we have prefabs to spawn
+        if (ingredientPrefabs == null || ingredientPrefabs.Length == 0)
         {
-            Debug.LogError("<color=red>[IngredientSpawner]</color> No ingredient prefab assigned!");
+            Debug.LogError("<color=red>[IngredientSpawner]</color> No ingredient prefabs assigned!");
             return;
         }
 
-        // Instantiate the ingredient at the spawn point
-        GameObject spawnedIngredient = Instantiate(ingredientPrefab, spawnPoint.position, spawnPoint.rotation);
+        // Randomly select a prefab and spawn point
+        GameObject selectedPrefab = ingredientPrefabs[Random.Range(0, ingredientPrefabs.Length)];
+        Transform selectedSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
+        // Instantiate the ingredient at the selected spawn point
+        GameObject spawnedIngredient = Instantiate(selectedPrefab, selectedSpawnPoint.position, selectedSpawnPoint.rotation);
+
+        // Apply force to the rigidbody with slight variation for each ingredient
         Rigidbody rb = spawnedIngredient.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.AddForce(Vector3.up * 2f + Random.insideUnitSphere * 1f, ForceMode.Impulse);
+            // Add some variation to the force to spread ingredients out
+            Vector3 randomForce = new Vector3(
+                Random.Range(-0.5f, 0.5f),
+                Random.Range(0.5f, 1.0f),
+                Random.Range(0.5f, 1.0f));
+
+            rb.AddForce(randomForce + Random.insideUnitSphere * 1f, ForceMode.Impulse);
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (spawnPoint != null)
+        // Draw all spawn points
+        if (spawnPoints != null)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(spawnPoint.position, 0.3f);
+            foreach (Transform point in spawnPoints)
+            {
+                if (point != null)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawWireSphere(point.position, 0.3f);
+                }
+            }
         }
     }
 }

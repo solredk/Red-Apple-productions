@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
+
+    [Header("UI Elements")]
+    [SerializeField] private GameObject regularCrosshair;
+    [SerializeField] private GameObject selectionCrosshair;
+
     [SerializeField] public Transform pickupSlot;
     [SerializeField] private Transform pickupParent;
     [SerializeField] private Transform playerCameraTransform;
+
 
     [SerializeField] private GameObject tomatoWeapon;
     [SerializeField] private GameObject inHandItem;
@@ -28,6 +34,7 @@ public class Pickup : MonoBehaviour
     private RaycastHit hit;
 
     private float currentDistance;
+    private bool showSelectionCrosshair = false;
 
 
     void Start()
@@ -35,10 +42,12 @@ public class Pickup : MonoBehaviour
         currentDistance = Vector3.Distance(pickupParent.position, playerCameraTransform.position);
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
         tomatoWeapon.SetActive(true);
+        UpdateCrosshair(false);
     }
 
     void Update()
     {
+        showSelectionCrosshair = false;
         Debug.DrawRay(playerCameraTransform.position, playerCameraTransform.forward * hitRange, Color.red);
 
         if (hit.collider != null)
@@ -59,7 +68,9 @@ public class Pickup : MonoBehaviour
                 UpdatePickupParentPosition();
                 UpdateHeldItemPosition();
             }
+            UpdateCrosshair(false);
             return;
+
         }
 
         // First check for ingredients and food with pickableLayerMask
@@ -70,6 +81,11 @@ public class Pickup : MonoBehaviour
                 hit.collider.GetComponent<Food>() != null)
             {
                 hit.collider.GetComponent<HighLight>()?.ToggleHighLight(true);
+                showSelectionCrosshair = true;
+            }
+            else
+            {
+                showSelectionCrosshair = false;
             }
         }
 
@@ -119,8 +135,17 @@ public class Pickup : MonoBehaviour
                 }
             }
         }
+        UpdateCrosshair(showSelectionCrosshair);
     }
 
+
+    private void UpdateCrosshair(bool showSelection)
+    {
+        if (regularCrosshair != null)
+            regularCrosshair.SetActive(!showSelection);
+        if (selectionCrosshair != null)
+            selectionCrosshair.SetActive(showSelection);
+    }
     private void UpdatePickupParentPosition()
     {
         // Position the pickup parent along the player's forward direction

@@ -10,7 +10,6 @@ public class UIManager : MonoBehaviour
 
     [Header("single player en co-op settings")]   
     [SerializeField] private GameObject pauseCanvas;    
-    
 
     [SerializeField] private EventSystem eventSystem;   
     
@@ -28,8 +27,10 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
 
-        if (pauseCanvas != null) 
-        pauseCanvas.SetActive(false);
+        if (pauseCanvas != null)
+        {
+            pauseCanvas.SetActive(false);
+        }
     }
 
     private void Update()
@@ -39,21 +40,25 @@ public class UIManager : MonoBehaviour
 
     public void Pause()
     {
-        // Check if the game is paused or not and toggle the pause state accordingly
+        if (isPaused)
+            return;
+
+        Debug.Log("Pause called!");
+        // If the game is not paused, set the time scale to 0 and show the pause menu and put the variable to true
+        Time.timeScale = 0f;
+        pauseCanvas.SetActive(true);
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
         if (!isPaused)
-        {
-            // If the game is not paused, set the time scale to 0 and show the pause menu and put the variable to true
-            isPaused = true;
-            Time.timeScale = 0f;
-            pauseCanvas.SetActive(true);
-        }
-        else if (isPaused)
-        {
-            // If the game is paused, set the time scale back to 1 and hide the pause menu and put the variable to false
-            isPaused = false;
-            Time.timeScale = 1f;
-            pauseCanvas.SetActive(false);
-        }
+            return;
+
+        Time.timeScale = 1f;
+        pauseCanvas.SetActive(false);
+        isPaused = true;
+
     }
 
     private void LastButtonPressed()
