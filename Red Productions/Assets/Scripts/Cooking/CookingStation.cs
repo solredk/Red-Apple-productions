@@ -9,10 +9,12 @@ public class CookingStation : Interactable, IIngredientCheckListener
     [SerializeField] private Transform finalProductSpawnPoint;
     [SerializeField] private bool destroyIngredientsOnComplete = true;
     [SerializeField] private GameObject interactionSprite;
+    [SerializeField] private float interactionRange = 3f;
 
     private bool isInteractionActive = false;
     private float lastLogTime = 0;
     private float logCooldown = 0.5f; // Check more frequently
+    public float InteractionRange = 0f;
 
     private void Start()
     {
@@ -21,9 +23,7 @@ public class CookingStation : Interactable, IIngredientCheckListener
         if (interactionSprite != null)
             interactionSprite.SetActive(false);
 
-        // Set default prompt message if none is provided
-        if (string.IsNullOrEmpty(promptMessage))
-            promptMessage = $"Hold Q    to cook {recipeType}";
+
 
         Debug.Log($"<color=cyan>[CookingStation]</color> Initialized with recipe type: {recipeType}");
     }
@@ -94,7 +94,7 @@ public class CookingStation : Interactable, IIngredientCheckListener
     protected override void Interact()
     {
         base.Interact(); // Call base implementation to handle events if needed
-        
+
         Debug.LogError($"<color=red>[CookingStation]</color> INTERACT CALLED on {gameObject.name}");
 
         if (!isInteractionActive)
@@ -128,7 +128,7 @@ public class CookingStation : Interactable, IIngredientCheckListener
         if (createdFoodItems != null && createdFoodItems.Count > 0)
         {
             Debug.LogError($"<color=blue>[CookingStation]</color> Spawned {createdFoodItems.Count} food items");
-            
+
             // Destroy ingredients if configured to do so
             if (destroyIngredientsOnComplete)
             {
@@ -160,7 +160,23 @@ public class CookingStation : Interactable, IIngredientCheckListener
                 Destroy(collider.gameObject);
             }
         }
-        
+
         Debug.LogError($"<color=magenta>[CookingStation]</color> Destroyed {destroyedCount} ingredients");
     }
+
+    private void OnDrawGizmosSelected()
+
+    {     // Draw interaction range
+        Gizmos.color = new Color(0.2f, 0.5f, 1f, 0.3f); // Semi-transparent blue
+        Gizmos.DrawSphere(transform.position, interactionRange);
+
+        // Draw wire sphere for better visibility
+        Gizmos.color = new Color(0.2f, 0.5f, 1f, 1f);
+        Gizmos.DrawWireSphere(transform.position, interactionRange);
+    }
+
 }
+
+
+
+

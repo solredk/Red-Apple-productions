@@ -1139,6 +1139,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 710cfdf70bbf7c541bc37c4ce66eb79e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8013483119038263785}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 710cfdf70bbf7c541bc37c4ce66eb79e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1587058825615211843}
   m_SourcePrefab: {fileID: 100100000, guid: 710cfdf70bbf7c541bc37c4ce66eb79e, type: 3}
 --- !u!1 &8465564275827650873 stripped
 GameObject:
@@ -1245,6 +1248,7 @@ MonoBehaviour:
   costToSpawn: 5
   cooldownTime: 3
   interactionSprite: {fileID: 0}
+  interactionRange: 3
   minIngredientsPerSpawn: 3
   maxIngredientsPerSpawn: 3
 --- !u!65 &8013483119038263785
@@ -1268,6 +1272,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6045787, y: 1, z: 0.80213237}
   m_Center: {x: 0.022856396, y: 0, z: -0.09893398}
+--- !u!114 &1587058825615211843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465564275827650873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece58ff13176d494cb9158a8dfa77662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 1903803055354175886}
+  color: {r: 1, g: 1, b: 1, a: 0.30588236}
 --- !u!4 &9092883610188508035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 710cfdf70bbf7c541bc37c4ce66eb79e, type: 3}

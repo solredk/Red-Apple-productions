@@ -1,16 +1,64 @@
 using UnityEngine;
 
-public class DeliverInteract : MonoBehaviour
+public class DeliverInteract : Interactable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Delivery Settings")]
+    [SerializeField] private float deliveryRadius = 3f;
+    [SerializeField] private LayerMask foodLayer;
+    [SerializeField] private GameObject interactionSprite;
+
+    private void Start()
     {
-        
+        // Hide interaction indicator by default
+        if (interactionSprite != null)
+            interactionSprite.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ShowInteractionIndicator(bool show)
     {
-        
+        if (interactionSprite != null)
+            interactionSprite.SetActive(show);
+    }
+
+    protected override void Interact()
+    {
+        Debug.Log("<color=blue>[DeliverInteract]</color> Checking for food to deliver...");
+
+        // Find all Food objects within the delivery radius
+        Collider[] colliders = Physics.OverlapSphere(transform.position, deliveryRadius, foodLayer);
+        int deliveredCount = 0;
+
+        foreach (Collider collider in colliders)
+        {
+            Food food = collider.GetComponent<Food>();
+            if (food != null)
+            {
+                // Award 100 points for each food
+                if (ScoreSystem.Instance != null)
+                {
+                    ScoreSystem.Instance.AddScore(100);
+                }
+
+                // Destroy the delivered food
+                Destroy(collider.gameObject);
+                deliveredCount++;
+            }
+        }
+
+        if (deliveredCount > 0)
+        {
+            Debug.Log($"<color=green>[DeliverInteract]</color> Delivered {deliveredCount} food items! +{deliveredCount * 100} points");
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // Visualize delivery radius
+        Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f); // Orange semi-transparent
+        Gizmos.DrawSphere(transform.position, deliveryRadius);
+
+        // Draw wire sphere for better visibility
+        Gizmos.color = new Color(1f, 0.5f, 0f, 1f);
+        Gizmos.DrawWireSphere(transform.position, deliveryRadius);
     }
 }

@@ -9,12 +9,17 @@ public class IngredientSpawner : Interactable
     [SerializeField] private float cooldownTime = 2f;
     [SerializeField] private GameObject interactionSprite;
 
+    [Header("Interaction Settings")]
+    [SerializeField] private float interactionRange = 3f;    // How far away the player can interact with this spawner
+
     [Header("Spawn Count")]
     [SerializeField] private int minIngredientsPerSpawn = 1;
     [SerializeField] private int maxIngredientsPerSpawn = 3;
 
     private bool canSpawn = true;
     private float cooldownTimer = 0f;
+
+    public float InteractionRange => interactionRange; // Property to access the range from other scripts
 
     private void Start()
     {
@@ -27,6 +32,10 @@ public class IngredientSpawner : Interactable
 
         if (interactionSprite != null)
             interactionSprite.SetActive(false);
+
+        // Set a default prompt message if not provided
+        if (string.IsNullOrEmpty(promptMessage))
+            promptMessage = $"Press Q to spawn ingredients (Cost: {costToSpawn})";
     }
 
     private void Update()
@@ -51,8 +60,6 @@ public class IngredientSpawner : Interactable
 
     protected override void Interact()
     {
-    
-
         Debug.LogError($"<color=blue>[IngredientSpawner]</color> Interact called on {gameObject.name}");
 
         if (!canSpawn)
@@ -110,7 +117,7 @@ public class IngredientSpawner : Interactable
         {
             // Add some variation to the force to spread ingredients out
             Vector3 randomForce = new Vector3(
-                Random.Range(-0.5f, 0.5f),
+                Random.Range(0.5f, 1.0f),
                 Random.Range(0.5f, 1.0f),
                 Random.Range(0.5f, 1.0f));
 
@@ -132,5 +139,13 @@ public class IngredientSpawner : Interactable
                 }
             }
         }
+
+        // Draw interaction range
+        Gizmos.color = new Color(0.2f, 0.5f, 1f, 0.3f); // Semi-transparent blue
+        Gizmos.DrawSphere(transform.position, interactionRange);
+
+        // Draw wire sphere for better visibility
+        Gizmos.color = new Color(0.2f, 0.5f, 1f, 1f);
+        Gizmos.DrawWireSphere(transform.position, interactionRange);
     }
 }
