@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
         if (isPaused)
             return;
 
-        Debug.Log("Pause called!");
+
         // If the game is not paused, set the time scale to 0 and show the pause menu and put the variable to true
         Time.timeScale = 0f;
         pauseCanvas.SetActive(true);

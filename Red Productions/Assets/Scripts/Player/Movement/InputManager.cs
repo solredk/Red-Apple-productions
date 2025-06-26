@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
 
     public void DoShooting(InputAction.CallbackContext context)
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
+        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead || Time.timeScale == 0)
             return;
         
         if (context.performed)
