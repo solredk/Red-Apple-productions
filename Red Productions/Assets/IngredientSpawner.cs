@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IngredientSpawner : MonoBehaviour
+public class IngredientSpawner : Interactable
 {
     [Header("Spawner Settings")]
     [SerializeField] private GameObject ingredientPrefab;
@@ -19,6 +19,8 @@ public class IngredientSpawner : MonoBehaviour
 
         if (interactionSprite != null)
             interactionSprite.SetActive(false);
+
+     
     }
 
     private void Update()
@@ -40,8 +42,10 @@ public class IngredientSpawner : MonoBehaviour
         if (interactionSprite != null)
             interactionSprite.SetActive(show);
     }
-    public void Interact()
+
+    protected override void Interact()
     {
+        base.Interact();
         Debug.LogError($"<color=blue>[IngredientSpawner]</color> Interact called on {gameObject.name}");
 
         if (!canSpawn)
@@ -82,7 +86,6 @@ public class IngredientSpawner : MonoBehaviour
         // Instantiate the ingredient at the spawn point
         GameObject spawnedIngredient = Instantiate(ingredientPrefab, spawnPoint.position, spawnPoint.rotation);
 
-      
         Rigidbody rb = spawnedIngredient.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -95,7 +98,7 @@ public class IngredientSpawner : MonoBehaviour
         if (spawnPoint != null)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(spawnPoint.position, 0.2f);
+            Gizmos.DrawWireSphere(spawnPoint.position, 0.3f);
         }
     }
 }

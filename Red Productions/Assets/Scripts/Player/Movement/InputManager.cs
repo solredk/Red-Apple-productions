@@ -51,7 +51,7 @@ public class InputManager : MonoBehaviour
             tomatoLauncher.isShooting = true;
         }
 
-        if (context.canceled    )
+        if (context.canceled)
             tomatoLauncher.isShooting = false;
     }
 
@@ -101,7 +101,7 @@ public class InputManager : MonoBehaviour
 
         if (context.performed)
             ScrollInput = context.ReadValue<Vector2>();
-            Debug.Log("Scroll Input: " + ScrollInput.y);
+          
     }
     
     public void DoPause(InputAction.CallbackContext context)
@@ -114,15 +114,25 @@ public class InputManager : MonoBehaviour
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
+        Debug.Log("InputManager.OnInteract called!");
+
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
-            return;
-        if (context.performed && pickup != null)
         {
-            pickup.OnInteract();
-            Debug.Log("Interacted");
+            Debug.Log("Early return due to playerInputManager check");
+            return;
         }
 
-           
+        if (context.performed)
+        {
+            Debug.Log($"Context performed, playerLook is {(playerLook != null ? "not null" : "NULL")}");
+
+            if (playerLook != null)
+            {
+                playerLook.OnInteract();
+                Debug.Log("Interacted - called playerLook.OnInteract()");
+            }
+        }
     }
+
 }
 

@@ -10,7 +10,7 @@ public class Ammo : Interactable
         {
             GetComponent<Renderer>().material = material;
             useEvents = false;
-            promptMassage = "empty";
+            promptMessage = "empty";
         }
     }
 }
