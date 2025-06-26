@@ -71,7 +71,7 @@ public class ScoreSystem : MonoBehaviour
         }
 
         else
-        {
+        {       
             if (score > saveData.singlePlayerLastScore)
             {
                 saveData.singlplayerHighscore = score;

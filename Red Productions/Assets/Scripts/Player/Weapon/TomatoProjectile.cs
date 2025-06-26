@@ -6,8 +6,6 @@ public class TomatoProjectile : MonoBehaviour
     [SerializeField] private  GameObject damagePopUp;
     [SerializeField] private GameObject tomatoSplatter;
 
-    public int playerIndex = 0;
-
     public int DamageOutput;
 
     private void Update()

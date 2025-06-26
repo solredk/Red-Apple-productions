@@ -46,15 +46,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientGroups:
   - groupType: 0
-    requiredIngredients: 00000000010000000200000003000000
-    ingredientPrefabs: []
-  - groupType: 1
-    requiredIngredients: 00000000
-    ingredientPrefabs: []
-  - groupType: 0
-    requiredIngredients: 00000000
-    ingredientPrefabs: []
-  ingredientCheckRadius: 2
+    ingredientRequirements:
+    - ingredientType: 2
+      requiredCount: 1
+    - ingredientType: 1
+      requiredCount: 1
+    - ingredientType: 3
+      requiredCount: 1
+    foodPrefabs:
+    - {fileID: 7409634640750807269, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+  - groupType: 3
+    ingredientRequirements:
+    - ingredientType: 4
+      requiredCount: 1
+    foodPrefabs:
+    - {fileID: 7409634640750807269, guid: ade9ce1ad9c05904fbe70ec5080b9325, type: 3}
+  - groupType: 2
+    ingredientRequirements:
+    - ingredientType: 8
+      requiredCount: 1
+    foodPrefabs:
+    - {fileID: 5192203679313780057, guid: 204a177595322bb4bbca70e5c398eacf, type: 3}
+  ingredientCheckRadius: 3
   ingredientLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
