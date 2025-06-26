@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class DeliveryPoint : MonoBehaviour
 {
-    [Tooltip("Amount of points given for each successful food delivery")]
+
+
+    [SerializeField] IngredientManager manager;
     [SerializeField] private int pointsPerDelivery = 100;
 
     private void OnTriggerEnter(Collider other)
