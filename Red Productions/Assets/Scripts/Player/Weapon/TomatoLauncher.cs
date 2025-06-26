@@ -12,7 +12,6 @@ public class TomatoLauncher : MonoBehaviour
     [Header("rumble")]
     [SerializeField] private ScreenRumble screenRumble;
     [SerializeField] private ControllerRumble controllerRumble;
-    [SerializeField] private int playerIndex;
 
     [SerializeField] private Animator animator;
 
@@ -62,7 +61,6 @@ public class TomatoLauncher : MonoBehaviour
 
         //setting the stats to the projectile from the launcher with the criptable object
         projectileComponent.DamageOutput = damage;
-        projectileComponent.playerIndex = playerIndex;
 
         //shake the screen
         screenRumble.TriggerShake(0.1f, 0.1f);
