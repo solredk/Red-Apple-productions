@@ -121,10 +121,8 @@ public class Zombie : MonoBehaviour
     private void AttackPlayer()
     {
         if (enemyHealth.isDead) return;
-
         zombieAttackSound.Play();
         zombieAnimator.SetTrigger("attack");
-
         if (Time.time - lastAttackTime >= attackCooldown)
         {
             // Check of speler een health script heeft
