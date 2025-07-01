@@ -61,7 +61,7 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
         if (Physics.Raycast(ray, out hitInfo, interactDistance, interactLayer))
         {
             // Logging for debugging controller issues
-            Debug.Log($"Raycast hit: {hitInfo.collider.gameObject.name}, layer: {LayerMask.LayerToName(hitInfo.collider.gameObject.layer)}");
+          
 
             //check if the object has an interactable component
             if (hitInfo.collider.GetComponent<Interactable>() != null)
