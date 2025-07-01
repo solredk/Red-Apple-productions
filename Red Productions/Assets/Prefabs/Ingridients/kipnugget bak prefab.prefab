@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23175307661f8434b8e48f3c79858c77, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.651
+      value: -23.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23175307661f8434b8e48f3c79858c77, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9108003
+      value: 2.042914
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23175307661f8434b8e48f3c79858c77, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.442
+      value: 11.97426
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23175307661f8434b8e48f3c79858c77, type: 3}
       propertyPath: m_LocalRotation.w
@@ -326,12 +326,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 128
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.19, y: 0.061578847, z: 0.11}
-  m_Center: {x: 0, y: 0.029210633, z: 0}
+  m_Size: {x: 0.13290963, y: 0.061578855, z: 0.11}
+  m_Center: {x: 0.0019627172, y: 0.029210636, z: 0}
 --- !u!114 &8589238716293157954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643f0cdba717633478c7fafca7f048d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodType: 0
+  foodType: 2
 --- !u!54 &-3747849558425182746
 Rigidbody:
   m_ObjectHideFlags: 0

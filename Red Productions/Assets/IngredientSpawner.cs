@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class IngredientSpawner : Interactable
 {
@@ -11,24 +12,19 @@ public class IngredientSpawner : Interactable
 
     [Header("Interaction Settings")]
     [SerializeField] private float interactionRange = 3f;    // How far away the player can interact with this spawner
+    [SerializeField] private float clearSpawnRadius = 0.5f;  // Radius to check for clear spawn point
 
     [Header("Spawn Count")]
     [SerializeField] private int minIngredientsPerSpawn = 1;
     [SerializeField] private int maxIngredientsPerSpawn = 3;
 
     private bool canSpawn = true;
-    private float cooldownTimer = 0f;
+    private float cooldownEndTime = 0f;
 
     public float InteractionRange => interactionRange; // Property to access the range from other scripts
 
     private void Start()
     {
-        // If no spawn points are defined, use this transform as default
-        if (spawnPoints == null || spawnPoints.Length == 0)
-        {
-            spawnPoints = new Transform[1];
-            spawnPoints[0] = transform;
-        }
 
         if (interactionSprite != null)
             interactionSprite.SetActive(false);
@@ -40,18 +36,12 @@ public class IngredientSpawner : Interactable
 
     private void Update()
     {
-        // Handle cooldown
-        if (!canSpawn)
+        // Handle cooldown more efficiently using Time.time
+        if (!canSpawn && Time.time >= cooldownEndTime)
         {
-            cooldownTimer -= Time.deltaTime;
-            if (cooldownTimer <= 0)
-            {
-                canSpawn = true;
-                cooldownTimer = 0;
-            }
+            canSpawn = true;
         }
     }
-
     public void ShowInteractionIndicator(bool show)
     {
         if (interactionSprite != null)
@@ -60,11 +50,11 @@ public class IngredientSpawner : Interactable
 
     protected override void Interact()
     {
-        Debug.LogError($"<color=blue>[IngredientSpawner]</color> Interact called on {gameObject.name}");
+        Debug.Log($"<color=blue>[IngredientSpawner]</color> Interact called on {gameObject.name}");
 
         if (!canSpawn)
         {
-            Debug.LogError($"<color=orange>[IngredientSpawner]</color> Spawner on cooldown! Please wait.");
+            Debug.Log($"<color=orange>[IngredientSpawner]</color> Spawner on cooldown! Please wait {cooldownEndTime - Time.time:F1} seconds.");
             return;
         }
 
@@ -76,46 +66,70 @@ public class IngredientSpawner : Interactable
 
             // Determine how many ingredients to spawn
             int spawnCount = Random.Range(minIngredientsPerSpawn, maxIngredientsPerSpawn + 1);
+            int successfulSpawns = 0;
 
             // Spawn multiple ingredients
             for (int i = 0; i < spawnCount; i++)
             {
-                SpawnIngredient();
+                if (SpawnIngredient())
+                    successfulSpawns++;
             }
 
-            Debug.LogError($"<color=green>[IngredientSpawner]</color> Spawned {spawnCount} ingredients and deducted {costToSpawn} points");
+            Debug.Log($"<color=green>[IngredientSpawner]</color> Spawned {successfulSpawns} ingredients and deducted {costToSpawn} points");
 
-            // Set cooldown
+            // Set cooldown using absolute time - more efficient
             canSpawn = false;
-            cooldownTimer = cooldownTime;
+            cooldownEndTime = Time.time + cooldownTime;
         }
         else
         {
             Debug.LogError($"<color=red>[IngredientSpawner]</color> Not enough points! Need {costToSpawn} points to spawn.");
         }
     }
-
-    private void SpawnIngredient()
+    private bool SpawnIngredient()
     {
         // Check if we have prefabs to spawn
         if (ingredientPrefabs == null || ingredientPrefabs.Length == 0)
         {
             Debug.LogError("<color=red>[IngredientSpawner]</color> No ingredient prefabs assigned!");
-            return;
+            return false;
         }
 
-        // Randomly select a prefab and spawn point
         GameObject selectedPrefab = ingredientPrefabs[Random.Range(0, ingredientPrefabs.Length)];
-        Transform selectedSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        // Try to find a spawn point without colliders
+        Transform selectedSpawnPoint = null;
 
-        // Instantiate the ingredient at the selected spawn point
+        // Create a shuffled list of indices to try spawn points in random order
+        List<int> indices = new List<int>();
+        for (int i = 0; i < spawnPoints.Length; i++)
+            indices.Add(i);
+        for (int i = 0; i < indices.Count; i++)
+        {
+            int temp = indices[i];
+            int randomIndex = Random.Range(i, indices.Count);
+            indices[i] = indices[randomIndex];
+            indices[randomIndex] = temp;
+        }
+
+        foreach (int i in indices)
+        {
+            // Check if this spawn point is clear (no colliders)
+            if (Physics.OverlapSphere(spawnPoints[i].position, clearSpawnRadius).Length == 0)
+            {
+                selectedSpawnPoint = spawnPoints[i];
+                break;
+            }
+        }
+        if (selectedSpawnPoint == null && spawnPoints.Length > 0)
+        {
+            selectedSpawnPoint = spawnPoints[0];
+            Debug.Log("<color=yellow>[IngredientSpawner]</color> All spawn points blocked, using first point.");
+        }
+
         GameObject spawnedIngredient = Instantiate(selectedPrefab, selectedSpawnPoint.position, selectedSpawnPoint.rotation);
-
-        // Apply force to the rigidbody with slight variation for each ingredient
         Rigidbody rb = spawnedIngredient.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            // Add some variation to the force to spread ingredients out
             Vector3 randomForce = new Vector3(
                 Random.Range(0.5f, 1.0f),
                 Random.Range(0.5f, 1.0f),
@@ -123,6 +137,61 @@ public class IngredientSpawner : Interactable
 
             rb.AddForce(randomForce + Random.insideUnitSphere * 1f, ForceMode.Impulse);
         }
+
+        return true;
+    }
+
+    private Transform FindClearSpawnPoint()
+    {
+        // Create a shuffled list of spawn point indices for random selection
+        List<int> spawnPointIndices = new List<int>();
+        for (int i = 0; i < spawnPoints.Length; i++)
+            spawnPointIndices.Add(i);
+
+        // Fisher-Yates shuffle
+        for (int i = 0; i < spawnPointIndices.Count; i++)
+        {
+            int temp = spawnPointIndices[i];
+            int randomIndex = Random.Range(i, spawnPointIndices.Count);
+            spawnPointIndices[i] = spawnPointIndices[randomIndex];
+            spawnPointIndices[randomIndex] = temp;
+        }
+
+        // Check each spawn point in random order
+        foreach (int index in spawnPointIndices)
+        {
+            Transform point = spawnPoints[index];
+            if (point != null && IsSpawnPointClear(point))
+                return point;
+        }
+
+        return null; // No clear spawn points found
+    }
+
+    private bool IsSpawnPointClear(Transform point)
+    {
+        // Check if there are any colliders at this spawn point
+        return Physics.OverlapSphere(point.position, clearSpawnRadius).Length == 0;
+    }
+
+    private Transform FindLeastBlockedSpawnPoint()
+    {
+        Transform bestPoint = null;
+        int fewestColliders = int.MaxValue;
+
+        foreach (Transform point in spawnPoints)
+        {
+            if (point == null) continue;
+
+            int colliderCount = Physics.OverlapSphere(point.position, clearSpawnRadius).Length;
+            if (colliderCount < fewestColliders)
+            {
+                fewestColliders = colliderCount;
+                bestPoint = point;
+            }
+        }
+
+        return bestPoint;
     }
 
     private void OnDrawGizmosSelected()
@@ -135,7 +204,7 @@ public class IngredientSpawner : Interactable
                 if (point != null)
                 {
                     Gizmos.color = Color.green;
-                    Gizmos.DrawWireSphere(point.position, 0.3f);
+                    Gizmos.DrawWireSphere(point.position, clearSpawnRadius);
                 }
             }
         }
