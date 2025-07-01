@@ -241,9 +241,6 @@ public class DeliverySystem : Interactable
         Debug.Log($"<color=green>[DeliverySystem]</color> NEW ORDER GENERATED:");
         Debug.Log($"<color=green>[DeliverySystem]</color> - Food Type: {newOrder.foodType}");
         Debug.Log($"<color=green>[DeliverySystem]</color> - Quantity: {newOrder.quantity}");
-        Debug.Log($"<color=green>[DeliverySystem]</color> - Total Time: {orderTime} seconds");
-        Debug.Log($"<color=green>[DeliverySystem]</color> - Creation Time: {newOrder.creationTime}");
-        Debug.Log($"<color=green>[DeliverySystem]</color> - Expiration Time: {newOrder.expirationTime}");
         Debug.Log($"<color=green>[DeliverySystem]</color> - Current Order Count: {activeOrders.Count}/{maxActiveOrders}");
     }
     private void CreateOrderUI(DeliveryOrder order)
