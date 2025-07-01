@@ -43,8 +43,10 @@ public class Loadscene : MonoBehaviour
         //coOpPlayerButton.SetActive(true);
     }
 
-
-
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
 
 

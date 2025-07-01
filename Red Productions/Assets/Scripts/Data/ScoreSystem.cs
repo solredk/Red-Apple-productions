@@ -22,7 +22,6 @@ public class ScoreSystem : MonoBehaviour
     [Header("co-op settings")]
     [SerializeField] private PlayerInputManager playerInputManager;
 
-    [SerializeField] private bool isCoop;
 
     private SaveData saveData;
 
