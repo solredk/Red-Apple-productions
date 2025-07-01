@@ -22,15 +22,10 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
     [SerializeField] private InputManager inputManager;
     [SerializeField] private PlayerUI playerUI;
 
-    private bool interacted;
-    private float interactionHoldTime = 0.5f; // How long to remember the interaction intent
-    private float interactionTimer;           // Timer to track how long since interaction was requested
-
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         playerUI = GetComponent<PlayerUI>();
-        interactionTimer = 0f;
     }
 
     private void Update()
@@ -38,18 +33,6 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
         if (playerUI != null)
         {
             playerUI.UpdateText(string.Empty);
-        }
-
-        // Update interaction timer if we're waiting to interact
-        if (interacted)
-        {
-            interactionTimer -= Time.deltaTime;
-            if (interactionTimer <= 0)
-            {
-                // Reset interaction flag if we've waited too long
-                interacted = false;
-                Debug.Log("Interaction timed out");
-            }
         }
 
         //if the controller is active, use the controller sensitivity
@@ -74,9 +57,10 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hitInfo;
 
-        //create an raycast to check if the player is looking at an interactable object
+        //create a raycast to check if the player is looking at an interactable object
         if (Physics.Raycast(ray, out hitInfo, interactDistance, interactLayer))
         {
+            // Logging for debugging controller issues
             Debug.Log($"Raycast hit: {hitInfo.collider.gameObject.name}, layer: {LayerMask.LayerToName(hitInfo.collider.gameObject.layer)}");
 
             //check if the object has an interactable component
@@ -84,23 +68,26 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
             {
                 interactable = hitInfo.collider.GetComponent<Interactable>();
                 playerUI.UpdateText(interactable.promptMessage);
-
-                //if you have interacted with the object call the interact function and put interacted into false again
-                if (interacted)
-                {
-                    interactable.BaseInteract();
-                    interacted = false; // Reset flag after interacting
-                    interactionTimer = 0f;
-                }
             }
-   
         }
     }
 
     public void OnInteract()
     {
-        interacted = true;
-        interactionTimer = interactionHoldTime; // Set timer when interaction is requested
+        // Debug log to verify the method is called from controller
+        Debug.Log("OnInteract called - attempting to interact");
+        
+        // Immediately check if we're looking at an interactable and trigger it
+        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, interactDistance, interactLayer))
+        {
+            Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                Debug.Log($"Interacting with {hitInfo.collider.gameObject.name}");
+                interactable.BaseInteract();
+            }
+        }
     }
 
     public void Look(Vector2 lookInput, bool controllerActive)

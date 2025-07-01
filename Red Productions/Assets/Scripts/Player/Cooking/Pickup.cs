@@ -1,12 +1,13 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Pickup : MonoBehaviour
 {
 
     [Header("UI Elements")]
     [SerializeField] private GameObject regularCrosshair;
     [SerializeField] private GameObject selectionCrosshair;
-
+    private Color originalSelectionColor;
+    private bool isTargetingEnemy = false;
     [SerializeField] public Transform pickupSlot;
     [SerializeField] private Transform pickupParent;
     [SerializeField] private Transform playerCameraTransform;
@@ -83,6 +84,12 @@ public class Pickup : MonoBehaviour
                 hit.collider.GetComponent<HighLight>()?.ToggleHighLight(true);
                 showSelectionCrosshair = true;
             }
+            else if (hit.collider.CompareTag("Enemy"))
+            {
+               
+                showSelectionCrosshair = true;
+                isTargetingEnemy = true;
+            }
             else
             {
                 showSelectionCrosshair = false;
@@ -141,10 +148,28 @@ public class Pickup : MonoBehaviour
 
     private void UpdateCrosshair(bool showSelection)
     {
+        // crosshairswitch 
         if (regularCrosshair != null)
+        {
             regularCrosshair.SetActive(!showSelection);
+        }
         if (selectionCrosshair != null)
+        {
             selectionCrosshair.SetActive(showSelection);
+        }
+        // Crosshair  color react system 
+        Image crosshairImage = selectionCrosshair.GetComponent<Image>();
+        if (crosshairImage != null)
+        {
+            if (isTargetingEnemy)
+            {
+                crosshairImage.color = Color.red;
+            }
+            else
+            {
+                crosshairImage.color = originalSelectionColor;
+            }
+        }
     }
     private void UpdatePickupParentPosition()
     {

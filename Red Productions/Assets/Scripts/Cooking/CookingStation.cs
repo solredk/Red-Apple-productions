@@ -11,10 +11,12 @@ public class CookingStation : Interactable, IIngredientCheckListener
     [SerializeField] private GameObject interactionSprite;
     [SerializeField] private float interactionRange = 3f;
 
+
     private bool isInteractionActive = false;
+    private float interactionStartTime = 0; // Add this field to track when interaction started
+    private float interactionDuration = 1.0f; // Duration to check ingredients (1 second)
     private float lastLogTime = 0;
-    private float logCooldown = 0.5f; // Check more frequently
-    public float InteractionRange = 0f;
+    private float logCooldown = 0.1f; // Check more frequently, 5x per second
 
     private void Start()
     {
@@ -30,12 +32,25 @@ public class CookingStation : Interactable, IIngredientCheckListener
 
     private void Update()
     {
-        // Automatic ingredient checking once activated
-        if (isInteractionActive && Time.time > lastLogTime + logCooldown)
+        if (isInteractionActive)
         {
-            lastLogTime = Time.time;
-            Debug.LogError($"<color=yellow>[CookingStation]</color> Checking ingredients at {Time.time}...");
-            CheckIngredientsInRadius();
+            // Check if we're still within the time window
+            if (Time.time < interactionStartTime + interactionDuration)
+            {
+                // Check ingredients periodically during this 1-second window
+                if (Time.time > lastLogTime + logCooldown)
+                {
+                    lastLogTime = Time.time;
+                    Debug.LogError($"<color=yellow>[CookingStation]</color> Checking ingredients at {Time.time}, time remaining: {(interactionStartTime + interactionDuration - Time.time):F2}s");
+                    CheckIngredientsInRadius();
+                }
+            }
+            else
+            {
+                // Time window expired, stop checking
+                Debug.LogError($"<color=orange>[CookingStation]</color> Ingredient checking duration complete after 1 second.");
+                isInteractionActive = false;
+            }
         }
     }
 
@@ -93,14 +108,16 @@ public class CookingStation : Interactable, IIngredientCheckListener
     // Override the Interact method from the Interactable base class
     protected override void Interact()
     {
-        base.Interact(); // Call base implementation to handle events if needed
+        base.Interact();
 
         Debug.LogError($"<color=red>[CookingStation]</color> INTERACT CALLED on {gameObject.name}");
 
         if (!isInteractionActive)
         {
             isInteractionActive = true;
-            Debug.LogError($"<color=green>[CookingStation]</color> Starting ingredient check for {recipeType}");
+            interactionStartTime = Time.time; // Record when we started
+            lastLogTime = 0; // Reset log timer to ensure immediate first check
+            Debug.LogError($"<color=green>[CookingStation]</color> Starting ingredient check for {recipeType} (1-second duration)");
 
             if (ingredientManager != null)
             {
@@ -110,6 +127,7 @@ public class CookingStation : Interactable, IIngredientCheckListener
             else
             {
                 Debug.LogError($"<color=red>[CookingStation]</color> CRITICAL ERROR: No IngredientManager found!");
+                isInteractionActive = false; // Reset interaction flag since we can't proceed
             }
         }
         else

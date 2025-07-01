@@ -137,8 +137,9 @@ public class IngredientManager : MonoBehaviour
     IEnumerator IngredientCheckCoroutine(Ingredient.IngredientType type, Vector3 center, IIngredientCheckListener listener)
     {
         float checkInterval = 0.5f;
-        float timeout = 30f;
+        float timeout = 5f; // Use shorter timeout for better user experience
         float elapsed = 0f;
+
         while (elapsed < timeout)
         {
             if (CheckIngredientsInRadius(type, center))
@@ -149,5 +150,8 @@ public class IngredientManager : MonoBehaviour
             elapsed += checkInterval;
             yield return new WaitForSeconds(checkInterval);
         }
+
+        // If we reach here, the timeout has elapsed without finding all ingredients
+        listener?.OnIngredientsMissing();
     }
 }
