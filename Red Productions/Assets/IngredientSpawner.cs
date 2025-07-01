@@ -8,7 +8,7 @@ public class IngredientSpawner : Interactable
     [SerializeField] private Transform[] spawnPoints;        // Array of possible spawn points
     [SerializeField] private int costToSpawn = 5;
     [SerializeField] private float cooldownTime = 2f;
-    [SerializeField] private GameObject interactionSprite;
+    [SerializeField] private GameObject interactionSprite;  
 
     [Header("Interaction Settings")]
     [SerializeField] private float interactionRange = 3f;    // How far away the player can interact with this spawner
