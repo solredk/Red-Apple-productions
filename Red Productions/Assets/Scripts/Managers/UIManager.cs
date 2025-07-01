@@ -8,16 +8,20 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [Header("single player en co-op settings")]   
-    [SerializeField] private GameObject pauseCanvas;    
+    [Header("pausecanvas")]   
+    [SerializeField] private GameObject pauseCanvas;
 
+    [Header("EventSystem")]
     [SerializeField] private EventSystem eventSystem;   
     
     [Header("co-op settings")]
     [SerializeField] private GameObject lobbyCanvas;
     [SerializeField] private PlayerInputManager playerInputManager;
+
+    [Header("Text Component")]
     [SerializeField] private TextMeshProUGUI PlayerCountText;
 
+    [Header("Buttons")]
     [SerializeField] private GameObject singlePlayerButton;
     [SerializeField] private Button lastButton;
 

@@ -5,22 +5,23 @@ using UnityEngine.UI;
 
 public class EnemyHealth : HealthSystem
 {
-    [SerializeField] private GameObject damagePopUp;
-
-    [SerializeField] private GameObject canvas;
-
-    [SerializeField] private int lastDamagedByPlayer;
-
-    [SerializeField] private Enemybehavior enemyBehavior;
-
-    [SerializeField] private Animator zombieAnimator;
-
+    [Header("Enemy Health Settings")]
     [SerializeField] private Enemybehavior enemyStats;
 
+    [Header("Collider Components")]
     [SerializeField] private Collider enemyCollider;
 
-    [SerializeField] private AudioSource[] deathSounds;
+    [Header("Health Bar Components")]
+    [SerializeField] private GameObject healthBarCanvas;
 
+    [Header("Damage Pop Up")]
+    [SerializeField] private GameObject damagePopUp;
+
+    [Header("Animation Components")]
+    [SerializeField] private Animator zombieAnimator;
+
+    [Header("Sound Components")]
+    [SerializeField] private AudioSource[] deathSounds;
     [SerializeField] private AudioSource[] hitSounds;
 
     public int score;
@@ -29,7 +30,7 @@ public class EnemyHealth : HealthSystem
 
     private void Awake()
     {
-        maxHealth = enemyBehavior.maxhealth;
+        maxHealth = enemyStats.maxhealth;
     }
     
     private void Update()
@@ -54,16 +55,22 @@ public class EnemyHealth : HealthSystem
     public override void Die()
     {
         base.Die();
+        //choose an random death sound
         int randomIndex = Random.Range(0, deathSounds.Length);
+
         deathSounds[randomIndex].Play();
+
         enemyCollider.enabled = false;
+
         if (!isDead)
         {
             //add score to the player that killed this enemy
             ScoreSystem.Instance.AddScore(enemyStats.reward);
             isDead = true;
         }
+
         zombieAnimator.SetTrigger("die");
+
         //destroy the gameobject
         Destroy(gameObject ,2);
     }

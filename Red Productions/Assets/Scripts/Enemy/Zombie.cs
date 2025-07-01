@@ -9,16 +9,22 @@ public class Zombie : MonoBehaviour
     [SerializeField] private float attackCooldown = 1f;
     [SerializeField] private int damage = 10;
 
+    [Header("Enemy Behavior Scriptable Object")]
     [SerializeField] private Enemybehavior enemyBehavior;
 
+    [Header("NavMesh Agent Component")]
     [SerializeField] private NavMeshAgent agent;
 
+    [Header("Animator Component")]
     [SerializeField] private Animator zombieAnimator;
 
+    [Header("Health Component")]
     [SerializeField] private EnemyHealth enemyHealth;
 
+    [Header("Collidor Component")]
     [SerializeField] private Collider zombieCollider;
 
+    [Header("Sound Component")]
     [SerializeField] private AudioSource zombieAttackSound;
     [SerializeField] private AudioSource[] zombieWalkSounds;
 
@@ -60,12 +66,14 @@ public class Zombie : MonoBehaviour
 
         zombieAnimator.SetFloat("speed", movementSpeed);        
         
-        if (!zombieCollider.enabled )
+        if (!zombieCollider.enabled)
         {
             counter += Time.deltaTime;
+
             if (counter >= 2f) 
             {
                 zombieWalkSounds[walkIndex].Stop();
+
                 zombieCollider.enabled = true;
                 counter = 0f; 
             }
@@ -81,6 +89,7 @@ public class Zombie : MonoBehaviour
                 agent.isStopped = true;
                 AttackPlayer();
             }
+
             else
             {
                 zombieWalkSounds[walkIndex].Stop();
@@ -121,17 +130,19 @@ public class Zombie : MonoBehaviour
     private void AttackPlayer()
     {
         if (enemyHealth.isDead) return;
+
         zombieAttackSound.Play();
         zombieAnimator.SetTrigger("attack");
+
         if (Time.time - lastAttackTime >= attackCooldown)
         {
             // Check of speler een health script heeft
             PlayerHealth playerHealth = closestPlayer.GetComponent<PlayerHealth>();
+
             //if the closestplayer is not null, then make the player take damage
             if (closestPlayer != null)
             {
                 playerHealth.TakeDamage(damage);
-
             }
 
             lastAttackTime = Time.time;

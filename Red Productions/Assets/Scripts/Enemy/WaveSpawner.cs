@@ -6,24 +6,16 @@ public class WaveSpawner : MonoBehaviour
 {
     [Header("the zombie prefab")]
     [SerializeField] private GameObject zombiePrefab;
+
     [Header("the maximum amount of zombies that can be spawned at once")]
     [SerializeField] private int maxZombies = 10;
-    
-    // the ammount of zombies that have been killed in the current wave
-    private int zombiesKilled;
-
-    //the amount of zombies that need to be killed to start the next wave
-    private int waveRequirments = 10;
 
     [Header("the time in between te zombies will randomly spawn")]
     [SerializeField] private float spawnIntervalMin = 1f;
     [SerializeField] private float spawnIntervalMax = 10f;
-
+    
+    [Header("Enemy Behavior Scriptable Object")]
     [SerializeField] private Enemybehavior enemyBehavior;
-
-    private List<GameObject> spawnedZombies = new List<GameObject>();
-
-    private int currentZombies = 0;
 
     [Header("Jump In Points")]
     [SerializeField] private List<Transform> jumpInPoints;
@@ -34,6 +26,14 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private int startMaxhealth;
     [SerializeField] private float startAttackCooldown;
     [SerializeField] private float startSpeed;
+    
+    private List<GameObject> spawnedZombies = new List<GameObject>();
+
+    private int waveRequirments = 10;
+    
+    private int currentZombies = 0;
+
+    private int zombiesKilled;
 
     private void Awake()
     {
