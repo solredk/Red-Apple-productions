@@ -76,6 +76,19 @@ public class WaveSpawner : MonoBehaviour
 
     private void NextWave()
     {
+        if (GameManager.Instance.gameMode == GameMode.CoOp)
+        {
+            for (int i = 0; i < GameManager.Instance.players.Count; i++)
+            {
+                GameObject player = GameManager.Instance.players[i];
+                PlayerHealth PlayerHealth = player.GetComponent<PlayerHealth>();
+                if (enemyBehavior != null)
+                {
+                    PlayerHealth.ResetPlayerState();
+                }
+            }
+        }
+
         // Reset the zombies killed counter
         zombiesKilled = 0;
 

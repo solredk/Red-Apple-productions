@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
 
         Time.timeScale = 1f;
         pauseCanvas.SetActive(false);
-        isPaused = true;
+        isPaused = false;
 
     }
 

@@ -22,9 +22,8 @@ public class PlayerHealth : HealthSystem
 
     [Header("Player Health Upgrade Component")]
     [SerializeField] private UpgradeItem upgradeItem;
-    
-    [Header("LoadScene Component")]
-    [SerializeField] private Loadscene loadscene;
+
+    [SerializeField] private AudioSource[] damageSound;
 
     [Header("Playerstate Component")]
     public PlayerState playerState;
@@ -42,8 +41,10 @@ public class PlayerHealth : HealthSystem
 
         maxHealth = upgradeItem.amount;
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && playerState == PlayerState.alive)
         {
+            // ScoreSystem.Instance.SaveData();
+            playerState = PlayerState.dead;
             Die();
         }
 
@@ -60,18 +61,7 @@ public class PlayerHealth : HealthSystem
             }
         }
 
-        if (playerState == PlayerState.dead && GameManager.Instance.gameMode == GameMode.SinglePlayer)
-        {
-            ScoreSystem.Instance.SaveData();
-            loadscene.LoadScene();
-        }
 
-        else if (playerState == PlayerState.dead && GameManager.Instance.gameMode == GameMode.CoOp)
-        {
-            Debug.Log("Player died, disabling collider and playing death animation");
-            gameObject.GetComponent<Collider>().enabled = false;
-            Animator.SetTrigger("Died");
-        }
 
         UpdateHealthUI(Color.red, Color.green);
     }
@@ -97,7 +87,7 @@ public class PlayerHealth : HealthSystem
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-
+        damageSound[Random.Range(0, damageSound.Length)].Play();
         //reset the cooldown
         healCooldown = 10f;
     }
@@ -105,8 +95,29 @@ public class PlayerHealth : HealthSystem
     public override void Die()
     {
         base.Die();
+        Animator.SetBool("Died", true);
+        if (playerState == PlayerState.dead && GameManager.Instance.gameMode == GameMode.SinglePlayer)
+        {
+            ScoreSystem.Instance.SaveData();
+            GameManager.Instance.loadscene.LoadScene();
+        }
 
-       // ScoreSystem.Instance.SaveData();
-        playerState = PlayerState.dead;
+        else if (playerState == PlayerState.dead && GameManager.Instance.gameMode == GameMode.CoOp)
+        {
+            Debug.Log("Player died, disabling collider and playing death animation");
+            gameObject.GetComponent<Collider>().enabled = false;
+            GameManager.Instance.PlayerDied();
+        }
+        // ScoreSystem.Instance.SaveData();
+
+    }
+
+    public void ResetPlayerState()
+    {
+        GameManager.Instance.PlayerSpawned();
+        playerState = PlayerState.alive;
+        currentHealth = maxHealth;
+        gameObject.GetComponent<Collider>().enabled = true;
+        Animator.SetBool("Died", false);
     }
 }

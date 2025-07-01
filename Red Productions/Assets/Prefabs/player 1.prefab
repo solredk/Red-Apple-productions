@@ -2654,6 +2654,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 90975027-aa3c-49d3-8e2d-be797b384682
     m_ActionName: 'Player/Adjust[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c00bbbda-d9ff-4e17-a804-95ac3d3b1006
+    m_ActionName: 'Player/Resume[/Keyboard/escape,/DualSenseGamepadHID/buttonEast,/DualSenseGamepadHID/start]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2720,7 +2724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeed: 5
   gravity: -9.8
-  characterController: {fileID: 8476158758437359495}
+  controller: {fileID: 8476158758437359495}
   animator: {fileID: 4888112697238712083}
 --- !u!114 &1918632901598311837
 MonoBehaviour:
@@ -2775,6 +2779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7f80c4c9691304097d48f9b93413a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  regularCrosshair: {fileID: 0}
+  selectionCrosshair: {fileID: 0}
   pickupSlot: {fileID: 4819436029383669822}
   pickupParent: {fileID: 8480171506129900867}
   playerCameraTransform: {fileID: 972878247296602707}
@@ -3866,6 +3872,8 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 0
+  inputManager: {fileID: 0}
+  playerUI: {fileID: 0}
 --- !u!114 &8882697431164680108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4540,11 +4548,9 @@ MonoBehaviour:
   tomatoData: {fileID: 11400000, guid: 39d81729402df4c48a1480ba65573cf8, type: 2}
   screenRumble: {fileID: 8008062148353392483}
   controllerRumble: {fileID: 5056484434205872633}
-  playerIndex: 0
   animator: {fileID: 4888112697238712083}
   isShooting: 0
   controllerActive: 0
-  fireRate: 0
 --- !u!114 &5056484434205872633
 MonoBehaviour:
   m_ObjectHideFlags: 0

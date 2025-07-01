@@ -31,11 +31,17 @@ public class InputManager : MonoBehaviour
 
     private Gamepad gamepad;
 
-    public void DoShooting(InputAction.CallbackContext context)
+
+    private void Start()
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead || Time.timeScale == 0)
-            return;
-        
+        if (playerInputManager == null)
+        {
+            if(GameManager.Instance.playerInputManager != null)
+            playerInputManager = GameManager.Instance.playerInputManager;
+        }
+    }
+    public void DoShooting(InputAction.CallbackContext context)
+    {        
         if (context.performed)
         {
             if (context.control.device is Gamepad gp)
@@ -75,9 +81,6 @@ public class InputManager : MonoBehaviour
 
     public void DoMoving(InputAction.CallbackContext context)
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
-            return;
-
         moveInput = context.ReadValue<Vector2>();
         if (PlayerMovement != null)
             PlayerMovement.ReadMoveVaulue(moveInput);
@@ -85,9 +88,6 @@ public class InputManager : MonoBehaviour
  
     public void DoLooking(InputAction.CallbackContext context)
     {
-        if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
-            return;
-
         lookInput = context.ReadValue<Vector2>();
 
         if (playerLook != null)

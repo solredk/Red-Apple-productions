@@ -19,6 +19,10 @@ public class EnemyHealth : HealthSystem
 
     [SerializeField] private Collider enemyCollider;
 
+    [SerializeField] private AudioSource[] deathSounds;
+
+    [SerializeField] private AudioSource[] hitSounds;
+
     public int score;
 
     public bool isDead = false;
@@ -40,9 +44,18 @@ public class EnemyHealth : HealthSystem
         }
     }
 
+    public void TakeDamage(int damage, int playerId)
+    {
+        base.TakeDamage(damage);
+        int randomIndex = Random.Range(0, hitSounds.Length);
+        hitSounds[randomIndex].Play();
+    }
+
     public override void Die()
     {
         base.Die();
+        int randomIndex = Random.Range(0, deathSounds.Length);
+        deathSounds[randomIndex].Play();
         enemyCollider.enabled = false;
         if (!isDead)
         {
