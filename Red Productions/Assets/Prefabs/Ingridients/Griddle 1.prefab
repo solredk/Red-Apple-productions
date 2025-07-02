@@ -123,12 +123,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useEvents: 0
-  promptMessage: 
+  promptMessage: QQ
   recipeType: 2
   ingredientManager: {fileID: 0}
   finalProductSpawnPoint: {fileID: 6887990914617120863}
   destroyIngredientsOnComplete: 1
   interactionSprite: {fileID: 0}
+  interactionRange: 3
+  ingredientCheckTimeout: 5
 --- !u!1 &7017457711420613438
 GameObject:
   m_ObjectHideFlags: 0
