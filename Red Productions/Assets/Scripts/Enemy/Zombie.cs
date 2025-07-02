@@ -19,6 +19,11 @@ public class Zombie : MonoBehaviour
 
     [SerializeField] private Collider zombieCollider;
 
+    [SerializeField] private AudioSource zombieAttackSound;
+    [SerializeField] private AudioSource[] zombieWalkSounds;
+
+    private int walkIndex;
+
     private GameObject closestPlayer;
 
     private List<GameObject> players = new List<GameObject>();
@@ -28,6 +33,7 @@ public class Zombie : MonoBehaviour
 
     private void Awake()
     {
+        walkIndex = Random.Range(0, zombieWalkSounds.Length);
         zombieCollider.enabled = false;
         agent.updateRotation = true;
 
@@ -45,21 +51,23 @@ public class Zombie : MonoBehaviour
     {
         if (enemyHealth.isDead)
         {
+            zombieWalkSounds[walkIndex].Stop();
             agent.isStopped = true;
-            return; 
+            return;
         }
 
         float movementSpeed = agent.velocity.magnitude;
 
-        zombieAnimator.SetFloat("speed", movementSpeed);        
-        
-        if (!zombieCollider.enabled )
+        zombieAnimator.SetFloat("speed", movementSpeed);
+
+        if (!zombieCollider.enabled)
         {
             counter += Time.deltaTime;
-            if (counter >= 2f) 
+            if (counter >= 2f)
             {
+                zombieWalkSounds[walkIndex].Stop();
                 zombieCollider.enabled = true;
-                counter = 0f; 
+                counter = 0f;
             }
         }
 
@@ -69,11 +77,13 @@ public class Zombie : MonoBehaviour
 
             if (distance <= attackRange)
             {
+                zombieWalkSounds[walkIndex].Play();
                 agent.isStopped = true;
                 AttackPlayer();
             }
             else
             {
+                zombieWalkSounds[walkIndex].Stop();
                 agent.isStopped = false;
                 agent.SetDestination(closestPlayer.transform.position);
             }
@@ -94,7 +104,7 @@ public class Zombie : MonoBehaviour
             PlayerState state = player.GetComponent<PlayerHealth>().playerState;
             if (state == PlayerState.dead)
             {
-                continue; 
+                continue;
             }
 
             float distance = Vector3.Distance(transform.position, player.transform.position);
@@ -111,21 +121,20 @@ public class Zombie : MonoBehaviour
     private void AttackPlayer()
     {
         if (enemyHealth.isDead) return;
+        zombieAttackSound.Play();
         zombieAnimator.SetTrigger("attack");
         if (Time.time - lastAttackTime >= attackCooldown)
         {
             // Check of speler een health script heeft
             PlayerHealth playerHealth = closestPlayer.GetComponent<PlayerHealth>();
-            
             //if the closestplayer is not null, then make the player take damage
             if (closestPlayer != null)
             {
                 playerHealth.TakeDamage(damage);
+
             }
 
             lastAttackTime = Time.time;
         }
     }
 }
-
-

@@ -19,6 +19,10 @@ public class EnemyHealth : HealthSystem
 
     [SerializeField] private Collider enemyCollider;
 
+    [SerializeField] private AudioSource[] deathSounds;
+
+    [SerializeField] private AudioSource[] hitSounds;
+
     public int score;
 
     public bool isDead = false;
@@ -27,11 +31,11 @@ public class EnemyHealth : HealthSystem
     {
         maxHealth = enemyBehavior.maxhealth;
     }
-    
+
     private void Update()
     {
         //updating the health bar
-        UpdateHealthUI(Color.green,Color.black);
+        UpdateHealthUI(Color.green, Color.black);
 
         //checking if you are death and if so, call the die function
         if (currentHealth <= 0 && !isDead)
@@ -40,9 +44,18 @@ public class EnemyHealth : HealthSystem
         }
     }
 
+    public void TakeDamage(int damage, int playerId)
+    {
+        base.TakeDamage(damage);
+        int randomIndex = Random.Range(0, hitSounds.Length);
+        hitSounds[randomIndex].Play();
+    }
+
     public override void Die()
     {
         base.Die();
+        int randomIndex = Random.Range(0, deathSounds.Length);
+        deathSounds[randomIndex].Play();
         enemyCollider.enabled = false;
         if (!isDead)
         {
@@ -52,6 +65,6 @@ public class EnemyHealth : HealthSystem
         }
         zombieAnimator.SetTrigger("die");
         //destroy the gameobject
-        Destroy(gameObject ,2);
+        Destroy(gameObject, 2);
     }
 }
