@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,8 +21,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WaveSpawner waveSpawner;
 
     [Header("co-op settings")]
-    [SerializeField] private GameObject SecondPlayer;
-    [SerializeField] private PlayerInputManager playerInputManager;
+    public List<GameObject> players;
+    public PlayerInputManager playerInputManager;
+
+    [Header("LoadScene Component")]
+    public Loadscene loadscene;
 
     private int aliveCount;
 
@@ -40,8 +45,18 @@ public class GameManager : MonoBehaviour
         if (playerInputManager == null)
             return;
 
-        if (playerInputManager.playerCount == 1)
-            playerInputManager.playerPrefab = SecondPlayer;
+        if (playerInputManager.playerCount == 2 && players.Count != 2)
+        {
+            for (int i = 0; i < playerInputManager.playerCount; i++)
+            {
+                if (players.Count <= i)
+                {
+                    GameObject[] playerPrefab = GameObject.FindGameObjectsWithTag("Player");
+                    players.Add(playerPrefab[i]);
+                }
+            }
+        }
+
 
         if (playerInputManager.playerCount == 2 && waveStarted == false)
         {
@@ -50,9 +65,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+
+    }
+
     public void PlayerDied()
     {
         aliveCount--;
+    }
+
+    public void PlayerSpawned()
+    {
+        aliveCount++;
+    }
+
+    public void DeathScene()
+    {
+        loadscene.LoadScene();
     }
 
     public void DoJoinLobby()
@@ -62,7 +92,5 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(waveSpawner.SpawnLoop());
         }
-            //if the first player is already in the game, then we can spawn the second player
-            playerInputManager.playerPrefab = SecondPlayer;
     }
 }
