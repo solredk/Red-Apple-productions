@@ -15,6 +15,8 @@ public class TomatoLauncher : MonoBehaviour
 
     [SerializeField] private Animator animator;
 
+    private bool canShoot = true;
+
     public Gamepad gamepad;
 
     public bool isShooting;
@@ -26,9 +28,6 @@ public class TomatoLauncher : MonoBehaviour
     private int damage;
 
     private float CooldownTimer;
-
-    private bool canShoot = true;
-
 
     private void Start()
     {
@@ -51,9 +50,7 @@ public class TomatoLauncher : MonoBehaviour
 
         //counting down the cooldown timer
         if (CooldownTimer > 0)
-        {
             CooldownTimer -= Time.deltaTime;
-        }
     }
 
     private void Shoot()
@@ -69,11 +66,9 @@ public class TomatoLauncher : MonoBehaviour
 
         //shake the screen
         screenRumble.TriggerShake(0.1f, 0.1f);
-
-        if (controllerActive && gamepad != null)
-        {
+        
+        if (controllerActive && gamepad != null) 
             controllerRumble.StartRumble(0.5f, 0.5f, rumbleDuration, gamepad);
-        }
 
         CooldownTimer = fireRate;
     }

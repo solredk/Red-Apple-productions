@@ -7,14 +7,16 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource audioSource;
 
-    [SerializeField] private AudioMixer audioMixer;
-
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
+    }
+    private void Update()
+    {
+        
     }
 
     public void PlayShootTomato()

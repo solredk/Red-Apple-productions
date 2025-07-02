@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour
     [Header("Pickup Component")]
     [SerializeField] private Pickup pickup;
 
+
     private Gamepad gamepad;
 
 
@@ -35,7 +36,7 @@ public class InputManager : MonoBehaviour
     {
         if (playerInputManager == null)
         {
-            if (GameManager.Instance.playerInputManager != null)
+            if(GameManager.Instance.playerInputManager != null)
             playerInputManager = GameManager.Instance.playerInputManager;
         }
     }
@@ -45,59 +46,44 @@ public class InputManager : MonoBehaviour
         {
             if (context.control.device is Gamepad gp)
             {
-                gamepad = gp;
+                gamepad = gp; 
                 tomatoLauncher.gamepad = gp;
                 tomatoLauncher.controllerActive = true;
             }
 
             else
-            {
                 tomatoLauncher.controllerActive = false;
-            }
             
             tomatoLauncher.isShooting = true;
         }
 
         if (context.canceled)
-        {
             tomatoLauncher.isShooting = false;
-        }
     }
 
     public void OnPickup(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
-        {
             return;
-        }
 
         if (context.performed && pickup != null)
-        {
             pickup.PickuP();
-        }
     }
 
     public void OnDrop(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
-        {
             return;
-        }
 
         if (context.performed && pickup != null)
-        {
             pickup.Drop();
-        }
     }
 
     public void DoMoving(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-
         if (PlayerMovement != null)
-        {
             PlayerMovement.ReadMoveVaulue(moveInput);
-        }
     }
  
     public void DoLooking(InputAction.CallbackContext context)
@@ -105,49 +91,36 @@ public class InputManager : MonoBehaviour
         lookInput = context.ReadValue<Vector2>();
 
         if (playerLook != null)
-        {
-            playerLook.Look(lookInput, context.control.device == Gamepad.current);
-        }
+            playerLook.Look(lookInput,context.control.device == Gamepad.current);
     }
 
     public void DoAdjustDistance(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
-        {
             return;
-        }
 
         if (context.performed)
-        {
             ScrollInput = context.ReadValue<Vector2>();
-        } 
+          
     }
     
     public void DoPause(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
-        {
             return;
-        }
 
         if (context.performed && UIManager.Instance != null)
-        {
             UIManager.Instance.Pause();
-        }
     }
 
 
     public void DoResume(InputAction.CallbackContext context)
     {
         if (playerInputManager != null && playerInputManager.playerCount != 2 || playerHealth.playerState == PlayerState.dead)
-        {
             return;
-        }
 
         if (context.performed && UIManager.Instance != null)
-        {
             UIManager.Instance.Resume();
-        }
     }
     public void OnInteract(InputAction.CallbackContext context)
     {

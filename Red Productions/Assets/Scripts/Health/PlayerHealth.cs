@@ -1,6 +1,10 @@
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
+using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum PlayerState
 {
