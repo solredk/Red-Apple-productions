@@ -4677,7 +4677,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5605759595082887459, guid: 0df0c788a7af68642a6ea23408d428e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 865153452}
   m_SourcePrefab: {fileID: 100100000, guid: 0df0c788a7af68642a6ea23408d428e0, type: 3}
 --- !u!1001 &280811848
 PrefabInstance:
@@ -14938,6 +14941,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 03643ebdc2a935e478efc2f0c2abaf77, type: 3}
   m_PrefabInstance: {fileID: 2086304517}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &865153443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5605759595082887459, guid: 0df0c788a7af68642a6ea23408d428e0, type: 3}
+  m_PrefabInstance: {fileID: 280776341}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &865153452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865153443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643f0cdba717633478c7fafca7f048d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodType: 1
 --- !u!4 &866961499 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8692149419981543800, guid: 838cdd5f603a26d4cbbc5d290a02b8c3, type: 3}
@@ -23578,6 +23599,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 162c2f19fc0e6694595a289f02cf6205, type: 3}
   m_PrefabInstance: {fileID: 444298785}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1315990540
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.063
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.913
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755801459357032337, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4563440735305516331, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
+      propertyPath: m_Name
+      value: tomaat heel We are cooked prefab (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d68f818956837af4da464c1d3a92c10d, type: 3}
 --- !u!4 &1335605785 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7759505848742521345, guid: be9a418a543ef2240990701461c6bbad, type: 3}
@@ -38988,63 +39066,6 @@ PrefabInstance:
       addedObject: {fileID: 1951477145}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f27722f1128d9e48880244e954f504f, type: 3}
---- !u!1001 &1989329737763014553
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -24.192825
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.246
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.7529373
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187558176112983442, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7562817803038451496, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
-      propertyPath: m_Name
-      value: tomaat heel We are cooked prefab
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 16e0664361b20c64891bef228d4c1242, type: 3}
 --- !u!1001 &3435544905117448807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39110,6 +39131,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0df0c788a7af68642a6ea23408d428e0, type: 3}
+--- !u!1001 &6652647929730787163
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -24.192825
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.164
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7304733377266720877, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932088957127129815, guid: efa4e87514964be4c91b5550e4914359, type: 3}
+      propertyPath: m_Name
+      value: tomaat heel We are cooked prefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: efa4e87514964be4c91b5550e4914359, type: 3}
 --- !u!1001 &8029026483321336573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39298,6 +39376,7 @@ SceneRoots:
   - {fileID: 453333345}
   - {fileID: 1387994752130402892}
   - {fileID: 1269352841}
+  - {fileID: 1315990540}
   - {fileID: 300790922}
   - {fileID: 1168768254}
   - {fileID: 2009576888}
@@ -39362,5 +39441,5 @@ SceneRoots:
   - {fileID: 3435544905117448807}
   - {fileID: 280776341}
   - {fileID: 1575678265}
-  - {fileID: 1989329737763014553}
+  - {fileID: 6652647929730787163}
   - {fileID: 341775028}
