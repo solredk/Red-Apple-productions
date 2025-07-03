@@ -39898,11 +39898,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 170140727118801106, guid: 1a491d163d635d346b1803888d7bb033, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1288
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 170140727118801106, guid: 1a491d163d635d346b1803888d7bb033, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1044
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 170140727118801106, guid: 1a491d163d635d346b1803888d7bb033, type: 3}
       propertyPath: m_LocalScale.x
@@ -39931,6 +39931,10 @@ PrefabInstance:
     - target: {fileID: 216215143807807916, guid: 1a491d163d635d346b1803888d7bb033, type: 3}
       propertyPath: m_Name
       value: OrderUIContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2984612439088170799, guid: 1a491d163d635d346b1803888d7bb033, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 438
       objectReference: {fileID: 0}
     - target: {fileID: 4823601477733045486, guid: 1a491d163d635d346b1803888d7bb033, type: 3}
       propertyPath: m_SizeDelta.x
