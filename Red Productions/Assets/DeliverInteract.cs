@@ -24,7 +24,7 @@ public class DeliverInteract : Interactable
             interactionSprite.SetActive(show);
     }
 
-    protected override void Interact()
+    protected override void Interact(GameObject playerGameObject)
     {
         Debug.Log("<color=blue>[DeliverInteract]</color> Checking for food to deliver...");
 

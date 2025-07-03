@@ -1,13 +1,13 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class IngredientShopUI : MonoBehaviour
+public class IngredientShopUI : Interactable
 {
     [Header("Manager Reference")]
-    [SerializeField] private IngredientManager manager; // Assign in Inspector
+    [SerializeField] private IngredientManager manager;
 
     [Header("Spawn Points")]
-    [SerializeField] private Transform[] spawnPoints;   // Assign in Inspector
+    [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private float clearSpawnRadius = 0.5f;
 
     [Header("Food Costs")]
@@ -16,7 +16,75 @@ public class IngredientShopUI : MonoBehaviour
     [SerializeField] private int milkshakeCost = 15;
     [SerializeField] private int friesCost = 40;
 
-    // Example UI Button methods
+    [Header("UI Settings")]
+    [Tooltip("Assign your regular shop UI canvas or panel here")]
+    [SerializeField] private GameObject shopHolder;
+
+    private PlayerMovement currentPlayerMovement;
+    private PlayerHealth currentPlayerHealth;
+
+    private bool isShopOpen;
+    private float lastKnownHealth;
+
+    protected override void Interact(GameObject playerGameObject)
+    {
+        base.Interact(playerGameObject);
+
+        currentPlayerMovement = playerGameObject.GetComponent<PlayerMovement>();
+        currentPlayerHealth = playerGameObject.GetComponent<PlayerHealth>();
+
+        OpenShopUI();
+    }
+
+    public void OpenShopUI()
+    {
+        if (!isShopOpen)
+        {
+            if (shopHolder != null)
+            {
+                shopHolder.SetActive(true);
+            }
+
+            if (currentPlayerMovement != null)
+            {
+                currentPlayerMovement.SetCurrentSpeed(0f);
+            }
+
+            if (currentPlayerHealth != null)
+            {
+                lastKnownHealth = currentPlayerHealth.currentHealth;
+            }
+
+            isShopOpen = true;
+        }
+    }
+
+    public void CloseShopUI()
+    {
+        if (isShopOpen)
+        {
+            if (shopHolder != null)
+            {
+                shopHolder.SetActive(false);
+            }
+
+            if (currentPlayerMovement != null)
+            {
+                currentPlayerMovement.SetCurrentSpeed(5f);
+            }
+
+            isShopOpen = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (isShopOpen && currentPlayerHealth && currentPlayerHealth.currentHealth < lastKnownHealth)
+        {
+            Debug.Log("Player took damage while in shop, closing UI");
+            CloseShopUI();
+        }
+    }
 
     public void OnBurgerClick()
     {
@@ -38,15 +106,12 @@ public class IngredientShopUI : MonoBehaviour
         TrySpawn(Ingredient.IngredientType.fries, friesCost);
     }
 
-    // Generic spawn method
     private void TrySpawn(Ingredient.IngredientType foodType, int cost)
     {
-        // Check score
         if (ScoreSystem.Instance != null && ScoreSystem.Instance.score >= cost)
         {
             ScoreSystem.Instance.AddScore(-cost);
 
-            // Find a clear spawn point
             Transform spawnPoint = FindClearSpawnPoint();
             if (spawnPoint == null && spawnPoints.Length > 0)
             {
@@ -54,7 +119,6 @@ public class IngredientShopUI : MonoBehaviour
                 Debug.Log("<color=yellow>[IngredientShopUI]</color> All spawn points blocked, using the first point.");
             }
 
-            // Spawn the food group using IngredientManager
             if (spawnPoint != null && manager != null)
             {
                 manager.InstantiateIngredientGroup(foodType, spawnPoint.position, spawnPoint.rotation);
@@ -66,7 +130,6 @@ public class IngredientShopUI : MonoBehaviour
         }
     }
 
-    // Attempts to find a spawn point that has no colliders within clearSpawnRadius
     private Transform FindClearSpawnPoint()
     {
         if (spawnPoints == null || spawnPoints.Length == 0)
@@ -75,10 +138,11 @@ public class IngredientShopUI : MonoBehaviour
             return null;
         }
 
-        // Create a random order of indices
         List<int> indices = new List<int>();
         for (int i = 0; i < spawnPoints.Length; i++)
+        {
             indices.Add(i);
+        }
 
         for (int i = 0; i < indices.Count; i++)
         {
@@ -88,7 +152,6 @@ public class IngredientShopUI : MonoBehaviour
             indices[randomIndex] = temp;
         }
 
-        // Check each spawn point in random order
         foreach (int index in indices)
         {
             Transform point = spawnPoints[index];
@@ -101,12 +164,9 @@ public class IngredientShopUI : MonoBehaviour
                 }
             }
         }
-
-        // None clear
         return null;
     }
 
-    // For reference or debugging in the scene view
     private void OnDrawGizmosSelected()
     {
         if (spawnPoints != null)

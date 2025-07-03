@@ -20,16 +20,29 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
     [SerializeField] private float interactDistance = 3f;
     [SerializeField] private LayerMask interactLayer;
     [SerializeField] private InputManager inputManager;
-    [SerializeField] private PlayerUI playerUI;
+    [SerializeField] private PlayerUI playerUI; // Make sure this is assigned in the Inspector
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        playerUI = GetComponent<PlayerUI>();
+
+        // Check if playerUI is already assigned in the Inspector
+        if (playerUI == null)
+        {
+            // If not, try to find it on the same GameObject
+            playerUI = GetComponent<PlayerUI>();
+
+            // If still null, log an error
+            if (playerUI == null)
+            {
+                Debug.LogError("PlayerUI component not found on this GameObject.  Please assign it in the Inspector or add the PlayerUI script to this GameObject.");
+            }
+        }
     }
 
     private void Update()
     {
+        // Only call UpdateText if playerUI is not null
         if (playerUI != null)
         {
             playerUI.UpdateText(string.Empty);
@@ -61,7 +74,7 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
         if (Physics.Raycast(ray, out hitInfo, interactDistance, interactLayer))
         {
             // Logging for debugging controller issues
-          
+
 
             //check if the object has an interactable component
             if (hitInfo.collider.GetComponent<Interactable>() != null)
@@ -76,7 +89,7 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
     {
         // Debug log to verify the method is called from controller
         Debug.Log("OnInteract called - attempting to interact");
-        
+
         // Immediately check if we're looking at an interactable and trigger it
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, interactDistance, interactLayer))
@@ -85,7 +98,7 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
             if (interactable != null)
             {
                 Debug.Log($"Interacting with {hitInfo.collider.gameObject.name}");
-                interactable.BaseInteract();
+                interactable.BaseInteract(gameObject);
             }
         }
     }

@@ -48,7 +48,7 @@ public class IngredientSpawner : Interactable
             interactionSprite.SetActive(show);
     }
 
-    protected override void Interact()
+    protected override void Interact(GameObject playerGameObject)
     {
         Debug.Log($"<color=blue>[IngredientSpawner]</color> Interact called on {gameObject.name}");
 
@@ -99,7 +99,7 @@ public class IngredientSpawner : Interactable
         // Try to find a spawn point without colliders
         Transform selectedSpawnPoint = null;
 
-        // Create a shuffled list of indices to try spawn points in random order
+      // shuffle 
         List<int> indices = new List<int>();
         for (int i = 0; i < spawnPoints.Length; i++)
             indices.Add(i);
@@ -139,59 +139,6 @@ public class IngredientSpawner : Interactable
         }
 
         return true;
-    }
-
-    private Transform FindClearSpawnPoint()
-    {
-        // Create a shuffled list of spawn point indices for random selection
-        List<int> spawnPointIndices = new List<int>();
-        for (int i = 0; i < spawnPoints.Length; i++)
-            spawnPointIndices.Add(i);
-
-        // Fisher-Yates shuffle
-        for (int i = 0; i < spawnPointIndices.Count; i++)
-        {
-            int temp = spawnPointIndices[i];
-            int randomIndex = Random.Range(i, spawnPointIndices.Count);
-            spawnPointIndices[i] = spawnPointIndices[randomIndex];
-            spawnPointIndices[randomIndex] = temp;
-        }
-
-        // Check each spawn point in random order
-        foreach (int index in spawnPointIndices)
-        {
-            Transform point = spawnPoints[index];
-            if (point != null && IsSpawnPointClear(point))
-                return point;
-        }
-
-        return null; // No clear spawn points found
-    }
-
-    private bool IsSpawnPointClear(Transform point)
-    {
-        // Check if there are any colliders at this spawn point
-        return Physics.OverlapSphere(point.position, clearSpawnRadius).Length == 0;
-    }
-
-    private Transform FindLeastBlockedSpawnPoint()
-    {
-        Transform bestPoint = null;
-        int fewestColliders = int.MaxValue;
-
-        foreach (Transform point in spawnPoints)
-        {
-            if (point == null) continue;
-
-            int colliderCount = Physics.OverlapSphere(point.position, clearSpawnRadius).Length;
-            if (colliderCount < fewestColliders)
-            {
-                fewestColliders = colliderCount;
-                bestPoint = point;
-            }
-        }
-
-        return bestPoint;
     }
 
     private void OnDrawGizmosSelected()

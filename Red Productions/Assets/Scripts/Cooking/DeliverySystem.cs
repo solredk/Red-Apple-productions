@@ -15,16 +15,28 @@ public class DeliverySystem : Interactable
     [SerializeField] private float deliveryDetectionRadius = 3f;
     [SerializeField] private LayerMask foodLayer;
     [SerializeField] private GameObject deliveryEffectPrefab;
+
     [SerializeField] private GameObject interactionIndicator;
 
+    [Header("Food Type Icons")]
+    [SerializeField] private Sprite burgerIcon;
+    [SerializeField] private Sprite friesIcon;
+    [SerializeField] private Sprite chickenNuggetsIcon;
+    [SerializeField] private Sprite milkShakesIcon;
+
+    [Header("Order State Icons")]
+    [SerializeField] private Sprite happyStateIcon;
+    [SerializeField] private Sprite neutralStateIcon;
+    [SerializeField] private Sprite frustratedStateIcon;
+    [SerializeField] private Sprite angryStateIcon;
+
     [Header("Timing Settings")]
-    // Higher values = more time remaining (opposite of completion percentage)
-    [SerializeField] private float happyThreshold = 0.75f; // Happy if 75%+ time remains
-    [SerializeField] private float neutralThreshold = 0.50f; // Neutral if 50-75% time remains
-    [SerializeField] private float frustratedThreshold = 0.25f; // Frustrated if 25-50% time remains
-    [SerializeField] private float baseOrderTime = 120f; // Base time (2 minutes)
-    [SerializeField] private float additionalTimePerItem = 50f; // Add 50 seconds per extra item
-    [SerializeField] private float maxOrderTime = 300f; // Maximum order time (5 minutes)
+    [SerializeField] private float happyThreshold = 0.75f;
+    [SerializeField] private float neutralThreshold = 0.50f;
+    [SerializeField] private float frustratedThreshold = 0.25f;
+    [SerializeField] private float baseOrderTime = 120f;
+    [SerializeField] private float additionalTimePerItem = 50f;
+    [SerializeField] private float maxOrderTime = 300f;
 
     [Header("Point Values")]
     [SerializeField] private int happyDeliveryPoints = 100;
@@ -37,8 +49,12 @@ public class DeliverySystem : Interactable
     [SerializeField] private GameObject orderUIPrefab;
 
     private List<DeliveryOrder> activeOrders = new List<DeliveryOrder>();
-    private Dictionary<DeliveryOrder, GameObject> orderUIElements = new Dictionary<DeliveryOrder, GameObject>();
+    private Dictionary<DeliveryOrder, OrderUIElements> orderUIElements = new Dictionary<DeliveryOrder, OrderUIElements>();
     private Coroutine orderExpiryCoroutine;
+
+    // Dictionaries for food type and order state sprites
+    private Dictionary<Ingredient.IngredientType, Sprite> foodTypeSprites = new Dictionary<Ingredient.IngredientType, Sprite>();
+    private Dictionary<DeliveryOrder.OrderState, Sprite> orderStateSprites = new Dictionary<DeliveryOrder.OrderState, Sprite>();
 
     [Serializable]
     public class DeliveryOrder
@@ -88,6 +104,30 @@ public class DeliverySystem : Interactable
         }
     }
 
+    // Helper class to cache UI element references
+    private class OrderUIElements
+    {
+        public GameObject uiElement;
+        public Image foodIcon;
+        public Image stateIcon;
+        public TextMeshProUGUI timerText;
+        public TextMeshProUGUI qtyText;
+    }
+
+    private void Awake()
+    {
+        // Initialize sprite dictionaries
+        foodTypeSprites.Add(Ingredient.IngredientType.burger, burgerIcon);
+        foodTypeSprites.Add(Ingredient.IngredientType.fries, friesIcon);
+        foodTypeSprites.Add(Ingredient.IngredientType.chickenNuggets, chickenNuggetsIcon);
+        foodTypeSprites.Add(Ingredient.IngredientType.milkShakes, milkShakesIcon);
+
+        orderStateSprites.Add(DeliveryOrder.OrderState.Happy, happyStateIcon);
+        orderStateSprites.Add(DeliveryOrder.OrderState.Neutral, neutralStateIcon);
+        orderStateSprites.Add(DeliveryOrder.OrderState.Frustrated, frustratedStateIcon);
+        orderStateSprites.Add(DeliveryOrder.OrderState.Angry, angryStateIcon);
+    }
+
     private void Start()
     {
         if (interactionIndicator != null)
@@ -105,7 +145,7 @@ public class DeliverySystem : Interactable
         UpdateOrderUI();
     }
 
-    protected override void Interact()
+    protected override void Interact(GameObject playerGameObject)
     {
         Debug.Log("Delivery System interacted with - checking for food items");
 
@@ -153,9 +193,9 @@ public class DeliverySystem : Interactable
 
         foreach (DeliveryOrder order in completedOrders)
         {
-            if (orderUIElements.TryGetValue(order, out GameObject uiElement))
+            if (orderUIElements.TryGetValue(order, out OrderUIElements uiElements))
             {
-                Destroy(uiElement);
+                Destroy(uiElements.uiElement);
                 orderUIElements.Remove(order);
             }
             activeOrders.Remove(order);
@@ -208,22 +248,17 @@ public class DeliverySystem : Interactable
             return;
         }
 
-        // Log available prefabs
-        Debug.Log($"<color=blue>[DeliverySystem]</color> Generating random order from {deliveryFoodPrefabs.Length} available prefabs");
-
         GameObject randomPrefab = deliveryFoodPrefabs[UnityEngine.Random.Range(0, deliveryFoodPrefabs.Length)];
-        Debug.Log($"<color=blue>[DeliverySystem]</color> Selected prefab: {randomPrefab.name}");
-
         FoodType typeId = randomPrefab.GetComponent<FoodType>();
+
         if (typeId == null)
         {
             Debug.LogError($"<color=red>[DeliverySystem]</color> Prefab {randomPrefab.name} is missing FoodType component!");
             return;
         }
 
-        int quantity = UnityEngine.Random.Range(1, 4); // Random amount between 1-3
+        int quantity = UnityEngine.Random.Range(1, 4);
         float orderTime = baseOrderTime + (additionalTimePerItem * (quantity - 1));
-        // Cap the order time to maximum
         orderTime = Mathf.Min(orderTime, maxOrderTime);
 
         DeliveryOrder newOrder = new DeliveryOrder
@@ -236,61 +271,95 @@ public class DeliverySystem : Interactable
 
         activeOrders.Add(newOrder);
         CreateOrderUI(newOrder);
-
-        // Enhanced detailed logging
-        Debug.Log($"<color=green>[DeliverySystem]</color> NEW ORDER GENERATED:");
-        Debug.Log($"<color=green>[DeliverySystem]</color> - Food Type: {newOrder.foodType}");
-        Debug.Log($"<color=green>[DeliverySystem]</color> - Quantity: {newOrder.quantity}");
-        Debug.Log($"<color=green>[DeliverySystem]</color> - Current Order Count: {activeOrders.Count}/{maxActiveOrders}");
     }
+
     private void CreateOrderUI(DeliveryOrder order)
     {
-        if (orderUIPrefab != null && orderUIContainer != null)
+        if (orderUIPrefab == null || orderUIContainer == null)
+            return;
+
+        GameObject uiElement = Instantiate(orderUIPrefab, orderUIContainer);
+
+        // Find UI elements and cache them
+        OrderUIElements uiElements = new OrderUIElements
         {
-            GameObject uiElement = Instantiate(orderUIPrefab, orderUIContainer);
+            uiElement = uiElement,
+            foodIcon = uiElement.transform.Find("FoodIcon")?.GetComponent<Image>(),
+            stateIcon = uiElement.transform.Find("StateIcon")?.GetComponent<Image>(),
+            timerText = uiElement.transform.Find("TimerText")?.GetComponent<TextMeshProUGUI>(),
+            qtyText = uiElement.transform.Find("QuantityText")?.GetComponent<TextMeshProUGUI>()
+        };
 
-            TextMeshProUGUI[] texts = uiElement.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach (TextMeshProUGUI text in texts)
+        orderUIElements[order] = uiElements;
+
+        // Set initial values
+        if (uiElements.foodIcon != null)
+        {
+            if (foodTypeSprites.ContainsKey(order.foodType))
             {
-                if (text.name.Contains("Type"))
-                    text.text = order.foodType.ToString();
-                else if (text.name.Contains("Quantity"))
-                    text.text = $"x{order.quantity}";
-                else if (text.name.Contains("Timer"))
-                    text.text = FormatTime(order.GetRemainingTime());
+                uiElements.foodIcon.sprite = foodTypeSprites[order.foodType];
             }
+            else
+            {
+                Debug.LogWarning($"No sprite found for food type: {order.foodType}");
+            }
+        }
 
-            orderUIElements[order] = uiElement;
+        if (uiElements.qtyText != null)
+        {
+            uiElements.qtyText.text = $"x{order.quantity}";
+        }
+
+        if (uiElements.timerText != null)
+        {
+            uiElements.timerText.text = FormatTime(order.GetRemainingTime());
+        }
+
+        // Set initial state icon (optional)
+        if (uiElements.stateIcon != null)
+        {
+            UpdateOrderStateIcon(order, uiElements.stateIcon);
         }
     }
 
     private void UpdateOrderUI()
     {
-        foreach (KeyValuePair<DeliveryOrder, GameObject> entry in orderUIElements)
+        foreach (DeliveryOrder order in activeOrders)
         {
-            DeliveryOrder order = entry.Key;
-            GameObject uiElement = entry.Value;
-
-            if (uiElement == null) continue;
-
-            TextMeshProUGUI timerText = uiElement.GetComponentInChildren<TextMeshProUGUI>(true);
-            if (timerText != null && timerText.name.Contains("Timer"))
-                timerText.text = FormatTime(order.GetRemainingTime());
-
-            Image stateIndicator = uiElement.GetComponentInChildren<Image>(true);
-            if (stateIndicator != null && stateIndicator.name.Contains("StateIndicator"))
+            if (orderUIElements.TryGetValue(order, out OrderUIElements uiElements))
             {
-                DeliveryOrder.OrderState state = order.GetCurrentState(happyThreshold, neutralThreshold, frustratedThreshold);
+                if (uiElements == null || uiElements.uiElement == null)
+                {
+                    // UI element was destroyed, remove it from the dictionary
+                    orderUIElements.Remove(order);
+                    continue;
+                }
 
-                if (state == DeliveryOrder.OrderState.Happy)
-                    stateIndicator.color = Color.green;
-                else if (state == DeliveryOrder.OrderState.Neutral)
-                    stateIndicator.color = Color.yellow;
-                else if (state == DeliveryOrder.OrderState.Frustrated)
-                    stateIndicator.color = new Color(1.0f, 0.5f, 0.0f); // Orange
-                else
-                    stateIndicator.color = Color.red;
+                if (uiElements.timerText != null)
+                {
+                    uiElements.timerText.text = FormatTime(order.GetRemainingTime());
+                }
+
+                if (uiElements.stateIcon != null)
+                {
+                    UpdateOrderStateIcon(order, uiElements.stateIcon);
+                }
             }
+        }
+    }
+
+    private void UpdateOrderStateIcon(DeliveryOrder order, Image stateIcon)
+    {
+        DeliveryOrder.OrderState state = order.GetCurrentState(happyThreshold, neutralThreshold, frustratedThreshold);
+
+        if (orderStateSprites.ContainsKey(state))
+        {
+            stateIcon.sprite = orderStateSprites[state];
+        }
+        else
+        {
+            Debug.LogWarning($"No sprite found for order state: {state}");
+            stateIcon.sprite = null; // Clear the sprite if no match is found
         }
     }
 
@@ -307,7 +376,6 @@ public class DeliverySystem : Interactable
         {
             float currentTime = Time.time;
 
-            // Use a for loop with backward iteration to safely remove elements
             for (int i = activeOrders.Count - 1; i >= 0; i--)
             {
                 DeliveryOrder order = activeOrders[i];
@@ -315,14 +383,12 @@ public class DeliverySystem : Interactable
                 {
                     Debug.Log($"Order expired: {order.quantity}x {order.foodType}");
 
-                    // Remove UI element
-                    if (orderUIElements.TryGetValue(order, out GameObject uiElement))
+                    if (orderUIElements.TryGetValue(order, out OrderUIElements uiElements))
                     {
-                        Destroy(uiElement);
+                        Destroy(uiElements.uiElement);
                         orderUIElements.Remove(order);
                     }
 
-                    // Safely remove the order
                     activeOrders.RemoveAt(i);
                 }
             }
@@ -339,11 +405,9 @@ public class DeliverySystem : Interactable
 
     private void OnDrawGizmosSelected()
     {
-        // Draw detection radius
-        Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f); // Orange
+        Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f);
         Gizmos.DrawSphere(transform.position, deliveryDetectionRadius);
 
-        // Draw wire sphere for visibility
         Gizmos.color = new Color(1f, 0.5f, 0f, 1f);
         Gizmos.DrawWireSphere(transform.position, deliveryDetectionRadius);
     }

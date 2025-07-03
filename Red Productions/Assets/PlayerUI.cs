@@ -6,19 +6,19 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI promptText;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (promptText == null)
+        {
+            Debug.LogWarning("PlayerUI: promptText is not assigned in the inspector!");
+        }
     }
-     
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     public void UpdateText(string promptMessage)
     {
-        promptText.text = promptMessage;
+        if (promptText != null)
+        {
+            promptText.text = promptMessage;
+        }
     }
 }

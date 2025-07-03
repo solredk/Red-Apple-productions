@@ -7,17 +7,17 @@ public abstract class Interactable : MonoBehaviour
     public bool useEvents;
     public string promptMessage;
 
-    public void BaseInteract()
+    public void BaseInteract(GameObject playerGameObject)
     {
-        if (useEvents)
+        if (useEvents && TryGetComponent(out InteractionEvent interactionEvent))
         {
-            GetComponent<InteractionEvent>().OnInteract.Invoke();
+            interactionEvent.OnInteract.Invoke();
         }
-        Interact();
+        Interact(playerGameObject);
     }
 
 
-    protected virtual void Interact()
+    protected virtual void Interact(GameObject playerGameObject)
     {
         
     }

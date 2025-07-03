@@ -17,8 +17,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     
     private bool isGrounded;
-
-
+    public void SetCurrentSpeed(float value)
+    {
+        currentSpeed = value;
+    }
     private void Update()
     {
         // Check if the player is falling below a certain height and reset position 
@@ -63,4 +65,5 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = input;
     }
+
 }

@@ -34,3 +34,4 @@ public class Ingredient : MonoBehaviour
     public IngredientType type;
 
 }
+// Voor later doe ingredientstates met prefabs als state zo is dan is de ingredient = preset prefab, laat alleen die preset prefab werken en voeg auto feedback ( cooking / uncooked) 

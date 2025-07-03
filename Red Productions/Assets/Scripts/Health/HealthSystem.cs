@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public abstract class HealthSystem : MonoBehaviour
 {
     [Header("Health Ammounts")]
-    [SerializeField] protected float currentHealth;
+    [SerializeField] public float currentHealth;
     [SerializeField] protected float maxHealth;
 
     [Header("Health Bar Components")]
