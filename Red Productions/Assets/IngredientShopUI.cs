@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class IngredientShopUI : Interactable
 {
@@ -20,11 +23,25 @@ public class IngredientShopUI : Interactable
     [Tooltip("Assign your regular shop UI canvas or panel here")]
     [SerializeField] private GameObject shopHolder;
 
+    [Header("UI Navigation")]
+    [Tooltip("Assign your shop buttons in navigation order")]
+    [SerializeField] private List<Button> shopButtons;
+
+    [Header("Input Actions")]
+    [Tooltip("Reference to your InputActionAsset (should have UI/Navigate, UI/Submit, UI/Cancel)")]
+    [SerializeField] private InputActionAsset inputActions;
+
     private PlayerMovement currentPlayerMovement;
     private PlayerHealth currentPlayerHealth;
 
     private bool isShopOpen;
     private float lastKnownHealth;
+
+    private int selectedButtonIndex = 0;
+    private EventSystem eventSystem;
+    private InputAction navigateAction;
+    private InputAction submitAction;
+    private InputAction cancelAction;
 
     protected override void Interact(GameObject playerGameObject)
     {
@@ -36,26 +53,87 @@ public class IngredientShopUI : Interactable
         OpenShopUI();
     }
 
+    private void Awake()
+    {
+        eventSystem = EventSystem.current;
+    }
+
+    private void OnEnable()
+    {
+        SetupInput();
+    }
+
+    private void OnDisable()
+    {
+        TeardownInput();
+    }
+
+    private void SetupInput()
+    {
+        if (inputActions == null) return;
+
+        // These names must match your InputActionAsset
+        navigateAction = inputActions.FindAction("UI/Navigate");
+        submitAction = inputActions.FindAction("UI/Submit");
+        cancelAction = inputActions.FindAction("UI/Cancel");
+
+        if (navigateAction != null)
+        {
+            navigateAction.performed += OnNavigate;
+            navigateAction.Enable();
+        }
+        if (submitAction != null)
+        {
+            submitAction.performed += OnSubmit;
+            submitAction.Enable();
+        }
+        if (cancelAction != null)
+        {
+            cancelAction.performed += OnCancel;
+            cancelAction.Enable();
+        }
+    }
+
+    private void TeardownInput()
+    {
+        if (navigateAction != null)
+        {
+            navigateAction.performed -= OnNavigate;
+            navigateAction.Disable();
+        }
+        if (submitAction != null)
+        {
+            submitAction.performed -= OnSubmit;
+            submitAction.Disable();
+        }
+        if (cancelAction != null)
+        {
+            cancelAction.performed -= OnCancel;
+            cancelAction.Disable();
+        }
+    }
+
     public void OpenShopUI()
     {
         if (!isShopOpen)
         {
             if (shopHolder != null)
-            {
                 shopHolder.SetActive(true);
-            }
 
             if (currentPlayerMovement != null)
-            {
                 currentPlayerMovement.SetCurrentSpeed(0f);
-            }
 
             if (currentPlayerHealth != null)
-            {
                 lastKnownHealth = currentPlayerHealth.currentHealth;
-            }
 
             isShopOpen = true;
+
+            // Select the first button for navigation
+            if (shopButtons != null && shopButtons.Count > 0)
+            {
+                selectedButtonIndex = 0;
+                eventSystem.SetSelectedGameObject(shopButtons[selectedButtonIndex].gameObject);
+            }
         }
     }
 
@@ -64,16 +142,13 @@ public class IngredientShopUI : Interactable
         if (isShopOpen)
         {
             if (shopHolder != null)
-            {
                 shopHolder.SetActive(false);
-            }
 
             if (currentPlayerMovement != null)
-            {
                 currentPlayerMovement.SetCurrentSpeed(5f);
-            }
 
             isShopOpen = false;
+            eventSystem.SetSelectedGameObject(null);
         }
     }
 
@@ -84,6 +159,37 @@ public class IngredientShopUI : Interactable
             Debug.Log("Player took damage while in shop, closing UI");
             CloseShopUI();
         }
+    }
+
+    private void OnNavigate(InputAction.CallbackContext ctx)
+    {
+        if (!isShopOpen || shopButtons == null || shopButtons.Count == 0) return;
+
+        Vector2 nav = ctx.ReadValue<Vector2>();
+        if (nav.y < -0.5f)
+        {
+            // Down
+            selectedButtonIndex = (selectedButtonIndex + 1) % shopButtons.Count;
+            eventSystem.SetSelectedGameObject(shopButtons[selectedButtonIndex].gameObject);
+        }
+        else if (nav.y > 0.5f)
+        {
+            // Up
+            selectedButtonIndex = (selectedButtonIndex - 1 + shopButtons.Count) % shopButtons.Count;
+            eventSystem.SetSelectedGameObject(shopButtons[selectedButtonIndex].gameObject);
+        }
+    }
+
+    private void OnSubmit(InputAction.CallbackContext ctx)
+    {
+        if (!isShopOpen || shopButtons == null || shopButtons.Count == 0) return;
+        shopButtons[selectedButtonIndex].onClick.Invoke();
+    }
+
+    private void OnCancel(InputAction.CallbackContext ctx)
+    {
+        if (isShopOpen)
+            CloseShopUI();
     }
 
     public void OnBurgerClick()
