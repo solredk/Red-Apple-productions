@@ -353,7 +353,7 @@ public class DeliverySystem : Interactable
     {
         int minutes = Mathf.FloorToInt(timeInSeconds / 60);
         int seconds = Mathf.FloorToInt(timeInSeconds % 60);
-        return $"{minutes:00}:{seconds:00}";
+        return $" Time: {minutes:00}:{seconds:00}";
     }
 
     private IEnumerator CheckOrderExpiryRoutine()
