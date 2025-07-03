@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Animator")]
     [SerializeField] private Animator animator;
-
+      
     private Vector3 playerVelocity;
 
     private Vector2 moveInput;

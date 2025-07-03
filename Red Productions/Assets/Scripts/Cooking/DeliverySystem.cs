@@ -1,16 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using System;
+using System.Linq;
 
 public class DeliverySystem : Interactable
 {
     [Header("Delivery Settings")]
     [SerializeField] private GameObject[] deliveryFoodPrefabs;
     [SerializeField] private int minActiveOrders = 1;
-    [SerializeField] private int maxActiveOrders = 3;
+    [SerializeField] private int maxActiveOrders = 1; // Only 1 order at a time
     [SerializeField] private float orderGenerationInterval = 20f;
     [SerializeField] private float deliveryDetectionRadius = 3f;
     [SerializeField] private LayerMask foodLayer;
@@ -47,10 +48,12 @@ public class DeliverySystem : Interactable
     [Header("UI References")]
     [SerializeField] private Transform orderUIContainer;
     [SerializeField] private GameObject orderUIPrefab;
+    [SerializeField] private Transform foodIconContainer; // Container for food icons
 
-    private List<DeliveryOrder> activeOrders = new List<DeliveryOrder>();
-    private Dictionary<DeliveryOrder, OrderUIElements> orderUIElements = new Dictionary<DeliveryOrder, OrderUIElements>();
-    private Coroutine orderExpiryCoroutine;
+    private DeliveryOrder activeOrder;
+    private GameObject orderUIElement;
+    private Image stateIcon;
+    private TextMeshProUGUI timerText;
 
     // Dictionaries for food type and order state sprites
     private Dictionary<Ingredient.IngredientType, Sprite> foodTypeSprites = new Dictionary<Ingredient.IngredientType, Sprite>();
@@ -80,8 +83,8 @@ public class DeliverySystem : Interactable
                 return OrderState.Happy;
             else if (timeRemainingPercentage >= neutralThreshold)
                 return OrderState.Neutral;
-            else if (timeRemainingPercentage >= frustratedThreshold)
-                return OrderState.Frustrated;
+            else if (timeRemainingPercentage < frustratedThreshold)
+                 return OrderState.Frustrated;
             else
                 return OrderState.Angry;
         }
@@ -102,16 +105,6 @@ public class DeliverySystem : Interactable
             float remainingTime = GetRemainingTime();
             return remainingTime / totalTime;
         }
-    }
-
-    // Helper class to cache UI element references
-    private class OrderUIElements
-    {
-        public GameObject uiElement;
-        public Image foodIcon;
-        public Image stateIcon;
-        public TextMeshProUGUI timerText;
-        public TextMeshProUGUI qtyText;
     }
 
     private void Awake()
@@ -136,8 +129,14 @@ public class DeliverySystem : Interactable
         if (string.IsNullOrEmpty(promptMessage))
             promptMessage = "Press Q to deliver food";
 
+        // Instantiate and cache the UI element
+        orderUIElement = Instantiate(orderUIPrefab, orderUIContainer);
+        stateIcon = orderUIElement.transform.Find("StateIcon")?.GetComponent<Image>();
+        timerText = orderUIElement.transform.Find("TimerText")?.GetComponent<TextMeshProUGUI>();
+        orderUIElement.SetActive(false); // Initially hide the UI element
+
         StartCoroutine(GenerateOrdersRoutine());
-        orderExpiryCoroutine = StartCoroutine(CheckOrderExpiryRoutine());
+        StartCoroutine(CheckOrderExpiryRoutine());
     }
 
     private void Update()
@@ -150,10 +149,10 @@ public class DeliverySystem : Interactable
         Debug.Log("Delivery System interacted with - checking for food items");
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, deliveryDetectionRadius, foodLayer);
-        List<DeliveryOrder> completedOrders = new List<DeliveryOrder>();
+        bool orderCompleted = false;
         int totalPointsEarned = 0;
 
-        foreach (DeliveryOrder order in activeOrders)
+        if (activeOrder != null)
         {
             int matchingFoodCount = 0;
             List<GameObject> matchingFoodItems = new List<GameObject>();
@@ -164,19 +163,19 @@ public class DeliverySystem : Interactable
                 if (food == null) continue;
 
                 FoodType typeId = foodCollider.GetComponent<FoodType>();
-                if (typeId != null && typeId.foodType == order.foodType)
+                if (typeId != null && typeId.foodType == activeOrder.foodType)
                 {
                     matchingFoodItems.Add(foodCollider.gameObject);
                     matchingFoodCount++;
 
-                    if (matchingFoodCount >= order.quantity)
+                    if (matchingFoodCount >= activeOrder.quantity)
                         break;
                 }
             }
 
-            if (matchingFoodCount >= order.quantity)
+            if (matchingFoodCount >= activeOrder.quantity)
             {
-                int pointsEarned = CalculatePointsForOrder(order) * order.quantity;
+                int pointsEarned = CalculatePointsForOrder(activeOrder) * activeOrder.quantity;
                 totalPointsEarned += pointsEarned;
 
                 foreach (GameObject foodItem in matchingFoodItems)
@@ -186,19 +185,15 @@ public class DeliverySystem : Interactable
                     Destroy(foodItem);
                 }
 
-                completedOrders.Add(order);
-                Debug.Log($"Order completed! {order.quantity}x {order.foodType} - {pointsEarned} points");
+                orderCompleted = true;
+                Debug.Log($"Order completed! {activeOrder.quantity}x {activeOrder.foodType} - {pointsEarned} points");
             }
         }
 
-        foreach (DeliveryOrder order in completedOrders)
+        if (orderCompleted)
         {
-            if (orderUIElements.TryGetValue(order, out OrderUIElements uiElements))
-            {
-                Destroy(uiElements.uiElement);
-                orderUIElements.Remove(order);
-            }
-            activeOrders.Remove(order);
+            activeOrder = null;
+            orderUIElement.SetActive(false);
         }
 
         if (totalPointsEarned > 0 && ScoreSystem.Instance != null)
@@ -226,14 +221,9 @@ public class DeliverySystem : Interactable
     {
         while (true)
         {
-            if (activeOrders.Count < maxActiveOrders)
+            if (activeOrder == null)
             {
-                int ordersToGenerate = UnityEngine.Random.Range(1, maxActiveOrders - activeOrders.Count + 1);
-
-                for (int i = 0; i < ordersToGenerate; i++)
-                {
-                    GenerateRandomOrder();
-                }
+                GenerateRandomOrder();
             }
 
             yield return new WaitForSeconds(orderGenerationInterval);
@@ -261,7 +251,7 @@ public class DeliverySystem : Interactable
         float orderTime = baseOrderTime + (additionalTimePerItem * (quantity - 1));
         orderTime = Mathf.Min(orderTime, maxOrderTime);
 
-        DeliveryOrder newOrder = new DeliveryOrder
+        activeOrder = new DeliveryOrder
         {
             foodType = typeId.foodType,
             quantity = quantity,
@@ -269,81 +259,57 @@ public class DeliverySystem : Interactable
             expirationTime = Time.time + orderTime
         };
 
-        activeOrders.Add(newOrder);
-        CreateOrderUI(newOrder);
+        UpdateUIForOrder(activeOrder);
+
+        // Enhanced detailed logging
+        Debug.Log($"<color=green>[DeliverySystem]</color> NEW ORDER GENERATED:");
+        Debug.Log($"<color=green>[DeliverySystem]</color> - Food Type: {activeOrder.foodType}");
+        Debug.Log($"<color=green>[DeliverySystem]</color> - Quantity: {activeOrder.quantity}");
+        Debug.Log($"<color=green>[DeliverySystem]</color> - Order Time: {orderTime}");
     }
 
-    private void CreateOrderUI(DeliveryOrder order)
+    private void UpdateUIForOrder(DeliveryOrder order)
     {
-        if (orderUIPrefab == null || orderUIContainer == null)
-            return;
-
-        GameObject uiElement = Instantiate(orderUIPrefab, orderUIContainer);
-
-        // Find UI elements and cache them
-        OrderUIElements uiElements = new OrderUIElements
+        // Clear existing food icons
+        foreach (Transform child in foodIconContainer)
         {
-            uiElement = uiElement,
-            foodIcon = uiElement.transform.Find("FoodIcon")?.GetComponent<Image>(),
-            stateIcon = uiElement.transform.Find("StateIcon")?.GetComponent<Image>(),
-            timerText = uiElement.transform.Find("TimerText")?.GetComponent<TextMeshProUGUI>(),
-            qtyText = uiElement.transform.Find("QuantityText")?.GetComponent<TextMeshProUGUI>()
-        };
-
-        orderUIElements[order] = uiElements;
-
-        // Set initial values
-        if (uiElements.foodIcon != null)
-        {
-            if (foodTypeSprites.ContainsKey(order.foodType))
-            {
-                uiElements.foodIcon.sprite = foodTypeSprites[order.foodType];
-            }
-            else
-            {
-                Debug.LogWarning($"No sprite found for food type: {order.foodType}");
-            }
+            Destroy(child.gameObject);
         }
 
-        if (uiElements.qtyText != null)
+        // Instantiate food icons based on quantity
+        for (int i = 0; i < order.quantity; i++)
         {
-            uiElements.qtyText.text = $"x{order.quantity}";
+            GameObject icon = new GameObject("FoodIcon");
+            Image image = icon.AddComponent<Image>();
+            image.sprite = foodTypeSprites[order.foodType];
+            icon.transform.SetParent(foodIconContainer, false);
         }
 
-        if (uiElements.timerText != null)
+        if (timerText != null)
         {
-            uiElements.timerText.text = FormatTime(order.GetRemainingTime());
+            timerText.text = FormatTime(order.GetRemainingTime());
         }
 
-        // Set initial state icon (optional)
-        if (uiElements.stateIcon != null)
+        if (stateIcon != null)
         {
-            UpdateOrderStateIcon(order, uiElements.stateIcon);
+            UpdateOrderStateIcon(order, stateIcon);
         }
+
+        orderUIElement.SetActive(true);
     }
 
     private void UpdateOrderUI()
     {
-        foreach (DeliveryOrder order in activeOrders)
+        if (activeOrder != null)
         {
-            if (orderUIElements.TryGetValue(order, out OrderUIElements uiElements))
+            if (timerText != null)
             {
-                if (uiElements == null || uiElements.uiElement == null)
-                {
-                    // UI element was destroyed, remove it from the dictionary
-                    orderUIElements.Remove(order);
-                    continue;
-                }
+                timerText.text = FormatTime(activeOrder.GetRemainingTime());
+            }
 
-                if (uiElements.timerText != null)
-                {
-                    uiElements.timerText.text = FormatTime(order.GetRemainingTime());
-                }
-
-                if (uiElements.stateIcon != null)
-                {
-                    UpdateOrderStateIcon(order, uiElements.stateIcon);
-                }
+            if (stateIcon != null)
+            {
+                UpdateOrderStateIcon(activeOrder, stateIcon);
             }
         }
     }
@@ -374,22 +340,13 @@ public class DeliverySystem : Interactable
     {
         while (true)
         {
-            float currentTime = Time.time;
-
-            for (int i = activeOrders.Count - 1; i >= 0; i--)
+            if (activeOrder != null)
             {
-                DeliveryOrder order = activeOrders[i];
-                if (currentTime >= order.expirationTime)
+                if (Time.time >= activeOrder.expirationTime)
                 {
-                    Debug.Log($"Order expired: {order.quantity}x {order.foodType}");
-
-                    if (orderUIElements.TryGetValue(order, out OrderUIElements uiElements))
-                    {
-                        Destroy(uiElements.uiElement);
-                        orderUIElements.Remove(order);
-                    }
-
-                    activeOrders.RemoveAt(i);
+                    Debug.Log($"Order expired: {activeOrder.quantity}x {activeOrder.foodType}");
+                    activeOrder = null;
+                    orderUIElement.SetActive(false);
                 }
             }
 
@@ -414,7 +371,6 @@ public class DeliverySystem : Interactable
 
     private void OnDestroy()
     {
-        if (orderExpiryCoroutine != null)
-            StopCoroutine(orderExpiryCoroutine);
+        StopAllCoroutines();
     }
 }
