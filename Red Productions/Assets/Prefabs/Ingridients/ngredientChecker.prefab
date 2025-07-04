@@ -67,6 +67,12 @@ MonoBehaviour:
       requiredCount: 1
     foodPrefabs:
     - {fileID: 5192203679313780057, guid: 204a177595322bb4bbca70e5c398eacf, type: 3}
+  - groupType: 1
+    ingredientRequirements:
+    - ingredientType: 6
+      requiredCount: 1
+    foodPrefabs:
+    - {fileID: 5605759595082887459, guid: 0df0c788a7af68642a6ea23408d428e0, type: 3}
   ingredientCheckRadius: 3
   ingredientLayer:
     serializedVersion: 2
