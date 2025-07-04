@@ -31549,7 +31549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4229125001414389180, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: hitRange
-      value: 4.5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 4229125001414389180, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: tomatoWeapon
