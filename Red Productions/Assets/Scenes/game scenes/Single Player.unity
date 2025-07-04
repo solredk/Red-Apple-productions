@@ -14986,6 +14986,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5234290898581977194, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1994265306}
+    - target: {fileID: 5234290898581977194, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBurgerClick
+      objectReference: {fileID: 0}
     - target: {fileID: 7631360240974768260, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -15065,6 +15073,14 @@ PrefabInstance:
     - target: {fileID: 7631360240974768260, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996743657451841205, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1994265303}
+    - target: {fileID: 7996743657451841205, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17900,6 +17916,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3033990287289568971, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
+      propertyPath: promptMessage
+      value: Interact with bread spawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033990287289568971, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: maxIngredientsPerSpawn
       value: 1
       objectReference: {fileID: 0}
@@ -18729,6 +18749,7 @@ GameObject:
   - component: {fileID: 1284033197}
   - component: {fileID: 1284033199}
   - component: {fileID: 1284033198}
+  - component: {fileID: 1284033200}
   m_Layer: 0
   m_Name: managers
   m_TagString: Manager
@@ -18795,7 +18816,7 @@ MonoBehaviour:
   waveSpawner: {fileID: 1284033193}
   players: []
   playerInputManager: {fileID: 0}
-  loadscene: {fileID: 0}
+  loadscene: {fileID: 1284033200}
 --- !u!114 &1284033196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18855,6 +18876,22 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284033192}
   m_Enabled: 1
+--- !u!114 &1284033200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284033192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1db6ffc0f5a9f0428541e9f6c9af7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneIndex: 0
+  Animator: {fileID: 1789874293}
+  singlePlayerButton: {fileID: 0}
+  coOpPlayerButton: {fileID: 0}
 --- !u!1001 &1286983341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25675,6 +25712,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f672a3719e51a94aa6a0b3f7fe4a5ed, type: 3}
+--- !u!95 &1789874293 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8930380815106923291, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
+  m_PrefabInstance: {fileID: 1004574763340546793}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1791777587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30033,6 +30075,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f02555a9e8c1f754ca88d6002fc14665, type: 3}
+--- !u!1 &1994265303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7450612456513534426, guid: 255854be33ea41e40a642de7cdde1782, type: 3}
+  m_PrefabInstance: {fileID: 160727684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1994265306 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3607217428423840435, guid: 255854be33ea41e40a642de7cdde1782, type: 3}
+  m_PrefabInstance: {fileID: 160727684}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994265303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8200c72370e9c14f968ceb0922e82e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2003994684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31575,6 +31633,7 @@ SceneRoots:
   - {fileID: 1001594212}
   - {fileID: 1269352841}
   - {fileID: 1931070798}
+  - {fileID: 160727684}
   - {fileID: 1098858630}
   - {fileID: 118860877}
   - {fileID: 312833967}
@@ -31605,7 +31664,6 @@ SceneRoots:
   - {fileID: 794439010}
   - {fileID: 2142331770}
   - {fileID: 1328838481}
-  - {fileID: 160727684}
   - {fileID: 1361280285}
   - {fileID: 553527217}
   - {fileID: 749249860}
