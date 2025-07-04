@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +14,8 @@ public class ScoreSystem : MonoBehaviour
     [SerializeField] private GameMode gameMode;
 
     [SerializeField] private WaveSpawner waveSpawner;
+
+    [SerializeField] private AudioSource moneySound;
 
     public int score;
 
@@ -50,6 +50,7 @@ public class ScoreSystem : MonoBehaviour
     }
     public void AddScore(int extraScore)
     {
+        moneySound.Play();
         waveSpawner.ZombieKilled();
 
         score += extraScore;
