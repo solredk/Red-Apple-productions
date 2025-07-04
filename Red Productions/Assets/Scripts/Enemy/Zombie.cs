@@ -125,9 +125,7 @@ public class Zombie : MonoBehaviour
         zombieAnimator.SetTrigger("attack");
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-            // Check of speler een health script heeft
             PlayerHealth playerHealth = closestPlayer.GetComponent<PlayerHealth>();
-            //if the closestplayer is not null, then make the player take damage
             if (closestPlayer != null)
             {
                 playerHealth.TakeDamage(damage);
