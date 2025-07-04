@@ -179,7 +179,9 @@ MonoBehaviour:
   m_text: "GAME ARTISTS\n\t\t\tBob Hoegen \n- Character Models/Textures\n- Character
     Animations\n- UI\n- Wall, Floor, Ceiling Models/Textures\n- Window, Door Models/Textures\n-
     Cash Register Model/Texture\n- Kitchen Table Models/Textures\n- Food Closet Model/Texture\n-
-    Lamp Models/Textures\n\n\n\t\t\tdominique"
+    Lamp Models/Textures\n\n\t\t\tDominique\n-Food models/textures\n-Frying oil shader\n-stove,
+    car, milkshake machine, chair, table, cuttingboard, kitchen utensils, sauce bottles
+    drive thru board models/textures"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f7d5165c4b181ec46bc3eadf0d442047, type: 2}
   m_sharedMaterial: {fileID: -1079246860351587026, guid: f7d5165c4b181ec46bc3eadf0d442047, type: 2}
