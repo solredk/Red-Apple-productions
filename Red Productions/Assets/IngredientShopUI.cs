@@ -28,8 +28,13 @@ public class IngredientShopUI : Interactable
     [SerializeField] private List<Button> shopButtons;
 
     [Header("Input Actions")]
-    [Tooltip("Reference to your InputActionAsset (should have UI/Navigate, UI/Submit, UI/Cancel)")]
+    [Tooltip("Reference to your InputActionAsset (should have Player and UI maps)")]
     [SerializeField] private InputActionAsset inputActions;
+
+    [Tooltip("Name of the gameplay action map (e.g. 'Player')")]
+    [SerializeField] private string gameplayActionMapName = "Player";
+    [Tooltip("Name of the UI action map (e.g. 'UI')")]
+    [SerializeField] private string uiActionMapName = "UI";
 
     private PlayerMovement currentPlayerMovement;
     private PlayerHealth currentPlayerHealth;
@@ -42,6 +47,8 @@ public class IngredientShopUI : Interactable
     private InputAction navigateAction;
     private InputAction submitAction;
     private InputAction cancelAction;
+    private InputActionMap gameplayMap;
+    private InputActionMap uiMap;
 
     protected override void Interact(GameObject playerGameObject)
     {
@@ -56,6 +63,11 @@ public class IngredientShopUI : Interactable
     private void Awake()
     {
         eventSystem = EventSystem.current;
+        if (inputActions != null)
+        {
+            gameplayMap = inputActions.FindActionMap(gameplayActionMapName, true);
+            uiMap = inputActions.FindActionMap(uiActionMapName, true);
+        }
     }
 
     private void OnEnable()
@@ -73,83 +85,71 @@ public class IngredientShopUI : Interactable
         if (inputActions == null) return;
 
         // These names must match your InputActionAsset
-        navigateAction = inputActions.FindAction("UI/Navigate");
-        submitAction = inputActions.FindAction("UI/Submit");
-        cancelAction = inputActions.FindAction("UI/Cancel");
+        navigateAction = inputActions.FindAction($"{uiActionMapName}/Navigate", true);
+        submitAction = inputActions.FindAction($"{uiActionMapName}/Submit", true);
+        cancelAction = inputActions.FindAction($"{uiActionMapName}/Cancel", true);
 
         if (navigateAction != null)
-        {
             navigateAction.performed += OnNavigate;
-            navigateAction.Enable();
-        }
         if (submitAction != null)
-        {
             submitAction.performed += OnSubmit;
-            submitAction.Enable();
-        }
         if (cancelAction != null)
-        {
             cancelAction.performed += OnCancel;
-            cancelAction.Enable();
-        }
     }
 
     private void TeardownInput()
     {
         if (navigateAction != null)
-        {
             navigateAction.performed -= OnNavigate;
-            navigateAction.Disable();
-        }
         if (submitAction != null)
-        {
             submitAction.performed -= OnSubmit;
-            submitAction.Disable();
-        }
         if (cancelAction != null)
-        {
             cancelAction.performed -= OnCancel;
-            cancelAction.Disable();
-        }
     }
 
     public void OpenShopUI()
     {
-        if (!isShopOpen)
+        if (isShopOpen) return;
+
+        if (shopHolder != null)
+            shopHolder.SetActive(true);
+
+        // Disable gameplay actions, enable UI actions
+        if (gameplayMap != null) gameplayMap.Disable();
+        if (uiMap != null) uiMap.Enable();
+
+        if (currentPlayerMovement != null)
+            currentPlayerMovement.SetCurrentSpeed(0f);
+
+        if (currentPlayerHealth != null)
+            lastKnownHealth = currentPlayerHealth.currentHealth;
+
+        isShopOpen = true;
+
+        // Select the first button for navigation
+        if (shopButtons != null && shopButtons.Count > 0)
         {
-            if (shopHolder != null)
-                shopHolder.SetActive(true);
-
-            if (currentPlayerMovement != null)
-                currentPlayerMovement.SetCurrentSpeed(0f);
-
-            if (currentPlayerHealth != null)
-                lastKnownHealth = currentPlayerHealth.currentHealth;
-
-            isShopOpen = true;
-
-            // Select the first button for navigation
-            if (shopButtons != null && shopButtons.Count > 0)
-            {
-                selectedButtonIndex = 0;
-                eventSystem.SetSelectedGameObject(shopButtons[selectedButtonIndex].gameObject);
-            }
+            selectedButtonIndex = 0;
+            eventSystem.SetSelectedGameObject(shopButtons[selectedButtonIndex].gameObject);
         }
     }
 
     public void CloseShopUI()
     {
-        if (isShopOpen)
-        {
-            if (shopHolder != null)
-                shopHolder.SetActive(false);
+        if (!isShopOpen) return;
 
-            if (currentPlayerMovement != null)
-                currentPlayerMovement.SetCurrentSpeed(5f);
+        if (shopHolder != null)
+            shopHolder.SetActive(false);
 
-            isShopOpen = false;
-            eventSystem.SetSelectedGameObject(null);
-        }
+        // Enable gameplay actions, disable UI actions
+        if (gameplayMap != null) gameplayMap.Enable();
+        if (uiMap != null) uiMap.Disable();
+
+        if (currentPlayerMovement != null)
+            currentPlayerMovement.SetCurrentSpeed(5f);
+
+        isShopOpen = false;
+        eventSystem.SetSelectedGameObject(null);
     }
 
     private void Update()
