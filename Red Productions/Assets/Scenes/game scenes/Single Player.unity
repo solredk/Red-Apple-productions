@@ -14982,6 +14982,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1213627587311535451, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1994265306}
+    - target: {fileID: 1213627587311535451, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnFriesClick
+      objectReference: {fileID: 0}
     - target: {fileID: 1950047142396659077, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
       propertyPath: m_Name
       value: ShopUI
@@ -15077,10 +15085,10 @@ PrefabInstance:
     - target: {fileID: 7996743657451841205, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1994265303}
+      objectReference: {fileID: 1994265306}
     - target: {fileID: 7996743657451841205, guid: 2c8f5c3fe5a6acd4aad8c7638e3750fd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: OnChickenNuggetClick
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30075,17 +30083,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f02555a9e8c1f754ca88d6002fc14665, type: 3}
---- !u!1 &1994265303 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7450612456513534426, guid: 255854be33ea41e40a642de7cdde1782, type: 3}
-  m_PrefabInstance: {fileID: 160727684}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1994265306 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3607217428423840435, guid: 255854be33ea41e40a642de7cdde1782, type: 3}
   m_PrefabInstance: {fileID: 160727684}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994265303}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8200c72370e9c14f968ceb0922e82e1, type: 3}
