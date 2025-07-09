@@ -1,17 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
 public class Pickup : MonoBehaviour
 {
 
     [Header("UI Elements")]
     [SerializeField] private GameObject regularCrosshair;
-    [SerializeField] private GameObject selectionCrosshair;
-    private Color originalSelectionColor;
-    private bool isTargetingEnemy = false;
+    [SerializeField] private bool isTargetingEnemy = false;
     [SerializeField] public Transform pickupSlot;
     [SerializeField] private Transform pickupParent;
     [SerializeField] private Transform playerCameraTransform;
-
 
     [SerializeField] public GameObject tomatoWeapon;
     [SerializeField] public GameObject inHandItem;
@@ -35,34 +31,22 @@ public class Pickup : MonoBehaviour
     private RaycastHit hit;
 
     private float currentDistance;
-    private bool showSelectionCrosshair = false;
-
 
     void Start()
     {
         currentDistance = Vector3.Distance(pickupParent.position, playerCameraTransform.position);
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
         tomatoWeapon.SetActive(true);
-        UpdateCrosshair(false);
 
-        if (selectionCrosshair != null)
+        if (regularCrosshair != null)
         {
-            Image crosshairImage = selectionCrosshair.GetComponent<Image>();
-            if (crosshairImage != null)
-            {
-                originalSelectionColor = crosshairImage.color;
-            }
-            else
-            {
-                originalSelectionColor = Color.white;
-            }
+            regularCrosshair.SetActive(true);
         }
     }
 
     void Update()
     {
         isTargetingEnemy = false;
-        showSelectionCrosshair = false;
         Debug.DrawRay(playerCameraTransform.position, playerCameraTransform.forward * hitRange, Color.red);
 
         if (hit.collider != null)
@@ -75,7 +59,6 @@ public class Pickup : MonoBehaviour
         {
             if (!isHolding)
             {
-                // Regular rotation for when not in "held" mode
                 inHandItem.transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.Self);
             }
             else
@@ -83,29 +66,23 @@ public class Pickup : MonoBehaviour
                 UpdatePickupParentPosition();
                 UpdateHeldItemPosition();
             }
-            UpdateCrosshair(false);
             return;
-
         }
 
+        // Raycast for pickable objects and enemies
         if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out hit, hitRange, pickableLayerMask))
         {
-            Debug.Log("Raycast hit: " + hit.collider.gameObject.name + " on layer " + LayerMask.LayerToName(hit.collider.gameObject.layer));
-            // Only highlight if it has Ingredient or Food component
-            if (hit.collider.GetComponent<Ingredient>() != null ||
-                hit.collider.GetComponent<Food>() != null)
+            // Check for Enemy tag first
+            if (hit.collider.CompareTag("Enemy"))
             {
-                hit.collider.GetComponent<HighLight>()?.ToggleHighLight(true);
-                showSelectionCrosshair = true;
-            }
-            else if (hit.collider.CompareTag("Enemy"))
-            {
-                showSelectionCrosshair = true;
+                Debug.Log("Detected");
                 isTargetingEnemy = true;
             }
-            else
+            // Then check for Ingredient or Food
+            else if (hit.collider.GetComponent<Ingredient>() != null ||
+                     hit.collider.GetComponent<Food>() != null)
             {
-                showSelectionCrosshair = false;
+                hit.collider.GetComponent<HighLight>()?.ToggleHighLight(true);
             }
         }
 
@@ -113,7 +90,6 @@ public class Pickup : MonoBehaviour
         RaycastHit interactionHit;
         if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out interactionHit, hitRange, detectableLayerMask))
         {
-            // Check for IngredientSpawner first
             IngredientSpawner spawner = interactionHit.collider.GetComponent<IngredientSpawner>();
             if (spawner != null)
             {
@@ -121,7 +97,6 @@ public class Pickup : MonoBehaviour
             }
             else
             {
-                // Check for CookingStation directly
                 CookingStation station = interactionHit.collider.GetComponent<CookingStation>();
                 if (station != null)
                 {
@@ -129,19 +104,15 @@ public class Pickup : MonoBehaviour
                 }
                 else
                 {
-                    // Check nearby objects
                     Collider[] nearbyColliders = Physics.OverlapSphere(interactionHit.point, 3f);
                     foreach (Collider col in nearbyColliders)
                     {
-                        // Check for nearby CookingStation
                         CookingStation nearbyStation = col.GetComponent<CookingStation>();
                         if (nearbyStation != null)
                         {
                             nearbyStation.ShowInteractionIndicator(true);
                             break;
                         }
-
-                        // Check for nearby IngredientSpawner if no station found
                         if (nearbyStation == null)
                         {
                             IngredientSpawner nearbySpawner = col.GetComponent<IngredientSpawner>();
@@ -155,41 +126,12 @@ public class Pickup : MonoBehaviour
                 }
             }
         }
-        UpdateCrosshair(showSelectionCrosshair);
     }
 
-
-    private void UpdateCrosshair(bool showSelection)
-    {
-        // crosshairswitch 
-        if (regularCrosshair != null)
-        {
-            regularCrosshair.SetActive(!showSelection);
-        }
-        if (selectionCrosshair != null)
-        {
-            selectionCrosshair.SetActive(showSelection);
-        }
-        // Crosshair  color react system 
-        Image crosshairImage = selectionCrosshair.GetComponent<Image>();
-        if (crosshairImage != null)
-        {
-            if (isTargetingEnemy)
-            {
-                crosshairImage.color = Color.red;
-            }
-            else
-            {
-                crosshairImage.color = originalSelectionColor;
-            }
-        }
-    }
     private void UpdatePickupParentPosition()
     {
-        // Position the pickup parent along the player's forward direction
         Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
         pickupParent.position = Vector3.Lerp(pickupParent.position, newPosition, followSpeed * Time.deltaTime);
-
 
         pickupParent.rotation = Quaternion.Lerp(pickupParent.rotation, playerCameraTransform.rotation, rotationLerpSpeed * Time.deltaTime);
     }
@@ -198,12 +140,11 @@ public class Pickup : MonoBehaviour
     {
         if (inHandItem == null) return;
 
-        // Get the exact position along the ray where the item should be
         Vector3 rayPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
 
         Vector3 currentPos = inHandItem.transform.position;
         float horizontalLerp = followSpeed * Time.deltaTime;
-        float verticalLerp = followSpeed * 2f * Time.deltaTime; 
+        float verticalLerp = followSpeed * 2f * Time.deltaTime;
 
         Vector3 newPos = new Vector3(
             Mathf.Lerp(currentPos.x, pickupSlot.position.x, horizontalLerp),
@@ -211,7 +152,6 @@ public class Pickup : MonoBehaviour
             Mathf.Lerp(currentPos.z, pickupSlot.position.z, horizontalLerp)
         );
 
-        // Apply position and rotation
         inHandItem.transform.position = newPos;
         inHandItem.transform.rotation = Quaternion.Slerp(
             inHandItem.transform.rotation,
@@ -221,7 +161,6 @@ public class Pickup : MonoBehaviour
 
     public void ToggleHoldMode()
     {
-        // Toggle hold mode when E is pressed
         if (inHandItem != null)
         {
             isHolding = !isHolding;
@@ -236,7 +175,7 @@ public class Pickup : MonoBehaviour
                 }
                 else
                 {
-                    rb.isKinematic = true;  // Still kinematic but not in hold mode
+                    rb.isKinematic = true;
                 }
             }
         }
@@ -244,16 +183,13 @@ public class Pickup : MonoBehaviour
 
     public void AdjustDistance(float scrollDelta)
     {
-        // Calculate potential new distance before applying it
         float potentialDistance = currentDistance - scrollDelta * scrollSensitivity;
 
         if (scrollDelta <= 0 || potentialDistance >= minDistance)
         {
-            // Apply the change
             currentDistance = potentialDistance;
 
             currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
-
 
             Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * currentDistance;
             pickupParent.position = newPosition;
@@ -262,13 +198,11 @@ public class Pickup : MonoBehaviour
 
     public void PickuP()
     {
-        // Don't pick up if already holding something
         if (inHandItem != null)
             return;
 
         if (hit.collider != null)
         {
-            // Only pick up objects with Ingredient or Food component
             Ingredient ingredient = hit.collider.GetComponent<Ingredient>();
             Food food = hit.collider.GetComponent<Food>();
 
@@ -276,15 +210,12 @@ public class Pickup : MonoBehaviour
             {
                 inHandItem = hit.collider.gameObject;
 
-                // Initially parent to the pickup slot
                 inHandItem.transform.SetParent(pickupSlot.transform, true);
                 inHandItem.transform.localPosition = Vector3.zero;
                 inHandItem.transform.localRotation = Quaternion.identity;
 
-                // Set up physics components
                 RigidbodySetup();
 
-                // Automatically start in held mode when picking up
                 isHolding = true;
 
                 tomatoWeapon.SetActive(false);
@@ -294,7 +225,6 @@ public class Pickup : MonoBehaviour
 
     public void Drop()
     {
-        // Don't try to drop if nothing is held
         if (inHandItem == null)
             return;
 
@@ -312,7 +242,6 @@ public class Pickup : MonoBehaviour
         inHandItem = null;
         tomatoWeapon.SetActive(true);
     }
-
 
     private void RigidbodySetup()
     {
