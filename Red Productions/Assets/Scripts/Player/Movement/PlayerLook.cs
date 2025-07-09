@@ -25,17 +25,21 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
     [Header("Raycast Offset")]
     [SerializeField] private float raycastStartOffset = 0.1f;
 
+    // Crosshair UI references
+    [Header("Crosshairs")]
+    [SerializeField] private GameObject regularCrosshair;
+    [SerializeField] private GameObject enemyDetectCrosshair;
+    [SerializeField] private GameObject itemSelectCrosshair;
+
+    [SerializeField] private LayerMask toolLayer;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
-        // Check if playerUI is already assigned in the Inspector
         if (playerUI == null)
         {
-            // If not, try to find it on the same GameObject
             playerUI = GetComponent<PlayerUI>();
-
-            // If still null, log an error
             if (playerUI == null)
             {
                 Debug.LogError("PlayerUI component not found on this GameObject.  Please assign it in the Inspector or add the PlayerUI script to this GameObject.");
@@ -45,43 +49,60 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
 
     private void Update()
     {
-        // Only call UpdateText if playerUI is not null
         if (playerUI != null)
         {
             playerUI.UpdateText(string.Empty);
         }
 
-        //if the controller is active, use the controller sensitivity
         float mouseX = input.x * Sensitivity * Time.deltaTime;
         float mousey = input.y * Sensitivity * Time.deltaTime;
 
-        //rotate the camera around the y axis
         xRotation -= mousey;
-
-        //clamp the x rotation to prevent the camera from flipping over
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        //rotate the camera around the x axis
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-
-        //rotate the player body around the y axis
         playerBody.Rotate(Vector3.up * mouseX);
 
-        // Calculate raycast origin with offset
         Vector3 raycastOrigin = cam.transform.position + cam.transform.forward * raycastStartOffset;
-
-        // Visual debug - will show the raycast in the Scene view
         Debug.DrawRay(raycastOrigin, cam.transform.forward * interactDistance, Color.red);
 
         Ray ray = new Ray(raycastOrigin, cam.transform.forward);
         RaycastHit hitInfo;
 
-        //create a raycast to check if the player is looking at an interactable object
+        // --- UI Crosshair System ---
+        // Use SphereCast for a "thicker" UI ray
+        Ray uiRay = new Ray(raycastOrigin, cam.transform.forward);
+        RaycastHit uiHit;
+        bool crosshairSet = false;
+        float uiRayThickness = 0.3f; // Adjust this value for more/less forgiveness
+
+        if (Physics.SphereCast(uiRay, uiRayThickness, out uiHit, Mathf.Infinity))
+        {
+            if (uiHit.collider.GetComponent<Ingredient>() != null)
+            {
+                SetAllCrosshairs(false, false, false);
+                crosshairSet = true;
+            }
+            else if (uiHit.collider.CompareTag("Enemy"))
+            {
+                SetAllCrosshairs(false, true, false);
+                var img = enemyDetectCrosshair.GetComponent<UnityEngine.UI.Image>();
+                if (img != null) img.color = Color.red;
+                crosshairSet = true;
+            }
+            else if (((1 << uiHit.collider.gameObject.layer) & toolLayer.value) != 0)
+            {
+                SetAllCrosshairs(false, false, true);
+                crosshairSet = true;
+            }
+        }
+        if (!crosshairSet)
+        {
+            SetAllCrosshairs(true, false, false);
+        }
+        // --- End UI Crosshair System ---
+
         if (Physics.Raycast(ray, out hitInfo, interactDistance, interactLayer))
         {
-            // Logging for debugging controller issues
-
-            //check if the object has an interactable component
             if (hitInfo.collider.GetComponent<Interactable>() != null)
             {
                 interactable = hitInfo.collider.GetComponent<Interactable>();
@@ -90,15 +111,18 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
         }
     }
 
+    private void SetAllCrosshairs(bool regular, bool enemy, bool item)
+    {
+        if (regularCrosshair != null) regularCrosshair.SetActive(regular);
+        if (enemyDetectCrosshair != null) enemyDetectCrosshair.SetActive(enemy);
+        if (itemSelectCrosshair != null) itemSelectCrosshair.SetActive(item);
+    }
+
     public void OnInteract()
     {
-        // Debug log to verify the method is called from controller
         Debug.Log("OnInteract called - attempting to interact");
 
-        // Calculate raycast origin with offset
         Vector3 raycastOrigin = cam.transform.position + cam.transform.forward * raycastStartOffset;
-
-        // Immediately check if we're looking at an interactable and trigger it
         Ray ray = new Ray(raycastOrigin, cam.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, interactDistance, interactLayer))
         {
@@ -115,16 +139,12 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
     {
         if (controllerActive)
         {
-            //if the controller is active, use the controller sensitivity
             Sensitivity = controllerSensitivity;
         }
         else
         {
-            //if the controller is not active, use the mouse sensitivity
             Sensitivity = mouseSensitivity;
         }
-
-        //save the input to be used in the update function
         input = lookInput;
     }
 }
