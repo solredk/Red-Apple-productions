@@ -22,6 +22,9 @@ public class CookingStation : Interactable, IIngredientCheckListener
     // Example extra positions for dropped ingredients (set in the Inspector)
     [SerializeField] private Transform[] droppedIngredientSpots;
 
+    [Header("Drop Point Settings")]
+    [SerializeField] private float dropPointRange = 1.5f; // Adjustable in Inspector
+
     private bool isInteractionActive = false;
     private bool isCookingCooldown = false;
 
@@ -33,6 +36,33 @@ public class CookingStation : Interactable, IIngredientCheckListener
             interactionSprite.SetActive(false);
 
         Debug.Log($"<color=cyan>[CookingStation]</color> Initialized with recipe type: {recipeType}");
+    }
+
+    private void Update()
+    {
+        // --- Drop Point Logic ---
+        if (!isCookingCooldown && droppedIngredientSpots != null && droppedIngredientSpots.Length > 0)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, dropPointRange);
+            int spotIndex = 0;
+            foreach (Collider col in colliders)
+            {
+                Ingredient ingredient = col.GetComponent<Ingredient>();
+                if (ingredient != null && spotIndex < droppedIngredientSpots.Length)
+                {
+                    // Snap ingredient to drop spot if not already parented
+                    if (ingredient.transform.parent != droppedIngredientSpots[spotIndex])
+                    {
+                        ingredient.transform.SetParent(droppedIngredientSpots[spotIndex], true);
+                        ingredient.transform.localPosition = Vector3.zero;
+                        ingredient.transform.localRotation = Quaternion.identity;
+                    }
+                    spotIndex++;
+                    if (spotIndex >= droppedIngredientSpots.Length)
+                        break;
+                }
+            }
+        }
     }
 
     public void ShowInteractionIndicator(bool show)
@@ -111,15 +141,24 @@ public class CookingStation : Interactable, IIngredientCheckListener
         isInteractionActive = false;
     }
 
-    // Example helper function to take newly dropped ingredients and place them in a stable spot
-    // (You could call this from elsewhere whenever an item is dropped near the station)
-    public bool TryPlaceDroppedIngredient(Ingredient droppedIng)
+
+    public bool TryPlaceDroppedIngredient(Ingredient droppedIng, GameObject playerGameObject)
     {
         if (!isCookingCooldown)
             return false;
 
-        // Here you'd confirm that droppedIng is one of the needed items and not already used.
-        // If acceptable, place it in one of the extra spots to avoid collision issues.
+        // Remove from player's hand if they are holding this ingredient
+        if (playerGameObject != null)
+        {
+            Pickup pickup = playerGameObject.GetComponent<Pickup>();
+            if (pickup != null && pickup.inHandItem == droppedIng.gameObject)
+            {
+                pickup.inHandItem = null;
+                pickup.isHolding = false;
+                pickup.tomatoWeapon.SetActive(true); 
+            }
+        }
+
         Rigidbody rb = droppedIng.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -127,7 +166,6 @@ public class CookingStation : Interactable, IIngredientCheckListener
             rb.useGravity = false;
         }
 
-        // Just pick the first available spot for example
         if (droppedIngredientSpots != null && droppedIngredientSpots.Length > 0)
         {
             Transform spot = droppedIngredientSpots[0];
@@ -162,6 +200,22 @@ public class CookingStation : Interactable, IIngredientCheckListener
 
     private void OnDrawGizmosSelected()
     {
+        // Draw drop point range
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, dropPointRange);
+
+        // Draw all drop spots
+        if (droppedIngredientSpots != null)
+        {
+            Gizmos.color = Color.green;
+            foreach (Transform spot in droppedIngredientSpots)
+            {
+                if (spot != null)
+                    Gizmos.DrawWireSphere(spot.position, 0.15f);
+            }
+        }
+
+        // Draw interaction range
         Gizmos.color = new Color(0.2f, 0.5f, 1f, 0.3f);
         Gizmos.DrawSphere(transform.position, interactionRange);
 

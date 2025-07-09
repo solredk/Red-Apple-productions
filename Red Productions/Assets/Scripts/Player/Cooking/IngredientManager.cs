@@ -1,28 +1,27 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public class IngredientManager : MonoBehaviour
 {
-    [Serializable]
+    [System.Serializable]
     public class IngredientRequirement
     {
         [SerializeField] public Ingredient.Ingredients ingredientType;
         [SerializeField] public int requiredCount = 1;
+        [SerializeField] public GameObject presetIngredientPrefab;
     }
 
-    [Serializable]
+    [System.Serializable]
     public class IngredientGroup
     {
         [SerializeField] public Ingredient.IngredientType groupType;
         [SerializeField] public List<IngredientRequirement> ingredientRequirements = new List<IngredientRequirement>();
         [SerializeField] public GameObject[] foodPrefabs;
 
-        // Dictionary populated from the serializable list
+
         public Dictionary<Ingredient.Ingredients, int> requiredIngredients = new Dictionary<Ingredient.Ingredients, int>();
 
-        // Method to initialize dictionary from the list
         public void InitializeDictionary()
         {
             requiredIngredients.Clear();
@@ -33,11 +32,11 @@ public class IngredientManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private List<IngredientGroup> ingredientGroups = new List<IngredientGroup>();
+    [SerializeField] public List<IngredientGroup> ingredientGroups = new List<IngredientGroup>();
     [SerializeField] private float ingredientCheckRadius = 2f;
     [SerializeField] private LayerMask ingredientLayer;
 
-    private Dictionary<Ingredient.IngredientType, IngredientGroup> groupDictionary = new Dictionary<Ingredient.IngredientType, IngredientGroup>();
+    public Dictionary<Ingredient.IngredientType, IngredientGroup> groupDictionary = new Dictionary<Ingredient.IngredientType, IngredientGroup>();
 
     private void Awake()
     {
@@ -65,10 +64,10 @@ public class IngredientManager : MonoBehaviour
             return null;
         }
 
-        // For food items, just spawn the first one (the completed recipe)
+        // complete recipe
         GameObject spawnedObj = Instantiate(group.foodPrefabs[0], position, rotation);
 
-        // Make sure it has a Food component to be recognized by delivery points
+        // Make sure it has a Food component to be recognized by delivery 
         if (!spawnedObj.GetComponent<Food>())
         {
             spawnedObj.AddComponent<Food>();
@@ -80,29 +79,25 @@ public class IngredientManager : MonoBehaviour
         return spawnedIngredients;
     }
 
- public bool CheckIngredientsInRadius(Ingredient.IngredientType type, Vector3 center)
-{
-    if (!groupDictionary.TryGetValue(type, out IngredientGroup group))
+    public bool CheckIngredientsInRadius(Ingredient.IngredientType type, Vector3 center)
     {
-        Debug.LogError(" No group found for type");
-        return false;
-    }
-
-    Collider[] colliders = Physics.OverlapSphere(center, ingredientCheckRadius, ingredientLayer);
-    List<Ingredient.Ingredients> foundIngredients = new List<Ingredient.Ingredients>();
-    
-    foreach (Collider collider in colliders)
-    {
-        Ingredient ingredient = collider.GetComponent<Ingredient>();
-        if (ingredient != null)
+        if (!groupDictionary.TryGetValue(type, out IngredientGroup group))
         {
-                foreach (Ingredient.Ingredients ing in group.requiredIngredients.Keys)
+            Debug.LogError(" No group found for type");
+            return false;
+        }
+
+        Collider[] colliders = Physics.OverlapSphere(center, ingredientCheckRadius, ingredientLayer);
+        List<Ingredient.Ingredients> foundIngredients = new List<Ingredient.Ingredients>();
+
+        foreach (Collider collider in colliders)
+        {
+            Ingredient ingredient = collider.GetComponent<Ingredient>();
+            if (ingredient != null)
             {
-                System.Reflection.FieldInfo field = ingredient.GetType().GetField("ingredients");
-                if (field != null)
+                foreach (Ingredient.Ingredients ing in group.requiredIngredients.Keys)
                 {
-                    object ingredientType = field.GetValue(ingredient);
-                    if (ingredientType is Ingredient.Ingredients && (Ingredient.Ingredients)ingredientType == ing)
+                    if (ingredient.ingredients == ing)
                     {
                         foundIngredients.Add(ing);
                         Debug.Log($"Found ingredient: {ing} for recipe {type}");
@@ -110,14 +105,13 @@ public class IngredientManager : MonoBehaviour
                 }
             }
         }
-    }
 
-    int foundCount = foundIngredients.Count;
-    bool hasAllIngredients = foundCount >= group.requiredIngredients.Count;
-    Debug.Log($"Recipe {type}: Found {foundCount}/{group.requiredIngredients.Count} required ingredients");
-    
-    return hasAllIngredients;
-}
+        int foundCount = foundIngredients.Count;
+        bool hasAllIngredients = foundCount >= group.requiredIngredients.Count;
+        Debug.Log($"Recipe {type}: Found {foundCount}/{group.requiredIngredients.Count} required ingredients");
+
+        return hasAllIngredients;
+    }
 
     public float GetCheckRadius()
     {
@@ -133,12 +127,12 @@ public class IngredientManager : MonoBehaviour
     {
         StartCoroutine(IngredientCheckCoroutine(type, center, listener));
     }
-
+        
     IEnumerator IngredientCheckCoroutine(Ingredient.IngredientType type, Vector3 center, IIngredientCheckListener listener)
     {
         float checkInterval = 0.5f;
-        float timeout = 5f; // Use shorter timeout for better user experience
-        float elapsed = 0f;
+        float timeout = 1.5f; 
+        float elapsed = 0f;     
 
         while (elapsed < timeout)
         {
@@ -151,7 +145,7 @@ public class IngredientManager : MonoBehaviour
             yield return new WaitForSeconds(checkInterval);
         }
 
-        // If we reach here, the timeout has elapsed without finding all ingredients
+        // If it here the timeout continued without finding all ingredients 
         listener?.OnIngredientsMissing();
     }
-}
+}   

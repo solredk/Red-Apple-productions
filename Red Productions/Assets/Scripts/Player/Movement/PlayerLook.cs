@@ -22,6 +22,9 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
     [SerializeField] private InputManager inputManager;
     [SerializeField] private PlayerUI playerUI; // Make sure this is assigned in the Inspector
 
+    [Header("Raycast Offset")]
+    [SerializeField] private float raycastStartOffset = 0.1f;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -64,17 +67,19 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
         //rotate the player body around the y axis
         playerBody.Rotate(Vector3.up * mouseX);
 
-        // Visual debug - will show the raycast in the Scene view
-        Debug.DrawRay(cam.transform.position, cam.transform.forward * interactDistance, Color.red);
+        // Calculate raycast origin with offset
+        Vector3 raycastOrigin = cam.transform.position + cam.transform.forward * raycastStartOffset;
 
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+        // Visual debug - will show the raycast in the Scene view
+        Debug.DrawRay(raycastOrigin, cam.transform.forward * interactDistance, Color.red);
+
+        Ray ray = new Ray(raycastOrigin, cam.transform.forward);
         RaycastHit hitInfo;
 
         //create a raycast to check if the player is looking at an interactable object
         if (Physics.Raycast(ray, out hitInfo, interactDistance, interactLayer))
         {
             // Logging for debugging controller issues
-
 
             //check if the object has an interactable component
             if (hitInfo.collider.GetComponent<Interactable>() != null)
@@ -90,8 +95,11 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
         // Debug log to verify the method is called from controller
         Debug.Log("OnInteract called - attempting to interact");
 
+        // Calculate raycast origin with offset
+        Vector3 raycastOrigin = cam.transform.position + cam.transform.forward * raycastStartOffset;
+
         // Immediately check if we're looking at an interactable and trigger it
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+        Ray ray = new Ray(raycastOrigin, cam.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, interactDistance, interactLayer))
         {
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();

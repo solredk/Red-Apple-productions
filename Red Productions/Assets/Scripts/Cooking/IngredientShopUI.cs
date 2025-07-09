@@ -11,30 +11,36 @@ public class IngredientShopUI : Interactable
 
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private float clearSpawnRadius = 0.5f;
 
     [Header("Food Costs")]
-    [SerializeField] private int burgerCost = 65;
-    [SerializeField] private int nuggetCost = 35;
-    [SerializeField] private int milkshakeCost = 15;
-    [SerializeField] private int friesCost = 40;
+    [SerializeField] private int burgerCost = 30;
+    [SerializeField] private int nuggetCost = 25;
+    [SerializeField] private int milkshakeCost = 25;
+    [SerializeField] private int friesCost = 25;
 
     [Header("UI Settings")]
-    [Tooltip("Assign your regular shop UI canvas or panel here")]
     [SerializeField] private GameObject shopHolder;
 
     [Header("UI Navigation")]
-    [Tooltip("Assign your shop buttons in navigation order")]
     [SerializeField] private List<Button> shopButtons;
 
     [Header("Input Actions")]
-    [Tooltip("Reference to your InputActionAsset (should have Player and UI maps)")]
     [SerializeField] private InputActionAsset inputActions;
 
-    [Tooltip("Name of the gameplay action map (e.g. 'Player')")]
     [SerializeField] private string gameplayActionMapName = "Player";
-    [Tooltip("Name of the UI action map (e.g. 'UI')")]
     [SerializeField] private string uiActionMapName = "UI";
+
+    // --- Manual Ingredient Prefab Assignments ---
+    [Header("Manual Ingredient Prefabs")]
+    [SerializeField] private GameObject burgerBreadPrefab;
+    [SerializeField] private GameObject burgerMeatPrefab;
+    [SerializeField] private GameObject burgerCheesePrefab;
+
+    [SerializeField] private GameObject friesBagPrefab;
+
+    [SerializeField] private GameObject nuggetsNuggetPrefab;
+
+    [SerializeField] private GameObject milkshakeCupPrefab;
 
     private PlayerMovement currentPlayerMovement;
     private PlayerHealth currentPlayerHealth;
@@ -84,7 +90,6 @@ public class IngredientShopUI : Interactable
     {
         if (inputActions == null) return;
 
-        // These names must match your InputActionAsset
         navigateAction = inputActions.FindAction($"{uiActionMapName}/Navigate", true);
         submitAction = inputActions.FindAction($"{uiActionMapName}/Submit", true);
         cancelAction = inputActions.FindAction($"{uiActionMapName}/Cancel", true);
@@ -114,7 +119,6 @@ public class IngredientShopUI : Interactable
         if (shopHolder != null)
             shopHolder.SetActive(true);
 
-        // Disable gameplay actions, enable UI actions
         if (gameplayMap != null) gameplayMap.Disable();
         if (uiMap != null) uiMap.Enable();
 
@@ -126,7 +130,6 @@ public class IngredientShopUI : Interactable
 
         isShopOpen = true;
 
-        // Select the first button for navigation
         if (shopButtons != null && shopButtons.Count > 0)
         {
             selectedButtonIndex = 0;
@@ -141,7 +144,6 @@ public class IngredientShopUI : Interactable
         if (shopHolder != null)
             shopHolder.SetActive(false);
 
-        // Enable gameplay actions, disable UI actions
         if (gameplayMap != null) gameplayMap.Enable();
         if (uiMap != null) uiMap.Disable();
 
@@ -168,13 +170,11 @@ public class IngredientShopUI : Interactable
         Vector2 nav = ctx.ReadValue<Vector2>();
         if (nav.y < -0.5f)
         {
-            // Down
             selectedButtonIndex = (selectedButtonIndex + 1) % shopButtons.Count;
             eventSystem.SetSelectedGameObject(shopButtons[selectedButtonIndex].gameObject);
         }
         else if (nav.y > 0.5f)
         {
-            // Up
             selectedButtonIndex = (selectedButtonIndex - 1 + shopButtons.Count) % shopButtons.Count;
             eventSystem.SetSelectedGameObject(shopButtons[selectedButtonIndex].gameObject);
         }
@@ -194,83 +194,61 @@ public class IngredientShopUI : Interactable
 
     public void OnBurgerClick()
     {
-        TrySpawn(Ingredient.IngredientType.burger, burgerCost);
+        TrySpawnManual(burgerCost, new GameObject[] {
+            burgerBreadPrefab, burgerMeatPrefab, burgerCheesePrefab
+        });
     }
 
     public void OnChickenNuggetClick()
     {
-        TrySpawn(Ingredient.IngredientType.chickenNuggets, nuggetCost);
+        TrySpawnManual(nuggetCost, new GameObject[] {
+            nuggetsNuggetPrefab
+        });
     }
 
     public void OnMilkshakeClick()
     {
-        TrySpawn(Ingredient.IngredientType.milkShakes, milkshakeCost);
+        TrySpawnManual(milkshakeCost, new GameObject[] {
+            milkshakeCupPrefab
+        });
     }
 
     public void OnFriesClick()
     {
-        TrySpawn(Ingredient.IngredientType.fries, friesCost);
+        TrySpawnManual(friesCost, new GameObject[] {
+            friesBagPrefab
+        });
     }
 
-    private void TrySpawn(Ingredient.IngredientType foodType, int cost)
+    private void TrySpawnManual(int cost, GameObject[] prefabs)
     {
         if (ScoreSystem.Instance != null && ScoreSystem.Instance.score >= cost)
         {
             ScoreSystem.Instance.AddScore(-cost);
 
-            Transform spawnPoint = FindClearSpawnPoint();
-            if (spawnPoint == null && spawnPoints.Length > 0)
-            {
-                spawnPoint = spawnPoints[0];
-                Debug.Log("<color=yellow>[IngredientShopUI]</color> All spawn points blocked, using the first point.");
-            }
+            Vector3 spawnPos = (spawnPoints != null && spawnPoints.Length > 0)
+                ? spawnPoints[0].position
+                : Vector3.zero;
+            Quaternion spawnRot = (spawnPoints != null && spawnPoints.Length > 0)
+                ? spawnPoints[0].rotation
+                : Quaternion.identity;
 
-            if (spawnPoint != null && manager != null)
+            foreach (var prefab in prefabs)
             {
-                manager.InstantiateIngredientGroup(foodType, spawnPoint.position, spawnPoint.rotation);
+                if (prefab != null)
+                {
+                    Instantiate(prefab, spawnPos, spawnRot);
+                }
+                else
+                {
+                    Debug.LogWarning("A required ingredient prefab is not assigned in the Inspector.");
+                }
             }
         }
         else
         {
             Debug.LogError("Not enough points to buy this item!");
         }
-    }
-
-    private Transform FindClearSpawnPoint()
-    {
-        if (spawnPoints == null || spawnPoints.Length == 0)
-        {
-            Debug.LogError("<color=red>[IngredientShopUI]</color> No spawn points assigned!");
-            return null;
-        }
-
-        List<int> indices = new List<int>();
-        for (int i = 0; i < spawnPoints.Length; i++)
-        {
-            indices.Add(i);
-        }
-
-        for (int i = 0; i < indices.Count; i++)
-        {
-            int temp = indices[i];
-            int randomIndex = Random.Range(i, indices.Count);
-            indices[i] = indices[randomIndex];
-            indices[randomIndex] = temp;
-        }
-
-        foreach (int index in indices)
-        {
-            Transform point = spawnPoints[index];
-            if (point != null)
-            {
-                Collider[] colliders = Physics.OverlapSphere(point.position, clearSpawnRadius);
-                if (colliders.Length == 0)
-                {
-                    return point;
-                }
-            }
-        }
-        return null;
     }
 
     private void OnDrawGizmosSelected()
@@ -282,7 +260,7 @@ public class IngredientShopUI : Interactable
             {
                 if (spawnPoint != null)
                 {
-                    Gizmos.DrawWireSphere(spawnPoint.position, clearSpawnRadius);
+                    Gizmos.DrawWireSphere(spawnPoint.position, 0.5f);
                 }
             }
         }

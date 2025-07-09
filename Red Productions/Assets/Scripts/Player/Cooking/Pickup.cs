@@ -13,8 +13,8 @@ public class Pickup : MonoBehaviour
     [SerializeField] private Transform playerCameraTransform;
 
 
-    [SerializeField] private GameObject tomatoWeapon;
-    [SerializeField] private GameObject inHandItem;
+    [SerializeField] public GameObject tomatoWeapon;
+    [SerializeField] public GameObject inHandItem;
 
     [SerializeField] private LayerMask pickableLayerMask;
     [SerializeField] private LayerMask detectableLayerMask;
@@ -30,7 +30,7 @@ public class Pickup : MonoBehaviour
     // Item follow parameters
     [SerializeField] private float followSpeed = 12f;
     [SerializeField] private float rotationLerpSpeed = 8f;
-    [SerializeField] private bool isHolding = false;
+    [SerializeField] public bool isHolding = false;
 
     private RaycastHit hit;
 
