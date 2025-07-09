@@ -44,10 +44,24 @@ public class Pickup : MonoBehaviour
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
         tomatoWeapon.SetActive(true);
         UpdateCrosshair(false);
+
+        if (selectionCrosshair != null)
+        {
+            Image crosshairImage = selectionCrosshair.GetComponent<Image>();
+            if (crosshairImage != null)
+            {
+                originalSelectionColor = crosshairImage.color;
+            }
+            else
+            {
+                originalSelectionColor = Color.white;
+            }
+        }
     }
 
     void Update()
     {
+        isTargetingEnemy = false;
         showSelectionCrosshair = false;
         Debug.DrawRay(playerCameraTransform.position, playerCameraTransform.forward * hitRange, Color.red);
 
@@ -74,9 +88,9 @@ public class Pickup : MonoBehaviour
 
         }
 
-        // First check for ingredients and food with pickableLayerMask
         if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out hit, hitRange, pickableLayerMask))
         {
+            Debug.Log("Raycast hit: " + hit.collider.gameObject.name + " on layer " + LayerMask.LayerToName(hit.collider.gameObject.layer));
             // Only highlight if it has Ingredient or Food component
             if (hit.collider.GetComponent<Ingredient>() != null ||
                 hit.collider.GetComponent<Food>() != null)
@@ -86,7 +100,6 @@ public class Pickup : MonoBehaviour
             }
             else if (hit.collider.CompareTag("Enemy"))
             {
-               
                 showSelectionCrosshair = true;
                 isTargetingEnemy = true;
             }
