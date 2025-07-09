@@ -33431,7 +33431,7 @@ PrefabInstance:
     - target: {fileID: 95258452672901647, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: tomatoPrefab
       value: 
-      objectReference: {fileID: 4578710047296779920, guid: af3eba7b57bc75045b2dc77f9e9ea9e1, type: 3}
+      objectReference: {fileID: 4981300097325600979, guid: a84318397bcdac94082fb79f2b8d34bf, type: 3}
     - target: {fileID: 386665317763530328, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -33499,6 +33499,10 @@ PrefabInstance:
     - target: {fileID: 1572039787313756910, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656064010646288411, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.11
       objectReference: {fileID: 0}
     - target: {fileID: 1737196290852550304, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: m_Layer
