@@ -40,7 +40,7 @@ public class CookingStation : Interactable, IIngredientCheckListener
 
     private void Update()
     {
-        // --- Drop Point Logic ---
+       // Drop Point Logic
         if (!isCookingCooldown && droppedIngredientSpots != null && droppedIngredientSpots.Length > 0)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, dropPointRange);
@@ -147,31 +147,44 @@ public class CookingStation : Interactable, IIngredientCheckListener
         if (!isCookingCooldown)
             return false;
 
+        // Only allow required ingredients for this recipe
+        if (ingredientManager != null &&
+            ingredientManager.groupDictionary.TryGetValue(recipeType, out var group) &&
+            !group.requiredIngredients.ContainsKey(droppedIng.ingredients))
+        {
+            // Not a required ingredient for this recipe
+            return false;
+        }
+
         // Remove from player's hand if they are holding this ingredient
         if (playerGameObject != null)
         {
             Pickup pickup = playerGameObject.GetComponent<Pickup>();
             if (pickup != null && pickup.inHandItem == droppedIng.gameObject)
             {
+                // Detach from any parent first
+                droppedIng.transform.SetParent(null, true);
                 pickup.inHandItem = null;
                 pickup.isHolding = false;
-                pickup.tomatoWeapon.SetActive(true); 
+                pickup.tomatoWeapon.SetActive(true);
             }
         }
 
         Rigidbody rb = droppedIng.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = true;
             rb.useGravity = false;
         }
 
+        // Set the dropped ingredient as a child of this CookingStation GameObject
+        droppedIng.transform.SetParent(this.transform, true);
+
+        // Optionally, snap to a drop spot if available
         if (droppedIngredientSpots != null && droppedIngredientSpots.Length > 0)
         {
             Transform spot = droppedIngredientSpots[0];
-            droppedIng.transform.SetParent(spot, true);
-            droppedIng.transform.localPosition = Vector3.zero;
-            droppedIng.transform.localRotation = Quaternion.identity;
+            droppedIng.transform.position = spot.position;
+            droppedIng.transform.rotation = spot.rotation;
         }
 
         return true;

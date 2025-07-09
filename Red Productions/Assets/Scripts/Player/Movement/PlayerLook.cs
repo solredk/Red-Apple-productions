@@ -77,7 +77,7 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
 
         if (Physics.SphereCast(uiRay, uiRayThickness, out uiHit, Mathf.Infinity))
         {
-            if (uiHit.collider.GetComponent<Ingredient>() != null)
+            if (uiHit.collider.GetComponent<Ingredient>() != null || uiHit.collider.GetComponent<Food>() != null)
             {
                 SetAllCrosshairs(false, false, false);
                 crosshairSet = true;
