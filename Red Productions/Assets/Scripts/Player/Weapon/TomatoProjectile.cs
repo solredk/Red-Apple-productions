@@ -5,14 +5,14 @@ public class TomatoProjectile : MonoBehaviour
 {
     [SerializeField] private  GameObject damagePopUp;
     [SerializeField] private GameObject tomatoSplatter;
-    [SerializeField] private float tomatoSpeed = 5.5f;
+    [SerializeField] private float tomatoSpeed = 17.0f;
 
     public int DamageOutput;
 
     private void Update()
     {
         // Move the tomato forward
-        transform.Translate(10f * Time.deltaTime * Vector3.forward);
+        transform.Translate(tomatoSpeed * Time.deltaTime * Vector3.forward);
 
         // Destroy the tomato after 5 seconds
         Destroy(gameObject, 5f);
@@ -21,7 +21,7 @@ public class TomatoProjectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // instantiating the blood effect above the enemy on the place he was hit
-        Vector3 spawnpoint = transform.position + Vector3.up * tomatoSpeed;
+        Vector3 spawnpoint = transform.position + Vector3.up * 0.5f;
 
         //checking if the enemy is hit
         if (collision.gameObject.CompareTag("Enemy"))
