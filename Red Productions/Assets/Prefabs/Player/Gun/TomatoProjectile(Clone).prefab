@@ -485,6 +485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damagePopUp: {fileID: 2067116603789273713, guid: 3d7d27f13f7dd634895ecfa847a9be15, type: 3}
   tomatoSplatter: {fileID: 4553287630450876385, guid: 15483e51212e3d74886ea57291f4639a, type: 3}
+  tomatoSpeed: 100
   DamageOutput: 0
 --- !u!65 &7136415968391698730
 BoxCollider:

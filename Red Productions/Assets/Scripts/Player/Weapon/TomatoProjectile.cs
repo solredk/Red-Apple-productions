@@ -5,6 +5,7 @@ public class TomatoProjectile : MonoBehaviour
 {
     [SerializeField] private  GameObject damagePopUp;
     [SerializeField] private GameObject tomatoSplatter;
+    [SerializeField] private float tomatoSpeed = 5.5f;
 
     public int DamageOutput;
 
@@ -20,7 +21,7 @@ public class TomatoProjectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // instantiating the blood effect above the enemy on the place he was hit
-        Vector3 spawnpoint = transform.position + Vector3.up * 0.5f;
+        Vector3 spawnpoint = transform.position + Vector3.up * tomatoSpeed;
 
         //checking if the enemy is hit
         if (collision.gameObject.CompareTag("Enemy"))
