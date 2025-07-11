@@ -205,6 +205,19 @@ public class CookingStation : Interactable, IIngredientCheckListener
             Ingredient ingredient = collider.GetComponent<Ingredient>();
             if (ingredient != null)
             {
+                // Find all players and clear their pickup if they are holding this ingredient
+                foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+                {
+                    Pickup pickup = player.GetComponent<Pickup>();
+                    if (pickup != null && pickup.inHandItem == ingredient.gameObject)
+                    {
+                        pickup.inHandItem = null;
+                        pickup.isHolding = false;
+                        if (pickup.tomatoWeapon != null)
+                            pickup.tomatoWeapon.SetActive(true);
+                    }
+                }
+
                 destroyedCount++;
                 Destroy(collider.gameObject);
             }
