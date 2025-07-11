@@ -33820,7 +33820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1656064010646288411, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.34
+      value: -0.352
       objectReference: {fileID: 0}
     - target: {fileID: 1737196290852550304, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: m_Layer
@@ -33956,7 +33956,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3343875344208588108, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 318.85944
+      value: 318.8595
       objectReference: {fileID: 0}
     - target: {fileID: 3343875344208588108, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -34041,6 +34041,10 @@ PrefabInstance:
     - target: {fileID: 4999166630460540118, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5012454196091039994, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
+      propertyPath: interactDistance
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 5012454196091039994, guid: a5b489d13a13dfd44bb58ea33882f4ee, type: 3}
       propertyPath: mouseSensitivity
