@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class IngredientSpawner : Interactable
 {
@@ -9,6 +10,7 @@ public class IngredientSpawner : Interactable
     [SerializeField] private float cooldownTime = 2f;
     [SerializeField] private GameObject interactionSprite;
 
+    [SerializeField] private UnityEvent InteractionFailed;
     private bool canSpawn = true;
     private float cooldownTimer = 0f;
 

@@ -83,7 +83,7 @@ MonoBehaviour:
   backHealthBar: {fileID: 7324335993265876433}
   lerpTimer: 0
   chipSpeed: 2
-  damagePopUp: {fileID: 2067116603789273713, guid: 3d7d27f13f7dd634895ecfa847a9be15, type: 3}
+  damagePopUp: {fileID: 5965526004141633989, guid: 7fc517f193126d447a51d6bab2ae4b5c, type: 3}
   canvas: {fileID: 7040277623196865548}
   lastDamagedByPlayer: 0
   enemyBehavior: {fileID: 11400000, guid: 3877f540a366cdf49905ca5195f7290d, type: 2}

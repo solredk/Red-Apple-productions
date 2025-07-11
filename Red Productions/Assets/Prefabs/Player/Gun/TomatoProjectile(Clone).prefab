@@ -483,10 +483,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec652c55d6ad3e429e857a38023d3ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePopUp: {fileID: 2067116603789273713, guid: 3d7d27f13f7dd634895ecfa847a9be15, type: 3}
   tomatoSplatter: {fileID: 4553287630450876385, guid: 15483e51212e3d74886ea57291f4639a, type: 3}
+  damagePopUp: {fileID: 2872045133741162803, guid: 7fc517f193126d447a51d6bab2ae4b5c, type: 3}
   tomatoSpeed: 60
   DamageOutput: 0
+  playerId: 0
 --- !u!65 &7136415968391698730
 BoxCollider:
   m_ObjectHideFlags: 0

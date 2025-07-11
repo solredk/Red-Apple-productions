@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class IngredientShopUI : Interactable
 {
@@ -55,6 +56,7 @@ public class IngredientShopUI : Interactable
     private InputAction cancelAction;
     private InputActionMap gameplayMap;
     private InputActionMap uiMap;
+    [SerializeField] private UnityEvent InteractionFailed;
 
     protected override void Interact(GameObject playerGameObject)
     {

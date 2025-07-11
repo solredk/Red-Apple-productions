@@ -12,7 +12,7 @@ public class Zombie : MonoBehaviour
     [SerializeField] private Enemybehavior enemyBehavior;
 
     [SerializeField] private NavMeshAgent agent;
-
+        
     [SerializeField] private Animator zombieAnimator;
 
     [SerializeField] private EnemyHealth enemyHealth;

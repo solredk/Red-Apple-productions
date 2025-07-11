@@ -14,6 +14,8 @@ public class CookingStation : Interactable, IIngredientCheckListener
     [SerializeField] private float interactionRange = 3f;
     [SerializeField] private float ingredientCheckTimeout = 5f;
 
+
+    [SerializeField] private UnityEvent InteractionFailed;
     // Called when cooking begins (e.g. to trigger a UI or sound)
     [SerializeField] private UnityEvent onCookingStarted;
     // Called when cooking finishes
