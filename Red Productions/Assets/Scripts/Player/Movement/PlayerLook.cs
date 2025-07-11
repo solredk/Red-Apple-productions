@@ -69,13 +69,12 @@ public class PlayerLook : MonoBehaviour // Look & Interact checker
         RaycastHit hitInfo;
 
         // --- UI Crosshair System ---
-        // Use SphereCast for a "thicker" UI ray
+        // Use Raycast only (no hitbox increaser/SphereCast)
         Ray uiRay = new Ray(raycastOrigin, cam.transform.forward);
         RaycastHit uiHit;
         bool crosshairSet = false;
-        float uiRayThickness = 0.3f; // Adjust this value for more/less forgiveness
 
-        if (Physics.SphereCast(uiRay, uiRayThickness, out uiHit, Mathf.Infinity))
+        if (Physics.Raycast(uiRay, out uiHit, Mathf.Infinity))
         {
             if (uiHit.collider.GetComponent<Ingredient>() != null || uiHit.collider.GetComponent<Food>() != null)
             {

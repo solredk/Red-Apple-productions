@@ -14,18 +14,14 @@ public class CookingStation : Interactable, IIngredientCheckListener
     [SerializeField] private float interactionRange = 3f;
     [SerializeField] private float ingredientCheckTimeout = 5f;
 
-
     [SerializeField] private UnityEvent InteractionFailed;
-    // Called when cooking begins (e.g. to trigger a UI or sound)
     [SerializeField] private UnityEvent onCookingStarted;
-    // Called when cooking finishes
     [SerializeField] private UnityEvent onCookingEnded;
 
-    // Example extra positions for dropped ingredients (set in the Inspector)
     [SerializeField] private Transform[] droppedIngredientSpots;
 
     [Header("Drop Point Settings")]
-    [SerializeField] private float dropPointRange = 1.5f; // Adjustable in Inspector
+    [SerializeField] private float dropPointRange = 1.5f;
 
     private bool isInteractionActive = false;
     private bool isCookingCooldown = false;
@@ -42,7 +38,6 @@ public class CookingStation : Interactable, IIngredientCheckListener
 
     private void Update()
     {
-       // Drop Point Logic
         if (!isCookingCooldown && droppedIngredientSpots != null && droppedIngredientSpots.Length > 0)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, dropPointRange);
@@ -52,7 +47,6 @@ public class CookingStation : Interactable, IIngredientCheckListener
                 Ingredient ingredient = col.GetComponent<Ingredient>();
                 if (ingredient != null && spotIndex < droppedIngredientSpots.Length)
                 {
-                    // Snap ingredient to drop spot if not already parented
                     if (ingredient.transform.parent != droppedIngredientSpots[spotIndex])
                     {
                         ingredient.transform.SetParent(droppedIngredientSpots[spotIndex], true);
@@ -101,6 +95,7 @@ public class CookingStation : Interactable, IIngredientCheckListener
     // Called by IngredientManager when all required ingredients are detected
     public void OnIngredientsReady()
     {
+        DestroyIngredientsInRadius(); // Destroy ingredients immediately when cooking starts
         StartCoroutine(CookingCooldownRoutine());
     }
 
@@ -117,9 +112,8 @@ public class CookingStation : Interactable, IIngredientCheckListener
         isCookingCooldown = true;
         onCookingStarted?.Invoke();
 
-        yield return new WaitForSeconds(5f); // Example 5-second cooking time
+        yield return new WaitForSeconds(5f);
 
-        // Spawn final product
         Debug.LogError($"<color=green>[CookingStation]</color> ALL INGREDIENTS FOUND! Recipe complete!");
 
         List<GameObject> createdFoodItems = ingredientManager.InstantiateIngredientGroup(
@@ -128,10 +122,6 @@ public class CookingStation : Interactable, IIngredientCheckListener
         if (createdFoodItems != null && createdFoodItems.Count > 0)
         {
             Debug.LogError($"<color=blue>[CookingStation]</color> Spawned {createdFoodItems.Count} food items");
-            if (destroyIngredientsOnComplete)
-            {
-                DestroyIngredientsInRadius();
-            }
         }
         else
         {
@@ -143,28 +133,23 @@ public class CookingStation : Interactable, IIngredientCheckListener
         isInteractionActive = false;
     }
 
-
     public bool TryPlaceDroppedIngredient(Ingredient droppedIng, GameObject playerGameObject)
     {
         if (!isCookingCooldown)
             return false;
 
-        // Only allow required ingredients for this recipe
         if (ingredientManager != null &&
             ingredientManager.groupDictionary.TryGetValue(recipeType, out var group) &&
             !group.requiredIngredients.ContainsKey(droppedIng.ingredients))
         {
-            // Not a required ingredient for this recipe
             return false;
         }
 
-        // Remove from player's hand if they are holding this ingredient
         if (playerGameObject != null)
         {
             Pickup pickup = playerGameObject.GetComponent<Pickup>();
             if (pickup != null && pickup.inHandItem == droppedIng.gameObject)
             {
-                // Detach from any parent first
                 droppedIng.transform.SetParent(null, true);
                 pickup.inHandItem = null;
                 pickup.isHolding = false;
@@ -178,10 +163,8 @@ public class CookingStation : Interactable, IIngredientCheckListener
             rb.useGravity = false;
         }
 
-        // Set the dropped ingredient as a child of this CookingStation GameObject
         droppedIng.transform.SetParent(this.transform, true);
 
-        // Optionally, snap to a drop spot if available
         if (droppedIngredientSpots != null && droppedIngredientSpots.Length > 0)
         {
             Transform spot = droppedIngredientSpots[0];
@@ -215,11 +198,9 @@ public class CookingStation : Interactable, IIngredientCheckListener
 
     private void OnDrawGizmosSelected()
     {
-        // Draw drop point range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, dropPointRange);
 
-        // Draw all drop spots
         if (droppedIngredientSpots != null)
         {
             Gizmos.color = Color.green;
@@ -230,7 +211,6 @@ public class CookingStation : Interactable, IIngredientCheckListener
             }
         }
 
-        // Draw interaction range
         Gizmos.color = new Color(0.2f, 0.5f, 1f, 0.3f);
         Gizmos.DrawSphere(transform.position, interactionRange);
 
