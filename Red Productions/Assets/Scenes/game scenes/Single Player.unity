@@ -4377,7 +4377,7 @@ PrefabInstance:
       objectReference: {fileID: 286570159}
     - target: {fileID: 7445716699471104164, guid: 610791e4fad4e4544ad087b9a847040b, type: 3}
       propertyPath: promptMessage
-      value: (5) Fries package
+      value: (5) Hold to Fries package
       objectReference: {fileID: 0}
     - target: {fileID: 7445716699471104164, guid: 610791e4fad4e4544ad087b9a847040b, type: 3}
       propertyPath: ingredientPrefab
