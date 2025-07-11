@@ -50,7 +50,7 @@ public class ScoreSystem : MonoBehaviour
     }
     public void AddScore(int extraScore)
     {
-        moneySound.Play();
+        if (moneySound != null) moneySound.Play();
         waveSpawner.ZombieKilled();
 
         score += extraScore;

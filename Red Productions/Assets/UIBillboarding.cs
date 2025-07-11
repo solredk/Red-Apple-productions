@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class UIBillboarding : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Camera.main != null)
+        {
+            // Make the UI face the camera
+            transform.LookAt(Camera.main.transform);
+            // Optionally, keep the UI upright (not upside down)
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        }
     }
 }
