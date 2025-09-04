@@ -4377,7 +4377,7 @@ PrefabInstance:
       objectReference: {fileID: 286570159}
     - target: {fileID: 7445716699471104164, guid: 610791e4fad4e4544ad087b9a847040b, type: 3}
       propertyPath: promptMessage
-      value: (5) Hold to Fries package
+      value: 'Fries (5) Hold F to interact '
       objectReference: {fileID: 0}
     - target: {fileID: 7445716699471104164, guid: 610791e4fad4e4544ad087b9a847040b, type: 3}
       propertyPath: ingredientPrefab
@@ -7470,7 +7470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3706505001255015755, guid: 5b6eeb68fe1ed9c4ab10d5a3ffa35d9b, type: 3}
       propertyPath: promptMessage
-      value: Interact to cook fries (Y)
+      value: Hold (F) To cook Fries
       objectReference: {fileID: 0}
     - target: {fileID: 3706505001255015755, guid: 5b6eeb68fe1ed9c4ab10d5a3ffa35d9b, type: 3}
       propertyPath: dropPointRange
@@ -10663,7 +10663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6442213081803867108, guid: d09b85ef49b356c44bb8fa4e0a62c16d, type: 3}
       propertyPath: promptMessage
-      value: Hold Interact to cook nugget  (Y)(F)
+      value: Hold (F) to cook Chicken Nuggets
       objectReference: {fileID: 0}
     - target: {fileID: 6442213081803867108, guid: d09b85ef49b356c44bb8fa4e0a62c16d, type: 3}
       propertyPath: dropPointRange
@@ -12066,7 +12066,7 @@ PrefabInstance:
       objectReference: {fileID: 286570159}
     - target: {fileID: 2440728855784270112, guid: 8de9a014523552145b8430aa1675c57a, type: 3}
       propertyPath: promptMessage
-      value: (5) Chicken Nugget
+      value: (5) Hold F to buy Chicken Nugget
       objectReference: {fileID: 0}
     - target: {fileID: 2440728855784270112, guid: 8de9a014523552145b8430aa1675c57a, type: 3}
       propertyPath: clearSpawnRadius
@@ -19723,7 +19723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3033990287289568971, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: promptMessage
-      value: (5) Interact with bread spawn
+      value: 'Bread (5) Interact to Spawn '
       objectReference: {fileID: 0}
     - target: {fileID: 3033990287289568971, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: ingredientPrefab
@@ -19755,7 +19755,7 @@ PrefabInstance:
       objectReference: {fileID: 6114041076493126574, guid: 3a4dfa0bbc1f9a647aba1953d13e7118, type: 3}
     - target: {fileID: 8013483119038263785, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: m_Size.x
-      value: 0.56170917
+      value: 0.6558015
       objectReference: {fileID: 0}
     - target: {fileID: 8013483119038263785, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: m_Size.y
@@ -19763,11 +19763,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8013483119038263785, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: m_Size.z
-      value: 0.9061373
+      value: 0.98657554
       objectReference: {fileID: 0}
     - target: {fileID: 8013483119038263785, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: m_Center.x
-      value: 0.044291236
+      value: -0.0027549267
       objectReference: {fileID: 0}
     - target: {fileID: 8013483119038263785, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: m_Center.y
@@ -19775,7 +19775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8013483119038263785, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: m_Center.z
-      value: -0.046931554
+      value: -0.0067124367
       objectReference: {fileID: 0}
     - target: {fileID: 8013483119038263785, guid: dadf695979036ac4f86e5fe65c1559eb, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -21550,7 +21550,7 @@ PrefabInstance:
       objectReference: {fileID: 1723004887}
     - target: {fileID: 1128063396492843797, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
       propertyPath: promptMessage
-      value: Interact to deliver (Y)
+      value: Hold (F) to Deliver Food
       objectReference: {fileID: 0}
     - target: {fileID: 1128063396492843797, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
       propertyPath: orderUIElement
@@ -21611,6 +21611,30 @@ PrefabInstance:
     - target: {fileID: 2962832252286614349, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
       propertyPath: m_Name
       value: DeliverySystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3478649162192959089, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
+      propertyPath: m_Size.x
+      value: 3.2670996
+      objectReference: {fileID: 0}
+    - target: {fileID: 3478649162192959089, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
+      propertyPath: m_Size.y
+      value: 1.7921289
+      objectReference: {fileID: 0}
+    - target: {fileID: 3478649162192959089, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
+      propertyPath: m_Size.z
+      value: 2.9811985
+      objectReference: {fileID: 0}
+    - target: {fileID: 3478649162192959089, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
+      propertyPath: m_Center.x
+      value: -0.5364928
+      objectReference: {fileID: 0}
+    - target: {fileID: 3478649162192959089, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
+      propertyPath: m_Center.y
+      value: 0.8960627
+      objectReference: {fileID: 0}
+    - target: {fileID: 3478649162192959089, guid: 283c50eccbda73245b5580027e0395e8, type: 3}
+      propertyPath: m_Center.z
+      value: 0.57267314
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
